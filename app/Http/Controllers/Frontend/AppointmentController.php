@@ -139,4 +139,47 @@ class AppointmentController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    public function getcustomername(Request $request){
+
+
+        $data = CrmCustomer::findOrFail($request->customer_id);
+
+        return $data;
+
+    }
+
+
+    public function getdoctor(Request $request){
+
+
+
+        $id = $request->id ;
+
+        $doctors = Doctor::WhereHas('clinics' , function($q) use ($id) {
+            $q->where('id', $id);
+        })->get();
+
+
+
+        return $doctors;
+
+
+    }
+
+    public function getservicename(Request $request){
+
+
+
+        $id = $request->id ;
+
+        $services  = Service::WhereHas('servicesClinics' , function($q) use ($id) {
+            $q->where('id', $id);
+        })->get();
+
+
+        return  $services;
+
+
+    }
 }

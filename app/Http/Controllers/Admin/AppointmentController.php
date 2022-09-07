@@ -28,7 +28,7 @@ class AppointmentController extends Controller
     {
         abort_if(Gate::denies('appointment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $appointments = Appointment::with(['employee', 'customer', 'company', 'doctor', 'clinic', 'services', 'products', 'branch'])->get();
+        $appointments = Appointment::withTrashed()->with(['employee', 'customer', 'company', 'doctor', 'clinic', 'services', 'products', 'branch'])->get();
 
         $users = User::get();
 

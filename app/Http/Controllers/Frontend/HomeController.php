@@ -36,17 +36,6 @@ class HomeController
 
         return view('frontend.home' , compact('branches', 'clinics', 'companies', 'customers', 'doctors', 'employees', 'products', 'services')) ;
     }
-    public function getcustomer(Request $request){
 
-
-        return
-
-
-        $data=['usedPulse'=>$usedPulse ];
-
-
-        return $data;
-
-    }
 
 }

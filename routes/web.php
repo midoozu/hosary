@@ -222,6 +222,7 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Doctor
     Route::delete('doctors/destroy', 'DoctorController@massDestroy')->name('doctors.massDestroy');
+
     Route::resource('doctors', 'DoctorController');
 
     // Company
@@ -234,8 +235,9 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Appointment
     Route::delete('appointments/destroy', 'AppointmentController@massDestroy')->name('appointments.massDestroy');
-    Route::get('appointments/getcustomername', 'AppointmentsController@getcustomername')->name('appointments.getcustomername');
-
+    Route::get('appointments/getcustomername', 'AppointmentController@getcustomername')->name('appointments.getcustomername');
+    Route::get('appointments/getdoctor', 'AppointmentController@getdoctor')->name('appointments.getdoctor');
+    Route::get('appointments/getservicename', 'AppointmentController@getservicename')->name('appointments.getservicename');
     Route::resource('appointments', 'AppointmentController');
 
     // Branches

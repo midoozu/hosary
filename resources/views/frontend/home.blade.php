@@ -35,14 +35,14 @@
                            {{'اضافه حجز جديد'}}
                         </button>
                         <!-- Modal -->
-                        <div class="modal fade" id="addnew" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade addnewt" id="addnew" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body">
+                                    <div class="modal-body  ">
                                         <div class="container-fluid">
                                             <form method="POST" action="{{ route("frontend.appointments.store") }}" enctype="multipart/form-data">
                                                 @method('POST')
@@ -81,7 +81,6 @@
                                                         </datalist>
 
                                                     </div>
-
                                                     <div class="form-group col-md-6" >
                                                         <label for="">{{ 'اسم العميل' }}</label>
                                                         <input class="form-control"  name="customer_name" id="customer_name" value="">
@@ -90,6 +89,21 @@
                                                 </div>
 
                                                 <div class="row">
+
+                                                    <div class="form-group col-md-6">
+                                                        <label class="required" for="clinic_id">{{ trans('cruds.appointment.fields.clinic') }}</label>
+
+                                                        <input list="clinic_list"  class="form-control" name="clinic_id" id="clinic_id" >
+                                                        <datalist id="clinic_list">
+                                                            @foreach($customers as $id => $entry)
+                                                                @foreach($clinics as $id => $entry)
+                                                                    <option value="{{ $id }}" >{{ $entry }}</option>
+                                                                @endforeach
+                                                            @endforeach
+                                                        </datalist>
+
+                                                    </div>
+
                                                     <div class="form-group col-md-6">
                                                         <label class="required" for="doctor_id">{{ trans('cruds.appointment.fields.doctor') }}</label>
                                                         <select class="form-control select2" name="doctor_id" id="doctor_id" required>
@@ -104,32 +118,28 @@
                                                         @endif
                                                         <span class="help-block">{{ trans('cruds.appointment.fields.doctor_helper') }}</span>
                                                     </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label class="required" for="clinic_id">{{ trans('cruds.appointment.fields.clinic') }}</label>
-                                                        <select class="form-control select2" name="clinic_id" id="clinic_id" required>
-                                                            @foreach($clinics as $id => $entry)
-                                                                <option value="{{ $id }}" {{ old('clinic_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @if($errors->has('clinic'))
-                                                            <div class="invalid-feedback">
-                                                                {{ $errors->first('clinic') }}
-                                                            </div>
-                                                        @endif
-                                                        <span class="help-block">{{ trans('cruds.appointment.fields.clinic_helper') }}</span>
-                                                    </div>
 
                                                 </div>
 
-                                                <div class="form-group col-md-6 ">
+                                                <div class="form-group">
                                                     <label class="required" for="services">{{ trans('cruds.appointment.fields.service') }}</label>
-                                                    <select class="form-control select2" name="services[]" id="services"  size="6" multiple required>
+                                                    <div style="padding-bottom: 4px">
+                                                        <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                                        <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                                                    </div>
+                                                    <select class="form-control select2" name="services[]" id="services" multiple required>
                                                         @foreach($services as $id => $service)
-                                                            <option value="{{ $id }}" {{ in_array($id, old('services', [])) ? 'selected' : '' }}  >{{ $service }}</option>
+                                                            <option value="{{ $id }}" {{ in_array($id, old('services', [])) ? 'selected' : '' }}>{{ $service }}</option>
                                                         @endforeach
                                                     </select>
-
+                                                    @if($errors->has('services'))
+                                                        <div class="invalid-feedback">
+                                                            {{ $errors->first('services') }}
+                                                        </div>
+                                                    @endif
+                                                    <span class="help-block">{{ trans('cruds.appointment.fields.service_helper') }}</span>
                                                 </div>
+
 
 
                                                 <div class="form-group">
@@ -446,9 +456,6 @@
         $('#customer_id').on('keyup', function () {
 
             let customer_id = $(this).val();
-            console.log(customer_id);
-            let Uid = $(this).data('value');
-
             $.ajax({
                 url: '{{route('frontend.appointments.getcustomername')}}',
                 method: 'GET',
@@ -457,13 +464,63 @@
 
                 },
                 success: function (data) {
-                    $('.customer_name').val(data.customer_name);
+                    $('#customer_name').val(data.first_name);
 
+                        $('#customer_name').attr('disabled', 'disabled');
+                },
+                error: function (){
+                    $('#customer_name').attr('disabled', false);
 
-                    console.log(data)
                 },
             });
         });
 
     </script>
+    <script>
+
+        $('#clinic_id').change(function () {
+
+            var id = $('#clinic_id').val()
+            var dataid={'id': id};
+
+            $.ajax({
+                type : 'GET',
+                url: "{{ route('frontend.appointments.getdoctor') }}",
+                data : dataid ,
+
+                success:function (doctors){
+
+                    select = '<select name="doctor_id" class="form-control input-sm " required id="doctor_id" >';
+                    $.each(doctors, function(i,doctors)
+                    {
+                        select +='<option value="'+doctors.id+'">'+doctors.name +'</option>';
+                    });
+                    select += '</select>';
+                    $("#doctor_id").html(select);
+
+                }
+
+            });
+            $.ajax({
+                type : 'GET',
+                url: "{{ route('frontend.appointments.getservicename') }}",
+                data : dataid ,
+
+
+                success:function (services){
+
+                    select = '<select name="services[]" class="form-control input-sm " required id="services" >';
+                    $.each(services, function(i,services)
+                    {
+                        select +='<option value="'+services.id+'">'+services.name +'</option>';
+                    });
+                    select += '</select>';
+                    $("#services").html(select);
+                }
+
+            });
+        });
+
+    </script>
+
 @endsection
