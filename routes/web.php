@@ -234,6 +234,8 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Appointment
     Route::delete('appointments/destroy', 'AppointmentController@massDestroy')->name('appointments.massDestroy');
+    Route::get('appointments/getcustomername', 'AppointmentsController@getcustomername')->name('appointments.getcustomername');
+
     Route::resource('appointments', 'AppointmentController');
 
     // Branches
