@@ -28,7 +28,7 @@ class HomeController
 
         $clinics = Clinic::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $services = Service::pluck('name', 'id');
+        $services = Service::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $products = Product::pluck('name', 'id');
 

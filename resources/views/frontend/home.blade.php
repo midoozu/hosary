@@ -121,17 +121,22 @@
 
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group ">
                                                     <label class="required" for="services">{{ trans('cruds.appointment.fields.service') }}</label>
                                                     <div style="padding-bottom: 4px">
                                                         <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                                                         <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                                                     </div>
-                                                    <select class="form-control select2" name="services[]" id="services" multiple required>
-                                                        @foreach($services as $id => $service)
-                                                            <option value="{{ $id }}" {{ in_array($id, old('services', [])) ? 'selected' : '' }}>{{ $service }}</option>
-                                                        @endforeach
-                                                    </select>
+
+                                                 <div class="row">
+                                                   <div class="col-12">
+                                                       <select class="form-control select2" name="services[]" id="services" multiple required>
+                                                           @foreach($services as $id => $service)
+                                                               <option value="{{ $id }}" {{ in_array($id, old('services', [])) ? 'selected' : '' }}>{{ $service }}</option>
+                                                           @endforeach
+                                                       </select>
+                                                   </div>
+                                                 </div>
                                                     @if($errors->has('services'))
                                                         <div class="invalid-feedback">
                                                             {{ $errors->first('services') }}
