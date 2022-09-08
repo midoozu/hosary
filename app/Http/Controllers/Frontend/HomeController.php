@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Appointment;
 use App\Models\Branch;
 use App\Models\Clinic;
 use App\Models\Company;
@@ -10,6 +11,7 @@ use App\Models\Doctor;
 use App\Models\Product;
 use App\Models\Service;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -34,7 +36,14 @@ class HomeController
 
         $branches = Branch::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.home' , compact('branches', 'clinics', 'companies', 'customers', 'doctors', 'employees', 'products', 'services')) ;
+
+        $appointments = Appointment::with([ 'customer', 'company', 'doctor', 'clinic', 'services', 'branch'])
+
+            ->whereDate('created_at', Carbon::today())->where('branch_id',auth()->user()->branch->id)->get();
+
+
+
+        return view('frontend.home' , compact('branches', 'clinics', 'companies', 'customers', 'doctors', 'employees', 'products','appointments', 'services')) ;
     }
 
 

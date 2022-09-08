@@ -74,9 +74,22 @@ class AppointmentController extends Controller
 
     public function store(StoreAppointmentRequest $request)
     {
-        $appointment = Appointment::create($request->all());
+
+
+        $client = CrmCustomer::firstOrCreate(['id' => $request->customer_id],
+        [
+            'first_name' => $request->customer_name,
+            'phone' => $request->customer_id
+        ]);
+
+        $appointment = $request->all() ;
+        $appointment['customer_id']  = $client->id ;
+      $appointment =   Appointment::create($appointment);
+        //        $appointment = Appointment::create($request->all());
+
         $appointment->services()->sync($request->input('services', []));
         $appointment->products()->sync($request->input('products', []));
+
 
         return redirect()->route('frontend.appointments.index');
     }
