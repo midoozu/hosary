@@ -95,11 +95,9 @@
 
                                                         <input list="clinic_list"  class="form-control" name="clinic_id" id="clinic_id" >
                                                         <datalist id="clinic_list">
-                                                            @foreach($customers as $id => $entry)
                                                                 @foreach($clinics as $id => $entry)
                                                                     <option value="{{ $id }}" >{{ $entry }}</option>
                                                                 @endforeach
-                                                            @endforeach
                                                         </datalist>
 
                                                     </div>
@@ -118,7 +116,6 @@
                                                         @endif
                                                         <span class="help-block">{{ trans('cruds.appointment.fields.doctor_helper') }}</span>
                                                     </div>
-
                                                 </div>
 
                                                 <div class="form-group ">
@@ -200,20 +197,22 @@
                                                       <span class="help-block">{{ trans('cruds.appointment.fields.total_price_helper') }}</span>
                                                   </div>
                                               </div>
-                                                <div class="form-group">
-                                                    <button class="btn btn-danger" type="submit">
-                                                        {{ trans('global.save') }}
-                                                    </button>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">{{'حفظ و طباعه'}}</button>
+
+                                                        <button class="btn btn-danger" type="submit">
+                                                            {{ trans('global.save') }}
+                                                        </button>
+
                                                 </div>
                                             </form>
-
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
+
+
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -332,7 +331,7 @@
                             <div class="card-body">
                             <table class="table table-hover my-0  datatable datatable-Appointment "  >
                                 <thead>
-                                <tr>
+                                <tr >
 
                                     <th>
                                         {{ trans('cruds.appointment.fields.id') }}
@@ -364,7 +363,7 @@
                                 <tbody>
 
                                 @foreach($appointments as $key => $appointment)
-                                    <tr data-entry-id="{{ $appointment->id }}">
+                                    <tr data-entry-id="{{ $appointment->id }}" >
 
                                         <td>
                                             {{ $appointment->id ?? '' }}
@@ -380,7 +379,9 @@
                                         </td>
                                         <td>
                                             @foreach($appointment->services as $key => $item)
-                                                <span>{{ $item->name }}</span>
+                                                <span class="badge badge-info">{{ $item->name }}</span>
+                                                <span class="badge badge-warning ">{{ count([$item]) }}</span>
+                                                <span class="badge badge-danger ">{{ $item->price }}</span>
                                             @endforeach
                                         </td>
                                         <td>
@@ -391,16 +392,23 @@
                                         </td>
                                         <td>
                                             @can('appointment_show')
-                                                <a class="btn btn-xs btn-primary" href="{{ route('frontend.appointments.show', $appointment->id) }}">
+                                                <a class="btn btn-xs btn-outline-primary" href="{{ route('frontend.appointments.show', $appointment->id) }}">
                                                     {{ trans('global.view') }}
+                                                </a>
+                                                <a class="btn btn-xs btn-outline-warning" href="{{ route('frontend.appointments.show', $appointment->id) }}">
+                                                    {{ 'print' }}
+                                                </a>
+                                                <a class="btn btn-xs btn-success" href="{{ route('frontend.appointments.show', $appointment->id) }}">
+                                                    {{ 'خروج' }}
                                                 </a>
                                             @endcan
 
                                             @can('appointment_edit')
-                                                <a class="btn btn-xs btn-info" href="{{ route('frontend.appointments.edit', $appointment->id) }}">
+                                                <a class="btn btn-xs btn-outline-info" href="{{ route('frontend.appointments.edit', $appointment->id) }}">
                                                     {{ trans('global.edit') }}
                                                 </a>
-                                            @endcan
+
+                                                @endcan
 
                                             @can('appointment_delete')
                                                 <form action="{{ route('frontend.appointments.destroy', $appointment->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
@@ -561,7 +569,9 @@
                     });
                     select += '</select>';
                     $("#services").html(select);
+                    $('.select2-container .select2-selection--multiple ').attr('width',60);
                 }
+
 
             });
         });

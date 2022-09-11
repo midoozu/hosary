@@ -12,6 +12,7 @@ use App\Models\Product;
 use App\Models\Service;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -40,6 +41,11 @@ class HomeController
         $appointments = Appointment::with([ 'customer', 'company', 'doctor', 'clinic', 'services', 'branch'])
 
             ->whereDate('created_at', Carbon::today())->where('branch_id',auth()->user()->branch->id)->get();
+
+        $user_info = DB::table('appointments')
+            ->select('clinic_id', DB::raw('count(*) as total'))
+            ->groupBy('clinic_id')
+            ->get();
 
 
 
