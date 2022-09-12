@@ -40,16 +40,41 @@ class HomeController
 
         $appointments = Appointment::with([ 'customer', 'company', 'doctor', 'clinic', 'services', 'branch'])
 
-            ->whereDate('created_at', Carbon::today())->where('branch_id',auth()->user()->branch->id)->get();
-
-        $user_info = DB::table('appointments')
-            ->select('clinic_id', DB::raw('count(*) as total'))
-            ->groupBy('clinic_id')
-            ->get();
+            ->whereDate('date', Carbon::today())->where('branch_id',auth()->user()->branch->id)->get();
 
 
 
-        return view('frontend.home' , compact('branches', 'clinics', 'companies', 'customers', 'doctors', 'employees', 'products','appointments', 'services')) ;
+
+
+        $mappedcollection = $appointments->map(function($name, $key) use ($appointments) {
+
+        return [ $appointments->where('date','<',$name->date )->count() , $name];
+
+
+        });
+
+
+        dd($mappedcollection);
+//        $user_info = DB::table('appointments')
+//            ->select('clinic_id', DB::raw('count(*) as total'))
+//            ->groupBy('clinic_id')
+//            ->get();
+
+//        $test = Appointment::with('clinic')->groupBy('clinics.name');
+//        dd($test);
+
+//      $r =  Appointment::with(['clinic' => function($query){
+//            $query->groupBy('name');
+//        }])->get();
+
+
+
+
+
+       $clinic_waiting = Appointment::query()->whereDate('date', Carbon::today())->where('branch_id',auth()->user()->branch->id)->get()->groupBy('clinic.name', DB::raw('count(*) as total'));
+
+
+        return view('frontend.home' , compact('branches', 'clinics', 'companies', 'customers', 'doctors', 'employees', 'products','appointments', 'services','clinic_waiting')) ;
     }
 
 
