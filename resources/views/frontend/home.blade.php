@@ -274,13 +274,15 @@
                                 <tbody>
 
                                 @foreach($appointments as $key => $appointment)
-                                    <tr data-entry-id="{{ $appointment->id }}" >
+                                    <tr data-entry-id="{{ $appointment->id }}">
 
                                         <td>
                                             {{ $appointment->id ?? '' }}
                                         </td>
-                                        <td>
-                                            {{ $appointment->customer->first_name ?? '' }}
+                                        <td class="waiting">
+                                            <a data-id="{{$appointment->id}}" class="addCart">{{ $appointment->customer->first_name ?? '' }}</a>
+
+
                                         </td>
                                         <td>
                                             {{ $appointment->clinic->name ?? '' }}
@@ -309,9 +311,31 @@
                                                 <a class="btn btn-xs btn-outline-warning" href="{{ route('frontend.appointments.show', $appointment->id) }}">
                                                     {{ 'print' }}
                                                 </a>
-                                                <a class="btn btn-xs btn-success" href="{{ route('frontend.appointments.show', $appointment->id) }}">
-                                                    {{ 'خروج' }}
-                                                </a>
+
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exit-{{$appointment->id}}">
+                                                    {{'خروج'}}
+                                                </button>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="exit-{{$appointment->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                {{$appointment->id}}
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             @endcan
 
                                             @can('appointment_edit')
@@ -494,6 +518,32 @@
     $('.select2-container').width('100%')
     });
     </script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+
+    $( '.addCart' ).click(function(e) {
+
+        var id = $(this).attr('data-id');
+        var dataid={'id': id};
+    console.log(dataid);
+        $.ajax({
+            type : 'GET',
+            url: "{{ route('frontend.appointments.getwaiting') }}",
+            data : dataid ,
+
+
+            success:function (waiting){
+
+                Swal.fire(
+                    'عدد الانتظار ',
+                        waiting
+                )
+            }
+        });
+
+    });
+    </script>
+
 
     <script>
         $(function () {

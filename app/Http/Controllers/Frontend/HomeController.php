@@ -44,8 +44,6 @@ class HomeController
 
 
 
-
-
         $mappedcollection = $appointments->map(function($name, $key) use ($appointments) {
 
         return [ $appointments->where('date','<',$name->date )->count() , $name];
@@ -54,7 +52,7 @@ class HomeController
         });
 
 
-        dd($mappedcollection);
+
 //        $user_info = DB::table('appointments')
 //            ->select('clinic_id', DB::raw('count(*) as total'))
 //            ->groupBy('clinic_id')

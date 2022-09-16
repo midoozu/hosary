@@ -238,6 +238,7 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::get('appointments/getcustomername', 'AppointmentController@getcustomername')->name('appointments.getcustomername');
     Route::get('appointments/getdoctor', 'AppointmentController@getdoctor')->name('appointments.getdoctor');
     Route::get('appointments/getservicename', 'AppointmentController@getservicename')->name('appointments.getservicename');
+    Route::get('appointments/getwaiting', 'AppointmentController@getwaiting')->name('appointments.getwaiting');
     Route::resource('appointments', 'AppointmentController');
 
     // Branches

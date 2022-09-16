@@ -183,7 +183,6 @@ class AppointmentController extends Controller
     public function getservicename(Request $request){
 
 
-
         $id = $request->id ;
 
         $services  = Service::WhereHas('servicesClinics' , function($q) use ($id) {
@@ -192,6 +191,19 @@ class AppointmentController extends Controller
 
 
         return  $services;
+
+
+    }
+    public function getwaiting(Request $request){
+
+
+        $id = $request->id ;
+
+        $appointment = Appointment::find($request->id);
+
+         $waiting =  Appointment::where('date','<',$appointment->date )->count();
+
+        return  $waiting ;
 
 
     }
