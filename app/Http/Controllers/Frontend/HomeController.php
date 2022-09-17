@@ -52,7 +52,6 @@ class HomeController
         });
 
 
-
 //        $user_info = DB::table('appointments')
 //            ->select('clinic_id', DB::raw('count(*) as total'))
 //            ->groupBy('clinic_id')
@@ -64,8 +63,6 @@ class HomeController
 //      $r =  Appointment::with(['clinic' => function($query){
 //            $query->groupBy('name');
 //        }])->get();
-
-
 
 
 

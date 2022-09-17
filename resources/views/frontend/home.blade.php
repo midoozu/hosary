@@ -280,8 +280,8 @@
                                             {{ $appointment->id ?? '' }}
                                         </td>
                                         <td class="waiting">
-                                            <a data-id="{{$appointment->id}}" class="addCart">{{ $appointment->customer->first_name ?? '' }}</a>
-
+                                            <a data-id="{{$appointment->id}}" href="#" class="addCart">{{ $appointment->customer->first_name ?? '' }}  </a>
++
 
                                         </td>
                                         <td>
@@ -311,30 +311,9 @@
                                                 <a class="btn btn-xs btn-outline-warning" href="{{ route('frontend.appointments.show', $appointment->id) }}">
                                                     {{ 'print' }}
                                                 </a>
-
-                                                <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exit-{{$appointment->id}}">
-                                                    {{'خروج'}}
-                                                </button>
-
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="exit-{{$appointment->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                {{$appointment->id}}
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <button type="button" class="btn btn-primary">Save changes</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <a class="btn btn-xs btn-success" href="{{ route('frontend.appointments.edit', $appointment->id) }}">
+                                                    {{ 'خروج' }}
+                                                </a>
 
                                             @endcan
 
@@ -352,9 +331,7 @@
                                                     <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
                                                 </form>
                                             @endcan
-
                                         </td>
-
                                     </tr>
 {{--                                <tr>--}}
 {{--                                    <td class="d-none d-xl-table-cell">01/01/2021</td>--}}
@@ -525,12 +502,11 @@
 
         var id = $(this).attr('data-id');
         var dataid={'id': id};
-    console.log(dataid);
+
         $.ajax({
             type : 'GET',
             url: "{{ route('frontend.appointments.getwaiting') }}",
             data : dataid ,
-
 
             success:function (waiting){
 
@@ -543,7 +519,6 @@
 
     });
     </script>
-
 
     <script>
         $(function () {
