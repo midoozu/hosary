@@ -30,6 +30,12 @@
         @endforeach
                 </div>
 
+    <div>
+
+
+
+    </div>
+
     <div class="row">
         <div class="col-12">
 
@@ -281,8 +287,6 @@
                                         </td>
                                         <td class="waiting">
                                             <a data-id="{{$appointment->id}}" href="#" class="addCart">{{ $appointment->customer->first_name ?? '' }}  </a>
-+
-
                                         </td>
                                         <td>
                                             {{ $appointment->clinic->name ?? '' }}
