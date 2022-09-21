@@ -15,10 +15,8 @@
                         @csrf
                         <div class="form-group col-3 " style="display: inline-block">
                             <label class="required" for="employee_id">{{ trans('cruds.appointment.fields.employee') }}</label>
-                            <select class="form-control select2" name="employee_id" id="employee_id" disabled>
-                                @foreach($employees as $id => $entry)
-                                    <option value="{{ $id }}" {{ (old('employee_id') ? old('employee_id') : $appointment->employee->id ?? '') == $id ? 'selected' : '' }} >{{ $entry }}</option>
-                                @endforeach
+                            <select class="form-control select2" name="employee_id" id="employee_id" >
+                                    <option value="{{ auth()->id() }}" >{{ auth()->user()->name }}</option>
                             </select>
                             @if($errors->has('employee'))
                                 <div class="invalid-feedback">
@@ -29,7 +27,7 @@
                         </div>
                         <div class="form-group col-3 " style="display: inline-block">
                             <label class="required" for="date">{{ trans('cruds.appointment.fields.date') }}</label>
-                            <input class="form-control datetime" type="text" name="date" id="date" value="{{ old('date', $appointment->date) }}" disabled>
+                            <input class="form-control datetime" type="text" name="date" id="date" value="{{ old('date', $appointment->date) }}" readonly>
                             @if($errors->has('date'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('date') }}
@@ -125,37 +123,39 @@
                             <span class="help-block">{{ trans('cruds.appointment.fields.check_out_helper') }}</span>
                         </div>
 
+                @if($appointment->services->contains(4))
+                            <div class="form-group col-3 " style="display: inline-block">
+                                <label for="pulse_counter">{{ trans('cruds.appointment.fields.pulse_counter') }}</label>
+                                <input class="form-control" type="number" name="pulse_counter" id="pulse_counter" value="{{ old('pulse_counter', $appointment->pulse_counter) }}" step="1">
+                                @if($errors->has('pulse_counter'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('pulse_counter') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.appointment.fields.pulse_counter_helper') }}</span>
+                            </div>
+                            <div class="form-group col-3 " style="display: inline-block">
+                                <label for="device_pulse">{{ trans('cruds.appointment.fields.device_pulse') }}</label>
+                                <input class="form-control" type="number" name="device_pulse" id="device_pulse" value="{{ old('device_pulse', $appointment->device_pulse) }}" step="1">
+                                @if($errors->has('device_pulse'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('device_pulse') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.appointment.fields.device_pulse_helper') }}</span>
+                            </div>
+                            <div class="form-group col-3 " style="display: inline-block">
+                                <label for="used_pulse">{{ trans('cruds.appointment.fields.used_pulse') }}</label>
+                                <input class="form-control" type="number" name="used_pulse" id="used_pulse" value="{{ old('used_pulse', $appointment->used_pulse) }}" step="1">
+                                @if($errors->has('used_pulse'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('used_pulse') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.appointment.fields.used_pulse_helper') }}</span>
+                            </div>
+                        @endif
 
-                        <div class="form-group col-3 " style="display: inline-block">
-                            <label for="pulse_counter">{{ trans('cruds.appointment.fields.pulse_counter') }}</label>
-                            <input class="form-control" type="number" name="pulse_counter" id="pulse_counter" value="{{ old('pulse_counter', $appointment->pulse_counter) }}" step="1">
-                            @if($errors->has('pulse_counter'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('pulse_counter') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.appointment.fields.pulse_counter_helper') }}</span>
-                        </div>
-                        <div class="form-group col-3 " style="display: inline-block">
-                            <label for="device_pulse">{{ trans('cruds.appointment.fields.device_pulse') }}</label>
-                            <input class="form-control" type="number" name="device_pulse" id="device_pulse" value="{{ old('device_pulse', $appointment->device_pulse) }}" step="1">
-                            @if($errors->has('device_pulse'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('device_pulse') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.appointment.fields.device_pulse_helper') }}</span>
-                        </div>
-                        <div class="form-group col-3 " style="display: inline-block">
-                            <label for="used_pulse">{{ trans('cruds.appointment.fields.used_pulse') }}</label>
-                            <input class="form-control" type="number" name="used_pulse" id="used_pulse" value="{{ old('used_pulse', $appointment->used_pulse) }}" step="1">
-                            @if($errors->has('used_pulse'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('used_pulse') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.appointment.fields.used_pulse_helper') }}</span>
-                        </div>
 
                         <div class="form-group col-3 " style="display: inline-block">
                             <label for="products">{{ trans('cruds.appointment.fields.product') }}</label>
@@ -178,9 +178,7 @@
                         <div class="form-group col-3 " style="display: inline-block">
                             <label class="required" for="branch_id">{{ trans('cruds.appointment.fields.branch') }}</label>
                             <select class="form-control select2" name="branch_id" id="branch_id" required>
-                                @foreach($branches as $id => $entry)
-                                    <option value="{{ $id }}" {{ (old('branch_id') ? old('branch_id') : $appointment->branch->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                @endforeach
+                                    <option value="{{ auth()->user()->branch->id }}" {{ (old('branch_id') ? old('branch_id') : $appointment->branch->id ?? '') == $id ? 'selected' : '' }}>{{ auth()->user()->branch->name }}</option>
                             </select>
                             @if($errors->has('branch'))
                                 <div class="invalid-feedback">

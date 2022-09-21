@@ -225,18 +225,15 @@
 
                 </div>
             </div>
+            <a href="{{ route('frontend.appointments.index') }}" class="btn btn-success">{{'جميع الحجوزات'}}</a>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addnew">
-                {{'اضافه حجز جديد'}}
+                {{'جرد مستهلكات'}}
             </button>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addnew">
-                {{'اضافه حجز جديد'}}
-            </button>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addnew">
-                {{'اضافه حجز جديد'}}
+            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addnew">
+                {{'استقبال مخزون'}}
             </button>
 
         </div>
-
 
     </div>
                 <div class="row removable">
@@ -298,8 +295,9 @@
                                             @foreach($appointment->services as $key => $item)
                                                 <span class="badge badge-info">{{ $item->name }}</span>
                                                 <span class="badge badge-warning ">{{ count([$item]) }}</span>
-                                                <span class="badge badge-danger ">{{ $item->price }}</span>
+                                                <span class="badge badge-success ">{{ $item->price }}</span>
                                             @endforeach
+                                                <span class="badge badge-danger">{{ $appointment->services_sum_price }}</span>
                                         </td>
                                         <td>
                                             {{ $appointment->comment ?? '' }}

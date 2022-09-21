@@ -97,6 +97,146 @@
                                             </svg> <span class="align-middle">Blank</span>
                                         </a>
                                     </li>
+                                    <li>
+
+
+                                            @can('user_management_access')
+                                                <a class="dropdown-item disabled" href="#">
+                                                    {{ trans('cruds.userManagement.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('permission_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.permissions.index') }}">
+                                                    {{ trans('cruds.permission.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('role_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.roles.index') }}">
+                                                    {{ trans('cruds.role.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('user_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.users.index') }}">
+                                                    {{ trans('cruds.user.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('user_alert_access')
+                                                <a class="dropdown-item" href="{{ route('frontend.user-alerts.index') }}">
+                                                    {{ trans('cruds.userAlert.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('appointment_access')
+                                                <a class="dropdown-item" href="{{ route('frontend.appointments.index') }}">
+                                                    {{ trans('cruds.appointment.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('basic_c_r_m_access')
+                                                <a class="dropdown-item disabled" href="#">
+                                                    {{ trans('cruds.basicCRM.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('crm_status_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.crm-statuses.index') }}">
+                                                    {{ trans('cruds.crmStatus.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('crm_customer_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.crm-customers.index') }}">
+                                                    {{ trans('cruds.crmCustomer.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('crm_note_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.crm-notes.index') }}">
+                                                    {{ trans('cruds.crmNote.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('crm_document_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.crm-documents.index') }}">
+                                                    {{ trans('cruds.crmDocument.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('setting_access')
+                                                <a class="dropdown-item disabled" href="#">
+                                                    {{ trans('cruds.setting.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('clinic_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.clinics.index') }}">
+                                                    {{ trans('cruds.clinic.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('doctor_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.doctors.index') }}">
+                                                    {{ trans('cruds.doctor.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('company_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.companies.index') }}">
+                                                    {{ trans('cruds.company.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('service_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.services.index') }}">
+                                                    {{ trans('cruds.service.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('branch_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.branches.index') }}">
+                                                    {{ trans('cruds.branch.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('product_management_access')
+                                                <a class="dropdown-item disabled" href="#">
+                                                    {{ trans('cruds.productManagement.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('product_category_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.product-categories.index') }}">
+                                                    {{ trans('cruds.productCategory.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('product_tag_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.product-tags.index') }}">
+                                                    {{ trans('cruds.productTag.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('product_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.products.index') }}">
+                                                    {{ trans('cruds.product.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('asset_management_access')
+                                                <a class="dropdown-item disabled" href="#">
+                                                    {{ trans('cruds.assetManagement.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('asset_category_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.asset-categories.index') }}">
+                                                    {{ trans('cruds.assetCategory.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('asset_location_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.asset-locations.index') }}">
+                                                    {{ trans('cruds.assetLocation.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('asset_status_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.asset-statuses.index') }}">
+                                                    {{ trans('cruds.assetStatus.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('asset_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.assets.index') }}">
+                                                    {{ trans('cruds.asset.title') }}
+                                                </a>
+                                            @endcan
+                                            @can('assets_history_access')
+                                                <a class="dropdown-item ml-3" href="{{ route('frontend.assets-histories.index') }}">
+                                                    {{ trans('cruds.assetsHistory.title') }}
+                                                </a>
+                                            @endcan
+
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -305,14 +445,35 @@
                                 </svg> Help Center</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Log out</a>
+
+
                         </div>
+
+
+
+
                     </li>
+
                 </ul>
             </div>
         </nav>
         <main class="content">
             <div class="container-fluid p-0">
-
+                @if($errors->count() > 0)
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="alert alert-danger">
+                                    <ul class="list-unstyled mb-0">
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 @yield('content')
             </div>
         </main>
@@ -781,6 +942,15 @@
 
         $.fn.dataTable.ext.classes.sPageButton = '';
     });
+
+</script>
+
+<script>
+    $( document ).ready(function() {
+        $('.container').addClass('container-fluid')
+        $('.container').removeClass('container')
+    });
+
 
 </script>
 @yield('scripts')

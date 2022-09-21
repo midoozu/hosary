@@ -40,7 +40,7 @@ class HomeController
 
         $appointments = Appointment::with([ 'customer', 'company', 'doctor', 'clinic', 'services', 'branch'])
 
-            ->whereDate('date', Carbon::today())->where('branch_id',auth()->user()->branch->id)->get();
+            ->whereDate('date', Carbon::today())->where('branch_id',auth()->user()->branch->id)->withSum('services','price')->get();
 
 
 
@@ -63,8 +63,8 @@ class HomeController
 //      $r =  Appointment::with(['clinic' => function($query){
 //            $query->groupBy('name');
 //        }])->get();
-$test =  Appointment::withSum('services','price')->get();
-dd($test);
+//$test =  Appointment::withSum('services','price')->get();
+
 
        $clinic_waiting = Appointment::query()->whereDate('date', Carbon::today())->where('branch_id',auth()->user()->branch->id)->get()->groupBy('clinic.name', DB::raw('count(*) as total'));
 
