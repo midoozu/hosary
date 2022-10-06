@@ -32,8 +32,6 @@
 
     <div>
 
-
-
     </div>
 
     <div class="row">
@@ -316,7 +314,12 @@
                                                 <a class="btn btn-xs btn-success" href="{{ route('frontend.appointments.edit', $appointment->id) }}">
                                                     {{ 'خروج' }}
                                                 </a>
-
+                                                <a  class="fas fa-eye" href="">
+                                                </a>
+                                                <a  class="fas fa-print" href="">
+                                                    <a class="far fa-edit" href="">
+                                                    </a>
+                                                </a>
                                             @endcan
 
                                             @can('appointment_edit')
