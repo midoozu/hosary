@@ -16,9 +16,11 @@ use App\Models\Doctor;
 use App\Models\Product;
 use App\Models\Service;
 use App\Models\User;
+use Flasher\Laravel\Facade\Flasher;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Flasher\Prime\FlasherInterface;
 
 class AppointmentController extends Controller
 {
@@ -75,23 +77,44 @@ class AppointmentController extends Controller
     public function store(StoreAppointmentRequest $request)
     {
 
+        $clientCheck_number = CrmCustomer::where('phone', $request->customer_id)->first();
 
-        $client = CrmCustomer::firstOrCreate(['id' => $request->customer_id],
-        [
-            'first_name' => $request->customer_name,
-            'phone' => $request->customer_id
-        ]);
+        if ($clientCheck_number){
+
+            Flasher::addError('المريض موجود بالفعل برجاء الاختيار من القائمه');
+
+            return back();
+        }
+
+        $clientCheck_id = CrmCustomer::where('id', $request->customer_id)->first();
+
+    if ($clientCheck_id){
 
         $appointment = $request->all() ;
-        $appointment['customer_id']  = $client->id ;
-      $appointment =   Appointment::create($appointment);
-        //        $appointment = Appointment::create($request->all());
+        $appointment['customer_id']  = $clientCheck_id->id ;
+        $appointment =   Appointment::create($appointment);
 
         $appointment->services()->sync($request->input('services', []));
         $appointment->products()->sync($request->input('products', []));
+     Flasher::addSuccess('تم اضافه الحجز بنجاح ');
+    }
+    else {
 
+        $client = CrmCustomer::Create([
+            'phone' => $request->customer_id,
+            'first_name' => $request->customer_name,
+        ]);
+        Flasher::addSuccess('تم اضافه العميل');
+           $appointment = $request->all();
+        $appointment['customer_id'] = $client->id;
+        $appointment = Appointment::create($appointment);
 
-        return redirect()->route('frontend.appointments.index');
+        $appointment->services()->sync($request->input('services', []));
+        $appointment->products()->sync($request->input('products', []));
+        Flasher::addSuccess('تم اضافه الحجز بنجاح');
+    };
+
+        return redirect()->back();
     }
 
     public function edit(Appointment $appointment)
@@ -162,10 +185,7 @@ class AppointmentController extends Controller
 
     }
 
-
     public function getdoctor(Request $request){
-
-
 
         $id = $request->id ;
 
@@ -173,10 +193,7 @@ class AppointmentController extends Controller
             $q->where('id', $id);
         })->get();
 
-
-
         return $doctors;
-
 
     }
 
@@ -189,9 +206,7 @@ class AppointmentController extends Controller
             $q->where('id', $id);
         })->get();
 
-
         return  $services;
-
 
     }
     public function getwaiting(Request $request){
@@ -201,7 +216,12 @@ class AppointmentController extends Controller
 
         $appointment = Appointment::find($request->id);
 
-         $waiting =  Appointment::where('date','<',$appointment->date )->count();
+         $waiting =  Appointment::where(function ($q) use ($appointment) {
+
+             $q->where('date','<',$appointment->date);
+             $q->where('clinic_id',$appointment->clinic_id);
+
+         } )->count();
 
         return  $waiting ;
 

@@ -235,7 +235,7 @@
 
     </div>
                 <div class="row removable">
-                    <div class="col-12 col-lg-8 col-xxl-9 d-flex">
+                    <div class="col-12 col-lg-9 col-xxl-10 d-flex">
                         <div class="card flex-fill">
                             <div class="card-header">
                                 <h5 class="card-title mb-0">{{'الحجز الحالي '}}</h5>
@@ -271,6 +271,57 @@
 
                                     </th>
                                 </tr>
+
+
+                                <tr>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}" size="2">
+                                    </td>
+
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($customers as $key => $item)
+                                                <option value="{{ $key }}">{{ $item->fisrt_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($clinics as $key => $item)
+                                                <option value="{{ $item }}">{{ $item }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($doctors as $key => $item)
+                                                <option value="{{ $item }}">{{ $item }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($services as $key => $item)
+                                                <option value="{{ $item }}">{{ $item }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}" size="2">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}" size="8">
+                                    </td>
+
+                                    <td>
+                                    </td>
+                                </tr>
+
                                 </thead>
                                 <tbody>
 
@@ -305,69 +356,188 @@
                                         </td>
                                         <td>
                                             @can('appointment_show')
-                                                <a class="btn btn-xs btn-outline-primary" href="{{ route('frontend.appointments.show', $appointment->id) }}">
-                                                    {{ trans('global.view') }}
+                                                <a class="fas fa-eye" href="{{ route('frontend.appointments.show', $appointment->id) }}">
                                                 </a>
-                                                <a class="btn btn-xs btn-outline-warning" href="{{ route('frontend.appointments.show', $appointment->id) }}">
-                                                    {{ 'print' }}
+                                                <a class="fa fa-sign-out" aria-hidden="true" href="#" type="button"  data-bs-toggle="modal" data-bs-target="#exit"></a>
+                                                <div class="modal fade exit" id="exit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">{{"خروج"}}</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+{{--                                                            <div class="modal-body  ">--}}
+{{--                                                                <div class="container-fluid">--}}
+{{--                                                                    <form method="POST" action="{{ route("frontend.appointments.update") }}" enctype="multipart/form-data">--}}
+{{--                                                                        @method('POST')--}}
+{{--                                                                        @csrf--}}
+
+{{--                                                                        <div class="row">--}}
+{{--                                                                            <div class="form-group col-md-6 ">--}}
+{{--                                                                                <label class="required" for="user_id">{{ 'كود الموظف' }}</label>--}}
+{{--                                                                                <input class="form-control"  name="user_id" id="user_id" value="{{ auth()->id() }}" readonly>--}}
+{{--                                                                            </div>--}}
+{{--                                                                            <div class="form-group col-md-6">--}}
+{{--                                                                                <label class="required" for="employee_id">{{ 'اسم الموظف' }}</label>--}}
+{{--                                                                                <select class="form-control " name="employee_id" id="employee_id" required>--}}
+{{--                                                                                    <option value="{{ auth()->id() }}"  >{{ auth()->user()->name }}</option>--}}
+{{--                                                                                </select>--}}
+{{--                                                                            </div>--}}
+{{--                                                                        </div>--}}
+
+
+{{--                                                                        <div class="row">--}}
+{{--                                                                            <div class="form-group col-md-6">--}}
+{{--                                                                                <label class="required" for="clinic_id">{{ trans('cruds.appointment.fields.clinic') }}</label>--}}
+
+{{--                                                                                <input list="clinic_list"  class="form-control" name="clinic_id" id="clinic_id" >--}}
+{{--                                                                                <datalist id="clinic_list">--}}
+{{--                                                                                    @foreach($clinics as $id => $entry)--}}
+{{--                                                                                        <option value="{{ $id }}" >{{ $entry }}</option>--}}
+{{--                                                                                    @endforeach--}}
+{{--                                                                                </datalist>--}}
+
+{{--                                                                            </div>--}}
+
+{{--                                                                            <div class="form-group col-md-6">--}}
+{{--                                                                                <label class="required" for="doctor_id">{{ trans('cruds.appointment.fields.doctor') }}</label>--}}
+{{--                                                                                <select class="form-control select2" name="doctor_id" id="doctor_id" required>--}}
+{{--                                                                                    @foreach($doctors as $id => $entry)--}}
+{{--                                                                                        <option value="{{ $id }}" {{ old('doctor_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>--}}
+{{--                                                                                    @endforeach--}}
+{{--                                                                                </select>--}}
+{{--                                                                                @if($errors->has('doctor'))--}}
+{{--                                                                                    <div class="invalid-feedback">--}}
+{{--                                                                                        {{ $errors->first('doctor') }}--}}
+{{--                                                                                    </div>--}}
+{{--                                                                                @endif--}}
+{{--                                                                                <span class="help-block">{{ trans('cruds.appointment.fields.doctor_helper') }}</span>--}}
+{{--                                                                            </div>--}}
+{{--                                                                        </div>--}}
+
+{{--                                                                        <div class="form-group ">--}}
+{{--                                                                            <label class="required" for="services">{{ trans('cruds.appointment.fields.service') }}</label>--}}
+{{--                                                                            <div style="padding-bottom: 4px">--}}
+{{--                                                                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>--}}
+{{--                                                                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>--}}
+{{--                                                                            </div>--}}
+
+{{--                                                                            <div class="row">--}}
+{{--                                                                                <div class="col-12">--}}
+{{--                                                                                    <select class="form-control select2" name="services[]" id="services" multiple required>--}}
+{{--                                                                                        @foreach($services as $id => $service)--}}
+{{--                                                                                            <option value="{{ $id }}" {{ in_array($id, old('services', [])) ? 'selected' : '' }}>{{ $service }}</option>--}}
+{{--                                                                                        @endforeach--}}
+{{--                                                                                    </select>--}}
+{{--                                                                                </div>--}}
+{{--                                                                            </div>--}}
+{{--                                                                            @if($errors->has('services'))--}}
+{{--                                                                                <div class="invalid-feedback">--}}
+{{--                                                                                    {{ $errors->first('services') }}--}}
+{{--                                                                                </div>--}}
+{{--                                                                            @endif--}}
+{{--                                                                            <span class="help-block">{{ trans('cruds.appointment.fields.service_helper') }}</span>--}}
+{{--                                                                        </div>--}}
+
+
+
+{{--                                                                        <div class="form-group">--}}
+{{--                                                                            <label for="company_id">{{ trans('cruds.appointment.fields.company') }}</label>--}}
+{{--                                                                            <select class="form-control select2" name="company_id" id="company_id">--}}
+{{--                                                                                @foreach($companies as $id => $entry)--}}
+{{--                                                                                    <option value="{{ $id }}" {{ old('company_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>--}}
+{{--                                                                                @endforeach--}}
+{{--                                                                            </select>--}}
+{{--                                                                            @if($errors->has('company'))--}}
+{{--                                                                                <div class="invalid-feedback">--}}
+{{--                                                                                    {{ $errors->first('company') }}--}}
+{{--                                                                                </div>--}}
+{{--                                                                            @endif--}}
+{{--                                                                            <span class="help-block">{{ trans('cruds.appointment.fields.company_helper') }}</span>--}}
+{{--                                                                        </div>--}}
+
+
+{{--                                                                        <div class="form-group">--}}
+{{--                                                                            <input type="text" name="branch_id" id="branch_id" value="{{auth()->user()->branch->id}}" hidden>--}}
+{{--                                                                        </div>--}}
+{{--                                                                        <div class="form-group">--}}
+{{--                                                                            <label for="comment">{{ trans('cruds.appointment.fields.comment') }}</label>--}}
+{{--                                                                            <input class="form-control" type="text" name="comment" id="comment" value="{{ old('comment', '') }}">--}}
+{{--                                                                            @if($errors->has('comment'))--}}
+{{--                                                                                <div class="invalid-feedback">--}}
+{{--                                                                                    {{ $errors->first('comment') }}--}}
+{{--                                                                                </div>--}}
+{{--                                                                            @endif--}}
+{{--                                                                            <span class="help-block">{{ trans('cruds.appointment.fields.comment_helper') }}</span>--}}
+{{--                                                                        </div>--}}
+{{--                                                                        <div class="row">--}}
+
+{{--                                                                            <div class="form-group col-md-6">--}}
+{{--                                                                                <label for="other_service">{{ trans('cruds.appointment.fields.other_service') }}</label>--}}
+{{--                                                                                <input class="form-control" type="number" name="other_service" id="other_service" value="{{ old('other_service', '') }}" step="0.01">--}}
+{{--                                                                                @if($errors->has('other_service'))--}}
+
+{{--                                                                                    <div class="invalid-feedback">--}}
+{{--                                                                                        {{ $errors->first('other_service') }}--}}
+{{--                                                                                    </div>--}}
+{{--                                                                                @endif--}}
+{{--                                                                                <span class="help-block">{{ trans('cruds.appointment.fields.other_service_helper') }}</span>--}}
+{{--                                                                            </div>--}}
+{{--                                                                            <div class="form-group col-md-6">--}}
+{{--                                                                                <label for="total_price">{{ trans('cruds.appointment.fields.total_price') }}</label>--}}
+{{--                                                                                <input class="form-control" type="number" name="total_price" id="total_price" value="{{ old('total_price', '') }}" step="0.01">--}}
+{{--                                                                                @if($errors->has('total_price'))--}}
+{{--                                                                                    <div class="invalid-feedback">--}}
+{{--                                                                                        {{ $errors->first('total_price') }}--}}
+{{--                                                                                    </div>--}}
+{{--                                                                                @endif--}}
+{{--                                                                                <span class="help-block">{{ trans('cruds.appointment.fields.total_price_helper') }}</span>--}}
+{{--                                                                            </div>--}}
+{{--                                                                        </div>--}}
+{{--                                                                        <div class="modal-footer">--}}
+{{--                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>--}}
+{{--                                                                            <button type="button" class="btn btn-primary">{{'حفظ و طباعه'}}</button>--}}
+
+{{--                                                                            <button class="btn btn-danger" type="submit">--}}
+{{--                                                                                {{ trans('global.save') }}--}}
+{{--                                                                            </button>--}}
+
+{{--                                                                        </div>--}}
+{{--                                                                    </form>--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
+
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <a class="fas fa-print btn-outline-warning" href="{{ route('frontend.appointments.show', $appointment->id) }}">
                                                 </a>
-                                                <a class="btn btn-xs btn-success" href="{{ route('frontend.appointments.edit', $appointment->id) }}">
-                                                    {{ 'خروج' }}
-                                                </a>
-                                                <a  class="fas fa-eye" href="">
-                                                </a>
-                                                <a  class="fas fa-print" href="">
-                                                    <a class="far fa-edit" href="">
-                                                    </a>
-                                                </a>
+
                                             @endcan
 
                                             @can('appointment_edit')
-                                                <a class="btn btn-xs btn-outline-info" href="{{ route('frontend.appointments.edit', $appointment->id) }}">
-                                                    {{ trans('global.edit') }}
+                                                <a class="far fa-edit btn-outline-info" href="{{ route('frontend.appointments.edit', $appointment->id) }}">
                                                 </a>
 
                                                 @endcan
 
+
                                             @can('appointment_delete')
-                                                <form action="{{ route('frontend.appointments.destroy', $appointment->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                                </form>
+                                                    <a class="fas fa-trash-alt" href="" style="color: red"></a>
+
                                             @endcan
                                         </td>
                                     </tr>
-{{--                                <tr>--}}
-{{--                                    <td class="d-none d-xl-table-cell">01/01/2021</td>--}}
-{{--                                    <td class="d-none d-xl-table-cell">31/06/2021</td>--}}
-{{--                                    <td><span class="badge bg-danger">Cancelled</span></td>--}}
-{{--                                    <td class="d-none d-md-table-cell">William Harris</td>--}}
-{{--                                </tr>--}}
 
-{{--                                <tr>--}}
-{{--                                    <td>Project Phoenix</td>--}}
-{{--                                    <td class="d-none d-xl-table-cell">01/01/2021</td>--}}
-{{--                                    <td class="d-none d-xl-table-cell">31/06/2021</td>--}}
-{{--                                    <td><span class="badge bg-success">Done</span></td>--}}
-{{--                                    <td class="d-none d-md-table-cell">William Harris</td>--}}
-{{--                                </tr>--}}
-
-{{--                                <tr>--}}
-{{--                                    <td>Project Wombat</td>--}}
-{{--                                    <td class="d-none d-xl-table-cell">01/01/2021</td>--}}
-{{--                                    <td class="d-none d-xl-table-cell">31/06/2021</td>--}}
-{{--                                    <td><span class="badge bg-warning">In progress</span></td>--}}
-{{--                                    <td class="d-none d-md-table-cell">William Harris</td>--}}
-{{--                                </tr>--}}
                                 @endforeach
                                 </tbody>
                             </table>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-lg-4 col-xxl-3 d-flex">
-
+                    <div class="col-12 col-lg-3 col-xxl-2 ">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -418,6 +588,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
 @endsection
@@ -460,13 +631,16 @@
 
                 success:function (doctors){
 
+
                     select = '<select name="doctor_id" class="form-control input-sm " required id="doctor_id" >';
                     $.each(doctors, function(i,doctors)
                     {
                         select +='<option value="'+doctors.id+'">'+doctors.name +'</option>';
                     });
                     select += '</select>';
+
                     $("#doctor_id").html(select);
+                    $("#doctor_id").prepend("<option value=''></option>").val('');
 
                 }
 

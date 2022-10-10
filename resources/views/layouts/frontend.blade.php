@@ -44,7 +44,7 @@
                                     </li>
 
                                     <li class="sidebar-item active">
-                                        <a class="sidebar-link" href="">
+                                        <a class="sidebar-link" href="{{route('frontend.home')}}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders align-middle">
                                                 <line x1="4" y1="21" x2="4" y2="14"></line>
                                                 <line x1="4" y1="10" x2="4" y2="3"></line>
@@ -68,175 +68,17 @@
                                         </a>
                                     </li>
 
-                                    <li class="sidebar-item">
-                                        <a class="sidebar-link" href="">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-in align-middle">
-                                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-                                                <polyline points="10 17 15 12 10 7"></polyline>
-                                                <line x1="15" y1="12" x2="3" y2="12"></line>
-                                            </svg> <span class="align-middle">Sign In</span>
-                                        </a>
-                                    </li>
+                                        <li class="sidebar-item">
+                                            <a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link" aria-expanded="true">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout align-middle"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg> <span class="align-middle">Pages</span>
+                                            </a>
+                                            <ul id="pages" class="sidebar-dropdown list-unstyled collapse hide" data-bs-parent="#sidebar" style="">
+                                                <li class="sidebar-item"><a class="sidebar-link" href="pages-settings.html">Settings</a></li>
 
-                                    <li class="sidebar-item">
-                                        <a class="sidebar-link" href="">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus align-middle">
-                                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                                <circle cx="8.5" cy="7" r="4"></circle>
-                                                <line x1="20" y1="8" x2="20" y2="14"></line>
-                                                <line x1="23" y1="11" x2="17" y2="11"></line>
-                                            </svg> <span class="align-middle">Sign Up</span>
-                                        </a>
-                                    </li>
-
-                                    <li class="sidebar-item">
-                                        <a class="sidebar-link" href="">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book align-middle">
-                                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                                            </svg> <span class="align-middle">Blank</span>
-                                        </a>
-                                    </li>
-                                    <li>
+                                            </ul>
+                                        </li>
 
 
-                                            @can('user_management_access')
-                                                <a class="dropdown-item disabled" href="#">
-                                                    {{ trans('cruds.userManagement.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('permission_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.permissions.index') }}">
-                                                    {{ trans('cruds.permission.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('role_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.roles.index') }}">
-                                                    {{ trans('cruds.role.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('user_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.users.index') }}">
-                                                    {{ trans('cruds.user.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('user_alert_access')
-                                                <a class="dropdown-item" href="{{ route('frontend.user-alerts.index') }}">
-                                                    {{ trans('cruds.userAlert.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('appointment_access')
-                                                <a class="dropdown-item" href="{{ route('frontend.appointments.index') }}">
-                                                    {{ trans('cruds.appointment.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('basic_c_r_m_access')
-                                                <a class="dropdown-item disabled" href="#">
-                                                    {{ trans('cruds.basicCRM.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('crm_status_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.crm-statuses.index') }}">
-                                                    {{ trans('cruds.crmStatus.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('crm_customer_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.crm-customers.index') }}">
-                                                    {{ trans('cruds.crmCustomer.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('crm_note_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.crm-notes.index') }}">
-                                                    {{ trans('cruds.crmNote.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('crm_document_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.crm-documents.index') }}">
-                                                    {{ trans('cruds.crmDocument.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('setting_access')
-                                                <a class="dropdown-item disabled" href="#">
-                                                    {{ trans('cruds.setting.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('clinic_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.clinics.index') }}">
-                                                    {{ trans('cruds.clinic.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('doctor_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.doctors.index') }}">
-                                                    {{ trans('cruds.doctor.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('company_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.companies.index') }}">
-                                                    {{ trans('cruds.company.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('service_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.services.index') }}">
-                                                    {{ trans('cruds.service.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('branch_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.branches.index') }}">
-                                                    {{ trans('cruds.branch.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('product_management_access')
-                                                <a class="dropdown-item disabled" href="#">
-                                                    {{ trans('cruds.productManagement.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('product_category_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.product-categories.index') }}">
-                                                    {{ trans('cruds.productCategory.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('product_tag_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.product-tags.index') }}">
-                                                    {{ trans('cruds.productTag.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('product_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.products.index') }}">
-                                                    {{ trans('cruds.product.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('asset_management_access')
-                                                <a class="dropdown-item disabled" href="#">
-                                                    {{ trans('cruds.assetManagement.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('asset_category_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.asset-categories.index') }}">
-                                                    {{ trans('cruds.assetCategory.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('asset_location_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.asset-locations.index') }}">
-                                                    {{ trans('cruds.assetLocation.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('asset_status_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.asset-statuses.index') }}">
-                                                    {{ trans('cruds.assetStatus.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('asset_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.assets.index') }}">
-                                                    {{ trans('cruds.asset.title') }}
-                                                </a>
-                                            @endcan
-                                            @can('assets_history_access')
-                                                <a class="dropdown-item ml-3" href="{{ route('frontend.assets-histories.index') }}">
-                                                    {{ trans('cruds.assetsHistory.title') }}
-                                                </a>
-                                            @endcan
-
-                                    </li>
                                 </ul>
                             </div>
                         </div>

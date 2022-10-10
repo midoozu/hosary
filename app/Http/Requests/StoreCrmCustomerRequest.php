@@ -34,6 +34,7 @@ class StoreCrmCustomerRequest extends FormRequest
                 'nullable',
             ],
             'phone' => [
+                'unique',
                 'string',
                 'nullable',
             ],

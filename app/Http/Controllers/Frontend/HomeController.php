@@ -25,6 +25,7 @@ class HomeController
 
         $customers = CrmCustomer::all();
 
+
         $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $doctors = Doctor::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -69,7 +70,7 @@ class HomeController
        $clinic_waiting = Appointment::query()->whereDate('date', Carbon::today())->where('branch_id',auth()->user()->branch->id)->get()->groupBy('clinic.name', DB::raw('count(*) as total'));
 
 
-        return view('frontend.home' , compact('branches', 'clinics', 'companies', 'customers', 'doctors', 'employees', 'products','appointments', 'services','clinic_waiting')) ;
+        return view('frontend.home' , compact('branches','clinics', 'companies', 'customers', 'doctors', 'employees', 'products','appointments', 'services','clinic_waiting')) ;
     }
 
 

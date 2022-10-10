@@ -95,10 +95,9 @@
                                 </tr>
                                 <tr>
                                     <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}" size="2">
                                     </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
+
                                     <td>
                                         <select class="search">
                                             <option value>{{ trans('global.all') }}</option>
@@ -108,7 +107,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}" size="12">
                                     </td>
                                     <td>
                                         <select class="search">
@@ -119,6 +118,8 @@
                                         </select>
                                     </td>
                                     <td>
+
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}" size="4">
                                     </td>
                                     <td>
                                         <select class="search">
@@ -352,7 +353,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 let visibleColumnsIndexes = null;
 $('.datatable thead').on('input', '.search', function () {
       let strict = $(this).attr('strict') || false
