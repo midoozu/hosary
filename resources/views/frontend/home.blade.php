@@ -523,9 +523,8 @@
 
                                                 @endcan
 
-
                                             @can('appointment_delete')
-                                                    <a class="fas fa-trash-alt" href="" style="color: red"></a>
+                                                    <a class="fas fa-trash-alt" href="{{ route('frontend.appointments.askfordelete', $appointment->id) }}" style="color: red"></a>
 
                                             @endcan
                                         </td>

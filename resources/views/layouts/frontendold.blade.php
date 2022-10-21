@@ -70,21 +70,17 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
                                     <a class="dropdown-item" href="{{ route('frontend.profile.index') }}">{{ __('My profile') }}</a>
 
-                                    @can('user_management_access')
-                                        <a class="dropdown-item disabled" href="#">
-                                            {{ trans('cruds.userManagement.title') }}
-                                        </a>
-                                    @endcan
+
                                     @can('permission_access')
                                         <a class="dropdown-item ml-3" href="{{ route('frontend.permissions.index') }}">
-                                            {{ trans('cruds.permission.title') }}
+
                                         </a>
                                     @endcan
                                     @can('role_access')

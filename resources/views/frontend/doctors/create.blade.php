@@ -72,6 +72,25 @@
                             <span class="help-block">{{ trans('cruds.doctor.fields.percentage_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <table class="table table-bordered">
+                                <thead>
+                                <th> {{'service id '}}</th>
+                                <th>{{'service name'}}</th>
+                                <th>{{' doctor pecent'}}</th>
+                                </thead>
+                                <tbody>
+                                @foreach($services as $id => $service)
+                                    <tr>
+                                        <td><input id="service_id[]" name="service_id[]" type="text" value="{{$id}}" style="border: none"> </td>
+                                        <td><input type="text" value="{{$service }}" style="border: none" ></td>
+                                        <td><input id="doctor_price[]" name="doctor_price[]" type="number" value=""></td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
                             </button>

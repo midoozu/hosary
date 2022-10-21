@@ -69,13 +69,19 @@
                                     </li>
 
                                         <li class="sidebar-item">
+                                            @can('user_management_access')
                                             <a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link" aria-expanded="true">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout align-middle"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg> <span class="align-middle">Pages</span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout align-middle"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg> <span class="align-middle">{{ trans('cruds.userManagement.title') }}</span>
                                             </a>
+                                            @endcan
+
                                             <ul id="pages" class="sidebar-dropdown list-unstyled collapse hide" data-bs-parent="#sidebar" style="">
-                                                <li class="sidebar-item"><a class="sidebar-link" href="pages-settings.html">Settings</a></li>
+                                                @can('permission_access')
+                                                <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.permissions.index') }}">{{ trans('cruds.permission.title') }}</a></li>
+                                                @endcan
 
                                             </ul>
+
                                         </li>
 
 

@@ -9,6 +9,8 @@ use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\Clinic;
 use App\Models\Doctor;
+use App\Models\Doctor_Service;
+use App\Models\Service;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,14 +35,30 @@ class DoctorController extends Controller
         abort_if(Gate::denies('doctor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $clinics = Clinic::pluck('name', 'id');
+        $services = Service::pluck('name', 'id');
 
-        return view('frontend.doctors.create', compact('clinics'));
+
+        return view('frontend.doctors.create', compact('clinics','services'));
     }
 
     public function store(StoreDoctorRequest $request)
     {
+
         $doctor = Doctor::create($request->all());
         $doctor->clinics()->sync($request->input('clinics', []));
+
+
+        if ($request->service_id != 0) {
+            foreach ($request->service_id as $key => $s) {
+
+                doctor_service::create([
+                    'doctor_id'=>$doctor->id,
+                    'service_id'=>$request->service_id[$key],
+                    'percent'=> $request->doctor_price[$key]
+                ]);
+            }
+        }
+
 
         return redirect()->route('frontend.doctors.index');
     }

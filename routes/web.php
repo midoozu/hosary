@@ -229,9 +229,11 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::delete('companies/destroy', 'CompanyController@massDestroy')->name('companies.massDestroy');
     Route::resource('companies', 'CompanyController');
 
+
     // Services
     Route::delete('services/destroy', 'ServicesController@massDestroy')->name('services.massDestroy');
     Route::resource('services', 'ServicesController');
+
 
     // Appointment
     Route::delete('appointments/destroy', 'AppointmentController@massDestroy')->name('appointments.massDestroy');
@@ -239,14 +241,20 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::get('appointments/getdoctor', 'AppointmentController@getdoctor')->name('appointments.getdoctor');
     Route::get('appointments/getservicename', 'AppointmentController@getservicename')->name('appointments.getservicename');
     Route::get('appointments/getwaiting', 'AppointmentController@getwaiting')->name('appointments.getwaiting');
+    Route::get('appointments/askfordelete/{id}', 'AppointmentController@askfordelete')->name('appointments.askfordelete');
+    Route::get('appointments/restore/{id}', 'AppointmentController@askfordelete')->name('appointments.restore');
+    Route::get('appointments/deleted', 'AppointmentController@deleted')->name('appointments.deleted');
     Route::resource('appointments', 'AppointmentController');
+
 
     // Branches
     Route::delete('branches/destroy', 'BranchesController@massDestroy')->name('branches.massDestroy');
     Route::resource('branches', 'BranchesController');
 
+
     Route::get('frontend/profile', 'ProfileController@index')->name('profile.index');
     Route::post('frontend/profile', 'ProfileController@update')->name('profile.update');
     Route::post('frontend/profile/destroy', 'ProfileController@destroy')->name('profile.destroy');
     Route::post('frontend/profile/password', 'ProfileController@password')->name('profile.password');
+
 });

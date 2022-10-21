@@ -16,9 +16,12 @@ use App\Models\Doctor;
 use App\Models\Product;
 use App\Models\Service;
 use App\Models\User;
+use Carbon\Carbon;
 use Flasher\Laravel\Facade\Flasher;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 use Flasher\Prime\FlasherInterface;
 
@@ -218,13 +221,60 @@ class AppointmentController extends Controller
 
          $waiting =  Appointment::where(function ($q) use ($appointment) {
 
-             $q->where('date','<',$appointment->date);
+             $q->whereBetween('date',[Carbon::today(),$appointment->date]);
              $q->where('clinic_id',$appointment->clinic_id);
 
          } )->count();
 
+//        $clinic_waiting = Appointment::query()->whereDate('date', Carbon::today())->where('branch_id',auth()->user()->branch->id)->get()->groupBy('clinic.name', DB::raw('count(*) as total'));
+
+
         return  $waiting ;
 
+    }
+
+
+    public function askfordelete($id){
+
+        Appointment::find($id)->update(['pending_delete'=>1]);
+
+        Flasher::addWarning('فانتظار الموافقه برجاء الرجوع الي المشرف');
+
+            return back();
+
+    }
+
+    public function deleted(){
+
+
+//            abort_if(Gate::denies('appointment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+            $appointments = Appointment::onlyTrashed()->with(['employee', 'customer', 'company', 'doctor', 'clinic', 'services', 'products', 'branch'])->get();
+
+            $users = User::get();
+
+            $crm_customers = CrmCustomer::get();
+
+            $companies = Company::get();
+
+            $doctors = Doctor::get();
+
+            $clinics = Clinic::get();
+
+            $services = Service::get();
+
+            $products = Product::get();
+
+            $branches = Branch::get();
+
+            return view('frontend.appointments.index', compact('appointments', 'branches', 'clinics', 'companies', 'crm_customers', 'doctors', 'products', 'services', 'users'));
+
+    }
+
+
+    public function restore($id){
+
+        Appointment::withTrashed()->find($id)->restore();
 
     }
 }
