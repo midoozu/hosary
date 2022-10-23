@@ -35,7 +35,7 @@
                         <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden;" tabindex="0" role="region" aria-label="scrollable content">
                             <div class="simplebar-content" style="padding: 0;">
                                 <a class="sidebar-brand" href="">
-                                    <span class="align-middle">AdminKit</span>
+                                    <span class="align-middle">Clinic</span>
                                 </a>
 
                                 <ul class="sidebar-nav">
@@ -71,7 +71,7 @@
                                         <li class="sidebar-item">
                                             @can('user_management_access')
                                             <a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link" aria-expanded="true">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout align-middle"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg> <span class="align-middle">{{ trans('cruds.userManagement.title') }}</span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout align-middle"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg> <span class="align-middle" style="color: white">{{ trans('cruds.userManagement.title') }}</span>
                                             </a>
                                             @endcan
 
@@ -79,11 +79,145 @@
                                                 @can('permission_access')
                                                 <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.permissions.index') }}">{{ trans('cruds.permission.title') }}</a></li>
                                                 @endcan
-
+                                                @can('role_access')
+                                                <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.roles.index') }}">{{ trans('cruds.role.title') }}</a></li>
+                                                @endcan
+                                                @can('user_access')
+                                                <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.users.index') }}">{{ trans('cruds.user.title') }}</a></li>
+                                                @endcan
                                             </ul>
-
                                         </li>
+                                        @can('user_alert_access')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="{{ route('frontend.user-alerts.index') }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user align-middle">
+                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                <circle cx="12" cy="7" r="4"></circle>
+                                            </svg> <span class="align-middle"> {{ trans('cruds.userAlert.title') }}</span>
+                                        </a>
+                                    </li>
+                                    @endcan
+                                        @can('appointment_access')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="{{ route('frontend.appointments.index') }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user align-middle">
+                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                <circle cx="12" cy="7" r="4"></circle>
+                                            </svg> <span class="align-middle"> {{ trans('cruds.appointment.title') }}</span>
+                                        </a>
+                                    </li>
+                                    @endcan
 
+
+                                    <li class="sidebar-item">
+                                        @can('basic_c_r_m_access')
+                                            <a data-bs-target="#crm" data-bs-toggle="collapse" class="sidebar-link" aria-expanded="true">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout align-middle"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg> <span class="align-middle" style="color: white"> {{ trans('cruds.basicCRM.title') }}</span>
+                                            </a>
+                                        @endcan
+
+                                        <ul id="crm" class="sidebar-dropdown list-unstyled collapse hide" data-bs-parent="#sidebar" style="">
+                                            @can('crm_status_access')
+                                                <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.crm-statuses.index') }}"> {{ trans('cruds.crmStatus.title') }}</a></li>
+                                            @endcan
+                                            @can('crm_customer_access')
+                                                <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.crm-customers.index') }}">{{ trans('cruds.crmCustomer.title') }}</a></li>
+                                            @endcan
+                                            @can('crm_note_access')
+                                                <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.crm-notes.index') }}">  {{ trans('cruds.crmNote.title') }}</a></li>
+                                            @endcan
+                                            @can('crm_document_access')
+                                                <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.crm-documents.index') }}"> {{ trans('cruds.crmDocument.title') }}</a></li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+
+
+                                    <li class="sidebar-item">
+                                        @can('setting_access')
+                                            <a data-bs-target="#setting" data-bs-toggle="collapse" class="sidebar-link" aria-expanded="true">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout align-middle"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg> <span class="align-middle" style="color: white"> {{ trans('cruds.setting.title') }}</span>
+                                            </a>
+                                        @endcan
+
+                                        <ul id="setting" class="sidebar-dropdown list-unstyled collapse hide" data-bs-parent="#sidebar" style="">
+                                            @can('clinic_access')
+                                                <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.clinics.index') }}">  {{ trans('cruds.clinic.title') }}</a></li>
+                                            @endcan
+                                            @can('doctor_access')
+                                                <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.doctors.index') }}">{{ trans('cruds.doctor.title') }}</a></li>
+                                            @endcan
+                                            @can('company_access')
+                                                <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.companies.index') }}">   {{ trans('cruds.company.title') }}</a></li>
+                                            @endcan
+                                            @can('service_access')
+                                                <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.services.index') }}">  {{ trans('cruds.service.title') }}</a></li>
+                                            @endcan
+                                            @can('branch_access')
+                                                <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.branches.index') }}">  {{ trans('cruds.branch.title') }}</a></li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+
+
+                                    <li class="sidebar-item">
+                                        @can('product_management_access')
+                                            <a data-bs-target="#product" data-bs-toggle="collapse" class="sidebar-link" aria-expanded="true">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout align-middle"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg> <span class="align-middle" style="color: white">  {{ trans('cruds.productManagement.title') }}</span>
+                                            </a>
+                                        @endcan
+
+                                        <ul id="product" class="sidebar-dropdown list-unstyled collapse hide" data-bs-parent="#sidebar" style="">
+                                            @can('product_category_access')
+                                                <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.product-categories.index') }}">  {{ trans('cruds.productCategory.title') }}</a></li>
+                                            @endcan
+                                            @can('product_tag_access')
+                                                <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.product-tags.index') }}"> {{ trans('cruds.productTag.title') }}</a></li>
+                                            @endcan
+                                            @can('product_access')
+                                                <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.products.index') }}">    {{ trans('cruds.product.title') }}</a></li>
+                                            @endcan
+
+                                        </ul>
+                                    </li>
+
+
+                                    <li class="sidebar-item">
+                                        @can('asset_management_access')
+                                            <a data-bs-target="#assets" data-bs-toggle="collapse" class="sidebar-link" aria-expanded="true">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout align-middle"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg> <span class="align-middle" style="color: white"> {{ trans('cruds.assetManagement.title') }}</span>
+                                            </a>
+                                        @endcan
+
+                                        <ul id="assets" class="sidebar-dropdown list-unstyled collapse hide" data-bs-parent="#sidebar" style="">
+                                            @can('asset_category_access')
+                                                <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.asset-categories.index') }}">  {{ trans('cruds.productCategory.title') }}</a></li>
+                                            @endcan
+                                            @can('asset_location_access')
+                                                <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.asset-locations.index') }}">  {{ trans('cruds.assetLocation.title') }}</a></li>
+                                            @endcan
+                                            @can('asset_status_access')
+                                                <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.assets.index') }}">   {{ trans('cruds.asset.title') }}</a></li>
+                                            @endcan
+                                            @can('assets_history_access')
+                                                <li class="sidebar-item"><a class="sidebar-link" href="{{ route('frontend.assets-histories.index') }}">  {{ trans('cruds.assetsHistory.title') }}</a></li>
+                                            @endcan
+
+                                        </ul>
+                                    </li>
+
+
+
+
+
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
 
                                 </ul>
                             </div>
@@ -292,7 +426,14 @@
                                     <line x1="12" y1="17" x2="12.01" y2="17"></line>
                                 </svg> Help Center</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Log out</a>
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
 
                         </div>
                     </li>

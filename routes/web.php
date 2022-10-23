@@ -13,6 +13,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
     Route::resource('roles', 'RolesController');
 
+    //    //////////////////////// HR ////////////////////////////////
+    require __DIR__.'/HRRoutes.php';
+    require __DIR__.'/FinancesRouter.php';
+
+
     // Users
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
     Route::post('users/media', 'UsersController@storeMedia')->name('users.storeMedia');
@@ -245,6 +250,13 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::get('appointments/restore/{id}', 'AppointmentController@askfordelete')->name('appointments.restore');
     Route::get('appointments/deleted', 'AppointmentController@deleted')->name('appointments.deleted');
     Route::resource('appointments', 'AppointmentController');
+
+
+    Route::view('/reports', 'reports');
+
+    //    //////////////////////// HR ////////////////////////////////
+    require __DIR__.'/HRRoutes.php';
+    require __DIR__.'/FinancesRouter.php';
 
 
     // Branches
