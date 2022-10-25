@@ -16,12 +16,14 @@ use App\Models\Doctor;
 use App\Models\Product;
 use App\Models\Service;
 use App\Models\User;
+use App\Notifications\DeleteNotification;
 use Carbon\Carbon;
 use Flasher\Laravel\Facade\Flasher;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Symfony\Component\HttpFoundation\Response;
 use Flasher\Prime\FlasherInterface;
 
@@ -236,9 +238,13 @@ class AppointmentController extends Controller
 
     public function askfordelete($id){
 
-        Appointment::find($id)->update(['pending_delete'=>1]);
+       $appointment= Appointment::find($id)->update(['pending_delete'=>1]);
 
         Flasher::addWarning('فانتظار الموافقه برجاء الرجوع الي المشرف');
+
+        $users =User::all();
+
+        Notification::send($users, new DeleteNotification($appointment));
 
             return back();
 

@@ -4,7 +4,7 @@ Route::view('/', 'welcome');
 Auth::routes(['register' => false]);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function () {
-    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/home', 'HomeController@index')->name('home');
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
     Route::resource('permissions', 'PermissionsController');
@@ -251,6 +251,7 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::get('appointments/deleted', 'AppointmentController@deleted')->name('appointments.deleted');
     Route::resource('appointments', 'AppointmentController');
 
+    Route::get('filterbydate', 'ReportsController@filterbydate')->name('filterbydate');
 
     Route::view('/reports', 'reports');
 

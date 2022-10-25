@@ -16,9 +16,10 @@ class DeleteNotification extends Notification
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($appointment)
     {
-        $this->user = $user;
+        dd($appointment);
+        $this->appointment = $appointment;
     }
 
     /**
@@ -54,9 +55,12 @@ class DeleteNotification extends Notification
      */
     public function toArray($notifiable)
     {
+
+            dd($this->appointment['id']);
+
         return [
-            'name' => $this->user->name,
-            'email' => $this->user->email,
+            'name' => $this->appointment['id'],
+
         ];
     }
 }

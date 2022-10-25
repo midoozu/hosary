@@ -206,7 +206,16 @@
                                         </ul>
                                     </li>
 
-
+{{--                                    @can('reports')--}}
+                                        <li class="sidebar-item">
+                                            <a class="sidebar-link" href="{{url('/reports')}}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user align-middle">
+                                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                    <circle cx="12" cy="7" r="4"></circle>
+                                                </svg> <span class="align-middle"> {{ 'التقارير' }}</span>
+                                            </a>
+                                        </li>
+{{--                                  li  @endcan--}}
 
 
 
@@ -248,14 +257,15 @@
                                     <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                                     <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                                 </svg>
-                                <span class="indicator">4</span>
+                                <span class="indicator">{{auth()->user()->unreadNotifications->count()}}</span>
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
                             <div class="dropdown-menu-header">
-                                4 New Notifications
+                                {{ auth()->user()->unreadNotifications->count() . ' '.'New Notifications'}}
                             </div>
                             <div class="list-group">
+                                @foreach (auth()->user()->unreadNotifications as $notification)
                                 <a href="#" class="list-group-item">
                                     <div class="row g-0 align-items-center">
                                         <div class="col-2">
@@ -265,13 +275,17 @@
                                                 <line x1="12" y1="16" x2="12.01" y2="16"></line>
                                             </svg>
                                         </div>
+
+
                                         <div class="col-10">
-                                            <div class="text-dark">Update completed</div>
-                                            <div class="text-muted small mt-1">Restart server 12 to complete the update.</div>
-                                            <div class="text-muted small mt-1">30m ago</div>
+                                            <div class="text-dark">{{'مطلوب حذف'}}</div>
+                                            <div class="text-muted small mt-1">{{$notification->data['name']}}</div>
+                                            <div class="text-muted small mt-1">{{$notification->created_at}}</div>
                                         </div>
+
                                     </div>
                                 </a>
+                                @endforeach
                                 <a href="#" class="list-group-item">
                                     <div class="row g-0 align-items-center">
                                         <div class="col-2">
