@@ -20,6 +20,7 @@ use App\Notifications\DeleteNotification;
 use Carbon\Carbon;
 use Flasher\Laravel\Facade\Flasher;
 use Gate;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -82,6 +83,13 @@ class AppointmentController extends Controller
     public function store(StoreAppointmentRequest $request)
     {
 
+
+
+        $servicePrice = Service::find($request->services)->sum('price');
+
+
+
+
         $clientCheck_number = CrmCustomer::where('phone', $request->customer_id)->first();
 
         if ($clientCheck_number){
@@ -97,6 +105,7 @@ class AppointmentController extends Controller
 
         $appointment = $request->all() ;
         $appointment['customer_id']  = $clientCheck_id->id ;
+        $appointment['total_price'] = $servicePrice + $request->other_service;
         $appointment =   Appointment::create($appointment);
 
         $appointment->services()->sync($request->input('services', []));
@@ -112,6 +121,7 @@ class AppointmentController extends Controller
         Flasher::addSuccess('تم اضافه العميل');
            $appointment = $request->all();
         $appointment['customer_id'] = $client->id;
+        $appointment['total_price'] = $servicePrice + $request->other_service;
         $appointment = Appointment::create($appointment);
 
         $appointment->services()->sync($request->input('services', []));
@@ -149,7 +159,12 @@ class AppointmentController extends Controller
 
     public function update(UpdateAppointmentRequest $request, Appointment $appointment)
     {
+
+        $servicePrice = Service::find($request->services)->sum('price');
+        $productPrice = Product::find($request->products)->sum('price');
+
         $appointment->update($request->all());
+        $appointment->update( ['total_price' =>$servicePrice + $request->other_service + $productPrice]) ;
         $appointment->services()->sync($request->input('services', []));
         $appointment->products()->sync($request->input('products', []));
 
@@ -230,7 +245,6 @@ class AppointmentController extends Controller
 
 //        $clinic_waiting = Appointment::query()->whereDate('date', Carbon::today())->where('branch_id',auth()->user()->branch->id)->get()->groupBy('clinic.name', DB::raw('count(*) as total'));
 
-
         return  $waiting ;
 
     }
@@ -238,11 +252,14 @@ class AppointmentController extends Controller
 
     public function askfordelete($id){
 
-       $appointment= Appointment::find($id)->update(['pending_delete'=>1]);
+       $appointment = Appointment::find($id);
+        $appointment ->update(['pending_delete'=>1]);
 
         Flasher::addWarning('فانتظار الموافقه برجاء الرجوع الي المشرف');
 
-        $users =User::all();
+        $users =User::whereHas('roles', function ($query) {
+            $query->where('id',2);
+        })->get();
 
         Notification::send($users, new DeleteNotification($appointment));
 
@@ -273,14 +290,57 @@ class AppointmentController extends Controller
 
             $branches = Branch::get();
 
-            return view('frontend.appointments.index', compact('appointments', 'branches', 'clinics', 'companies', 'crm_customers', 'doctors', 'products', 'services', 'users'));
+            return view('frontend.appointments.deleted', compact('appointments', 'branches', 'clinics', 'companies', 'crm_customers', 'doctors', 'products', 'services', 'users'));
 
     }
 
+    public function pendingdelete(){
+
+
+//            abort_if(Gate::denies('appointment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+            $appointments = Appointment::with(['employee', 'customer', 'company', 'doctor', 'clinic', 'services', 'products', 'branch'])->where('pending_delete','=',1)->get();
+
+
+
+            $users = User::get();
+
+            $crm_customers = CrmCustomer::get();
+
+            $companies = Company::get();
+
+            $doctors = Doctor::get();
+
+            $clinics = Clinic::get();
+
+            $services = Service::get();
+
+            $products = Product::get();
+
+            $branches = Branch::get();
+
+            return view('frontend.appointments.pendingdelete', compact('appointments', 'branches', 'clinics', 'companies', 'crm_customers', 'doctors', 'products', 'services', 'users'));
+
+    }
 
     public function restore($id){
 
         Appointment::withTrashed()->find($id)->restore();
 
+        Flasher::addInfo('تم استعاده العنصر');
+
+        return back();
+
     }
+
+    public function exit($id){
+
+        $appointment = Appointment::find($id)->update(['check_out'=>1]);
+
+    Flasher::addInfo('تم بنجاح ');
+
+    return back();
+
+    }
+
 }

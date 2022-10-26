@@ -3,24 +3,10 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            @can('appointment_create')
-                <div style="margin-bottom: 10px;" class="row">
-                    <div class="col-lg-12">
-                        <a class="btn btn-success" href="{{ route('frontend.appointments.create') }}">
-                            {{ trans('global.add') }} {{ trans('cruds.appointment.title_singular') }}
-                        </a>
-                        <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
-                            {{ trans('global.app_csvImport') }}
-                        </button>
-                        @include('csvImport.modal', ['model' => 'Appointment', 'route' => 'admin.appointments.parseCsvImport'])
-                    </div>
-                </div>
-            @endcan
             <div class="card">
                 <div class="card-header">
                     {{ trans('cruds.appointment.title_singular') }} {{ trans('global.list') }}
                 </div>
-
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class=" table table-bordered table-striped table-hover datatable datatable-Appointment">
@@ -287,10 +273,10 @@
                                             @endcan
 
                                             @can('appointment_delete')
-                                                <form action="{{ route('frontend.appointments.restore', $appointment->id) }}" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-
-
-                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ 'استعاده' }}">
+                                                <form action="{{ route('frontend.appointments.destroy', $appointment->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
                                                 </form>
                                             @endcan
 

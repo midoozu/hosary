@@ -497,7 +497,7 @@ return [
             'comment_helper'       => ' ',
             'other_service'        => 'خدمات اخري',
             'other_service_helper' => ' ',
-            'total_price'          => 'السعر الاضافي ',
+            'total_price'          => 'السعر الجمالي ',
             'total_price_helper'   => ' ',
         ],
     ],

@@ -44,6 +44,16 @@
                             <span class="help-block">{{ trans('cruds.product.fields.price_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label class="required" for="units">{{ 'عدد' }}</label>
+                            <input class="form-control" type="number" name="units" id="units" value="{{ old('units', '') }}" step="0.01" required>
+                            @if($errors->has('units'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('units') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.product.fields.price_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="categories">{{ trans('cruds.product.fields.category') }}</label>
                             <div style="padding-bottom: 4px">
                                 <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>

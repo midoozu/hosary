@@ -1,6 +1,6 @@
 
 
-@extends('layouts.admin.admin')
+@extends('layouts.frontend')
 @section('styles')
 <style>
     .allowance_div{

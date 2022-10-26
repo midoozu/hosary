@@ -39,6 +39,9 @@
                                         {{ trans('cruds.product.fields.price') }}
                                     </th>
                                     <th>
+                                        {{ 'عدد' }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.product.fields.category') }}
                                     </th>
                                     <th>
@@ -66,6 +69,7 @@
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
+                                    <td></td>
                                     <td>
                                         <select class="search">
                                             <option value>{{ trans('global.all') }}</option>
@@ -102,6 +106,9 @@
                                         </td>
                                         <td>
                                             {{ $product->price ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $product->units ?? '' }}
                                         </td>
                                         <td>
                                             @foreach($product->categories as $key => $item)
@@ -200,7 +207,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 let visibleColumnsIndexes = null;
 $('.datatable thead').on('input', '.search', function () {
       let strict = $(this).attr('strict') || false

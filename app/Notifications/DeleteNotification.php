@@ -18,7 +18,7 @@ class DeleteNotification extends Notification
      */
     public function __construct($appointment)
     {
-        dd($appointment);
+
         $this->appointment = $appointment;
     }
 
@@ -56,11 +56,8 @@ class DeleteNotification extends Notification
     public function toArray($notifiable)
     {
 
-            dd($this->appointment['id']);
-
         return [
-            'name' => $this->appointment['id'],
-
+            'id' => $this->appointment->id ,
         ];
     }
 }

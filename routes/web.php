@@ -247,14 +247,18 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::get('appointments/getservicename', 'AppointmentController@getservicename')->name('appointments.getservicename');
     Route::get('appointments/getwaiting', 'AppointmentController@getwaiting')->name('appointments.getwaiting');
     Route::get('appointments/askfordelete/{id}', 'AppointmentController@askfordelete')->name('appointments.askfordelete');
-    Route::get('appointments/restore/{id}', 'AppointmentController@askfordelete')->name('appointments.restore');
+    Route::get('appointments/restore/{id}', 'AppointmentController@restore')->name('appointments.restore');
+    Route::get('appointments/exit/{id}', 'AppointmentController@exit')->name('appointments.exit');
     Route::get('appointments/deleted', 'AppointmentController@deleted')->name('appointments.deleted');
+    Route::get('appointments/pendingdelete', 'AppointmentController@pendingdelete')->name('appointments.pendingdelete');
     Route::resource('appointments', 'AppointmentController');
 
-    Route::get('filterbydate', 'ReportsController@filterbydate')->name('filterbydate');
+
+
 
     Route::view('/reports', 'reports');
-
+    Route::get('filterbydate', 'ReportsController@filterbydate')->name('reports.filterbydate');
+    Route::post('reportresult', 'ReportsController@reportresult')->name('reports.reportresult');
     //    //////////////////////// HR ////////////////////////////////
     require __DIR__.'/HRRoutes.php';
     require __DIR__.'/FinancesRouter.php';

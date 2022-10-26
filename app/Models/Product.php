@@ -39,6 +39,7 @@ class Product extends Model implements HasMedia
         'name',
         'description',
         'price',
+        'units',
         'created_at',
         'updated_at',
         'deleted_at',

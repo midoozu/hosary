@@ -52,6 +52,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{'عدد'}}
+                                    </th>
+                                    <td>
+                                        {{ $product->units }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.product.fields.category') }}
                                     </th>
                                     <td>
