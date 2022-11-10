@@ -29,19 +29,14 @@
                     </div>
         @endforeach
                 </div>
-
     <div>
-
     </div>
-
     <div class="row">
         <div class="col-12">
-
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addnew">
-                {{'اضافه حجز جديد'}}
+                {{'اضافه حجز حالي'}}
             </button>
-
             <!-- Modal -->
             <div class="modal fade addnewt" id="addnew" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -50,14 +45,14 @@
                             <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body  ">
+                        <div class="modal-body">
                             <div class="container-fluid">
                                 <form method="POST" action="{{ route("frontend.appointments.store") }}" enctype="multipart/form-data">
                                     @method('POST')
                                     @csrf
                                     <div class="form-group">
                                         <label class="required" for="date">{{ trans('cruds.appointment.fields.date') }}</label>
-                                        <input class="form-control datetime" type="text" name="date" id="date" value="{{ now() }}" required>
+                                        <input class="form-control datetime" type="text" name="date" id="date" value="{{ now() }}" readonly>
                                         @if($errors->has('date'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('date') }}
@@ -77,7 +72,6 @@
                                             </select>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             <label for="customer_id">{{ 'رقم العميل' }}</label>
@@ -95,7 +89,6 @@
 
                                         </div>
                                     </div>
-
                                     <div class="row">
 
                                         <div class="form-group col-md-6">
@@ -125,7 +118,6 @@
                                             <span class="help-block">{{ trans('cruds.appointment.fields.doctor_helper') }}</span>
                                         </div>
                                     </div>
-
                                     <div class="form-group ">
                                         <label class="required" for="services">{{ trans('cruds.appointment.fields.service') }}</label>
                                         <div style="padding-bottom: 4px">
@@ -149,9 +141,6 @@
                                         @endif
                                         <span class="help-block">{{ trans('cruds.appointment.fields.service_helper') }}</span>
                                     </div>
-
-
-
                                     <div class="form-group">
                                         <label for="company_id">{{ trans('cruds.appointment.fields.company') }}</label>
                                         <select class="form-control select2" name="company_id" id="company_id">
@@ -166,8 +155,177 @@
                                         @endif
                                         <span class="help-block">{{ trans('cruds.appointment.fields.company_helper') }}</span>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="text" name="branch_id" id="branch_id" value="{{auth()->user()->branch->id}}" hidden>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="comment">{{ trans('cruds.appointment.fields.comment') }}</label>
+                                        <input class="form-control" type="text" name="comment" id="comment" value="{{ old('comment', '') }}">
+                                        @if($errors->has('comment'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('comment') }}
+                                            </div>
+                                        @endif
+                                        <span class="help-block">{{ trans('cruds.appointment.fields.comment_helper') }}</span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-4">
+                                            <label for="other_service">{{ 'خدمات اضافيه' }}</label>
+                                            <input class="form-control" type="number" name="other_service" id="other_service" value="{{ old('other_service', '') }}" step="0.01">
+                                            @if($errors->has('other_service'))
+                                                <div class="invalid-feedback">
+                                                    {{ $errors->first('other_service') }}
+                                                </div>
+                                            @endif
+                                            <span class="help-block">{{ trans('cruds.appointment.fields.other_service_helper') }}</span>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="discount">{{ 'خصم' }}</label>
+                                            <input class="form-control" type="number" name="discount" id="discount" value="{{ old('other_service', '') }}" step="0.01">
+                                            @if($errors->has('other_service'))
+                                                <div class="invalid-feedback">
+                                                    {{ $errors->first('other_service') }}
+                                                </div>
+                                            @endif
+                                            <span class="help-block">{{ trans('cruds.appointment.fields.other_service_helper') }}</span>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="dr_supplies">{{ 'مستلزمات الدكتور' }}</label>
+                                            <input class="form-control" type="number" name="dr_supplies" id="dr_supplies" value="{{ old('total_price', '') }}" step="0.01">
+                                            @if($errors->has('total_price'))
+                                                <div class="invalid-feedback">
+                                                    {{ $errors->first('total_price') }}
+                                                </div>
+                                            @endif
+                                            <span class="help-block">{{ trans('cruds.appointment.fields.total_price_helper') }}</span>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="clinic_supplies">{{ 'مستلزمات العياده' }}</label>
+                                            <input class="form-control" type="number" name="clinic_supplies" id="dr_supplies" value="{{ old('clinic_supplies', '') }}" step="0.01">
+                                            @if($errors->has('clinic_supplies'))
+                                                <div class="invalid-feedback">
+                                                    {{ $errors->first('clinic_supplies') }}
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">{{'حفظ و طباعه'}}</button>
 
+                                        <button class="btn btn-danger" type="submit">
+                                            {{ trans('global.save') }}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
+            </div>
+            <a href="{{ route('frontend.appointments.index') }}" class="btn btn-success">{{'جميع الحجوزات'}}</a>
+
+            <a href="{{ route('frontend.appointments.nextIndex') }}" class="btn btn-outline-danger">{{'الحجز القادم'}}</a>
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addnew">
+                {{'جرد مستهلكات'}}
+            </button>
+            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addnew">
+                {{'استقبال مخزون'}}
+            </button>
+            <button type="button" class="btn btn-warning " data-bs-toggle="modal" data-bs-target="#addnext">
+                {{'اضافه حجز قادم'}}
+            </button>
+            <div class="modal fade addnext" id="addnext" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">اضافه حجز قادم </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body  ">
+                            <div class="container-fluid">
+                                <form method="POST" action="{{ route("frontend.appointments.next") }}" enctype="multipart/form-data">
+                                    @method('POST')
+                                    @csrf
+                                    <div class="form-group">
+                                        <label class="required" for="date">{{ trans('cruds.appointment.fields.date') }}</label>
+                                        <input class="form-control datetime" type="text" name="date" id="date" value="{{ now() }}" required>
+                                        @if($errors->has('date'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('date') }}
+                                            </div>
+                                        @endif
+                                        <span class="help-block">{{ trans('cruds.appointment.fields.date_helper') }}</span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6 ">
+                                            <label class="required" for="user_id">{{ 'كود الموظف' }}</label>
+                                            <input class="form-control"  name="user_id" id="user_id" value="{{ auth()->id() }}" readonly>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="required" for="employee_id">{{ 'اسم الموظف' }}</label>
+                                            <select class="form-control " name="employee_id" id="employee_id" required>
+                                                <option value="{{ auth()->id() }}"  >{{ auth()->user()->name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="customer_id">{{ 'رقم العميل' }}</label>
+                                            <input list="customer" id="customer_id" name="customer_id" class="form-control">
+                                            <datalist id="customer">
+                                                @foreach($customers as $id => $entry)
+                                                    <option value="{{ $entry->id }}" >{{ $entry->phone }} {{$entry->first_name}}</option>
+                                                @endforeach
+                                            </datalist>
+                                        </div>
+                                        <div class="form-group col-md-6" >
+                                            <label for="">{{ 'اسم العميل' }}</label>
+                                            <input class="form-control"  name="customer_name" id="customer_name" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label class="required" for="clinic_id">{{ trans('cruds.appointment.fields.clinic') }}</label>
+
+                                            <input list="clinic_list"  class="form-control" name="clinic_id" id="clinic_id" >
+                                            <datalist id="clinic_list">
+                                                @foreach($clinics as $id => $entry)
+                                                    <option value="{{ $id }}" >{{ $entry }}</option>
+                                                @endforeach
+                                            </datalist>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="required" for="doctor_id">{{ trans('cruds.appointment.fields.doctor') }}</label>
+                                            <select class="form-control select2" name="doctor_id" id="doctor_id" required>
+                                                @foreach($doctors as $id => $entry)
+                                                    <option value="{{ $id }}" {{ old('doctor_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                                @endforeach
+                                            </select>
+                                            @if($errors->has('doctor'))
+                                                <div class="invalid-feedback">
+                                                    {{ $errors->first('doctor') }}
+                                                </div>
+                                            @endif
+                                            <span class="help-block">{{ trans('cruds.appointment.fields.doctor_helper') }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="company_id">{{ trans('cruds.appointment.fields.company') }}</label>
+                                        <select class="form-control select2" name="company_id" id="company_id">
+                                            @foreach($companies as $id => $entry)
+                                                <option value="{{ $id }}" {{ old('company_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                            @endforeach
+                                        </select>
+                                        @if($errors->has('company'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('company') }}
+                                            </div>
+                                        @endif
+                                        <span class="help-block">{{ trans('cruds.appointment.fields.company_helper') }}</span>
+                                    </div>
                                     <div class="form-group">
                                         <input type="text" name="branch_id" id="branch_id" value="{{auth()->user()->branch->id}}" hidden>
                                     </div>
@@ -183,56 +341,20 @@
                                     </div>
                                     <div class="row">
 
-                                        <div class="form-group col-md-6">
-                                            <label for="other_service">{{ trans('cruds.appointment.fields.other_service') }}</label>
-                                            <input class="form-control" type="number" name="other_service" id="other_service" value="{{ old('other_service', '') }}" step="0.01">
-                                            @if($errors->has('other_service'))
-
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first('other_service') }}
-                                                </div>
-                                            @endif
-                                            <span class="help-block">{{ trans('cruds.appointment.fields.other_service_helper') }}</span>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="total_price">{{ trans('cruds.appointment.fields.total_price') }}</label>
-                                            <input class="form-control" type="number" name="total_price" id="total_price" value="{{ old('total_price', '') }}" step="0.01">
-                                            @if($errors->has('total_price'))
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first('total_price') }}
-                                                </div>
-                                            @endif
-                                            <span class="help-block">{{ trans('cruds.appointment.fields.total_price_helper') }}</span>
-                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">{{'حفظ و طباعه'}}</button>
-
                                         <button class="btn btn-danger" type="submit">
                                             {{ trans('global.save') }}
                                         </button>
-
                                     </div>
                                 </form>
                             </div>
                         </div>
-
-
                     </div>
-
                 </div>
             </div>
-            <a href="{{ route('frontend.appointments.index') }}" class="btn btn-success">{{'جميع الحجوزات'}}</a>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addnew">
-                {{'جرد مستهلكات'}}
-            </button>
-            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addnew">
-                {{'استقبال مخزون'}}
-            </button>
-
         </div>
-
     </div>
                 <div class="row removable">
                     <div class="col-12 col-lg-9 col-xxl-10 d-flex">
@@ -303,7 +425,6 @@
                                         </select>
                                     </td>
                                     <td>
-
                                         <select class="search">
                                             <option value>{{ trans('global.all') }}</option>
                                             @foreach($services as $key => $item)
@@ -317,11 +438,9 @@
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}" size="8">
                                     </td>
-
                                     <td>
                                     </td>
                                 </tr>
-
                                 </thead>
                                 <tbody>
 
@@ -346,7 +465,7 @@
                                                 <span class="badge badge-warning ">{{ count([$item]) }}</span>
                                                 <span class="badge badge-success ">{{ $item->price }}</span>
                                             @endforeach
-                                                <span class="badge badge-danger">{{ $appointment->services_sum_price }}</span>
+                                                <span class="badge badge-danger">{{ $appointment->total_price }}</span>
                                         </td>
                                         <td>
                                             {{ $appointment->comment ?? '' }}
@@ -380,35 +499,24 @@
                                                                             <a class="btn btn-xs btn-danger" href="{{ route('frontend.appointments.exit', $appointment->id) }}">
                                                                                 {{ 'خروج' }}
                                                                             </a>
-
                                                                         </div>
-
                                                                 </div>
                                                             </div>
-
-
                                                         </div>
-
                                                     </div>
                                                 </div>
-                                                <a class="fas fa-print btn-outline-warning" href="{{ route('frontend.appointments.show', $appointment->id) }}">
+                                                <a class="fas fa-print btn-outline-warning" href="{{ route('frontend.appointments.print')}}">
                                                 </a>
-
                                             @endcan
-
                                             @can('appointment_edit')
                                                 <a class="far fa-edit btn-outline-info" href="{{ route('frontend.appointments.edit', $appointment->id) }}">
                                                 </a>
-
                                                 @endcan
-
                                             @can('appointment_delete')
                                                     <a class="fas fa-trash-alt" href="{{ route('frontend.appointments.askfordelete', $appointment->id) }}" style="color: red"></a>
-
                                             @endcan
                                         </td>
                                     </tr>
-
                                 @endforeach
                                 </tbody>
                             </table>
@@ -447,7 +555,6 @@
                                     <div class="col mt-0">
                                         <h5 class="card-title"> الدخل</h5>
                                     </div>
-
                                     <div class="col-auto">
                                         <div class="stat text-primary">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-truck align-middle">
@@ -466,7 +573,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
 @endsection
@@ -519,6 +625,7 @@
 
                     $("#doctor_id").html(select);
                     $("#doctor_id").prepend("<option value=''></option>").val('');
+                    $('.select2-container').attr('width',60);
 
                 }
 

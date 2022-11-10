@@ -67,7 +67,37 @@
                                 <i class="fa fa-adjust"></i>
                             </div>
                             <h3>
-                                تقرير
+                                تقرير الكل
+                            </h3>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <a href="{{route('frontend.reports.todayreport')}}">
+                    <div class="content  d-flex align-items-center justify-content-center">
+                        <div class="text-i">
+                            <div class="w-100 mb-3 d-flex align-items-center justify-content-center">
+                                <i class="fa fa-adjust"></i>
+                            </div>
+                            <h3>
+تقرير اليوم
+                            </h3>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <a href="{{route('frontend.reports.servicesreport')}}">
+                    <div class="content  d-flex align-items-center justify-content-center">
+                        <div class="text-i">
+                            <div class="w-100 mb-3 d-flex align-items-center justify-content-center">
+                                <i class="fa fa-adjust"></i>
+                            </div>
+                            <h3>
+                              تقرير الخدمات
                             </h3>
                         </div>
                     </div>

@@ -16,7 +16,8 @@ class CreateAppointmentsTable extends Migration
             $table->integer('used_pulse')->nullable();
             $table->integer('device_pulse')->nullable();
             $table->string('comment')->nullable();
-            $table->decimal('other_service', 15, 2)->nullable();
+            $table->decimal('extra_service', 15, 2)->nullable();
+            $table->decimal('discount', 15, 2)->nullable();
             $table->decimal('total_price', 15, 2)->nullable();
             $table->timestamps();
             $table->softDeletes();

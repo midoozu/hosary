@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class
-Appointment extends Model
+Next_Appointment extends Model
 {
     use SoftDeletes;
     use Auditable;
@@ -46,7 +46,6 @@ Appointment extends Model
         'pending_delete',
         'discount',
         'dr_supplies',
-        'clinic_supplies',
 
     ];
 
@@ -85,15 +84,6 @@ Appointment extends Model
         return $this->belongsTo(Clinic::class, 'clinic_id');
     }
 
-    public function services()
-    {
-        return $this->belongsToMany(Service::class);
-    }
-
-    public function products()
-    {
-        return $this->belongsToMany(Product::class);
-    }
 
     public function branch()
     {

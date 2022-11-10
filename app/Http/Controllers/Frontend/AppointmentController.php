@@ -13,6 +13,7 @@ use App\Models\Clinic;
 use App\Models\Company;
 use App\Models\CrmCustomer;
 use App\Models\Doctor;
+use App\Models\Next_Appointment;
 use App\Models\Product;
 use App\Models\Service;
 use App\Models\User;
@@ -24,6 +25,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+
 use Illuminate\Support\Facades\Notification;
 use Symfony\Component\HttpFoundation\Response;
 use Flasher\Prime\FlasherInterface;
@@ -57,6 +59,33 @@ class AppointmentController extends Controller
         return view('frontend.appointments.index', compact('appointments', 'branches', 'clinics', 'companies', 'crm_customers', 'doctors', 'products', 'services', 'users'));
     }
 
+    public function nextIndex()
+    {
+        abort_if(Gate::denies('appointment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $appointments = Next_Appointment::with(['employee', 'customer', 'company', 'doctor', 'clinic', 'branch'])->get();
+
+        $users = User::get();
+
+        $crm_customers = CrmCustomer::get();
+
+        $companies = Company::get();
+
+        $doctors = Doctor::get();
+
+        $clinics = Clinic::get();
+
+        $services = Service::get();
+
+        $products = Product::get();
+
+        $branches = Branch::get();
+
+        return view('frontend.appointments.nextIndex', compact('appointments', 'branches', 'clinics', 'companies', 'crm_customers', 'doctors', 'products', 'services', 'users'));
+    }
+
+
+
     public function create()
     {
         abort_if(Gate::denies('appointment_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -88,8 +117,6 @@ class AppointmentController extends Controller
         $servicePrice = Service::find($request->services)->sum('price');
 
 
-
-
         $clientCheck_number = CrmCustomer::where('phone', $request->customer_id)->first();
 
         if ($clientCheck_number){
@@ -105,7 +132,7 @@ class AppointmentController extends Controller
 
         $appointment = $request->all() ;
         $appointment['customer_id']  = $clientCheck_id->id ;
-        $appointment['total_price'] = $servicePrice + $request->other_service;
+        $appointment['total_price'] = ($servicePrice + $request->other_service)-($request->discount) ;
         $appointment =   Appointment::create($appointment);
 
         $appointment->services()->sync($request->input('services', []));
@@ -121,7 +148,7 @@ class AppointmentController extends Controller
         Flasher::addSuccess('تم اضافه العميل');
            $appointment = $request->all();
         $appointment['customer_id'] = $client->id;
-        $appointment['total_price'] = $servicePrice + $request->other_service;
+        $appointment['total_price'] = ($servicePrice + $request->other_service)-($request->discount) ;
         $appointment = Appointment::create($appointment);
 
         $appointment->services()->sync($request->input('services', []));
@@ -131,6 +158,26 @@ class AppointmentController extends Controller
 
         return redirect()->back();
     }
+
+
+    public function store_next_appointment(StoreAppointmentRequest $request)
+    {
+
+        $servicePrice = Service::find($request->services)->sum('price');
+
+            $appointment = $request->all() ;
+            $appointment['total_price'] = ($servicePrice + $request->other_service)-($request->discount) ;
+            $appointment =   Appointment::create($appointment);
+
+            $appointment->services()->sync($request->input('services', []));
+            $appointment->products()->sync($request->input('products', []));
+
+            Flasher::addSuccess('تم اضافه الحجز بنجاح ');
+
+
+        return redirect()->back();
+    }
+
 
     public function edit(Appointment $appointment)
     {
@@ -157,6 +204,31 @@ class AppointmentController extends Controller
         return view('frontend.appointments.edit', compact('appointment', 'branches', 'clinics', 'companies', 'customers', 'doctors', 'employees', 'products', 'services'));
     }
 
+    public function next_transfer(Next_Appointment $appointment)
+    {
+//        abort_if(Gate::denies('appointment_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $employees = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $customers = CrmCustomer::pluck('first_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $doctors = Doctor::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $clinics = Clinic::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $services = Service::pluck('name', 'id');
+
+        $products = Product::pluck('name', 'id');
+
+        $branches = Branch::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $appointment->load('employee', 'customer', 'company', 'doctor', 'clinic', 'branch');
+
+        return view('frontend.appointments.next_transfer', compact('appointment', 'branches', 'clinics', 'companies', 'customers', 'doctors', 'employees', 'products', 'services'));
+    }
+
     public function update(UpdateAppointmentRequest $request, Appointment $appointment)
     {
 
@@ -164,7 +236,7 @@ class AppointmentController extends Controller
         $productPrice = Product::find($request->products)->sum('price');
 
         $appointment->update($request->all());
-        $appointment->update( ['total_price' =>$servicePrice + $request->other_service + $productPrice]) ;
+        $appointment->update( ['total_price' =>($servicePrice + $request->other_service + $productPrice)-($request->discount)]) ;
         $appointment->services()->sync($request->input('services', []));
         $appointment->products()->sync($request->input('products', []));
 
@@ -216,6 +288,7 @@ class AppointmentController extends Controller
         return $doctors;
 
     }
+
 
     public function getservicename(Request $request){
 
@@ -341,6 +414,47 @@ class AppointmentController extends Controller
 
     return back();
 
+    }
+
+    public function next(Request $request)
+    {
+
+
+
+        $clientCheck_number = CrmCustomer::where('phone', $request->customer_id)->first();
+
+        if ($clientCheck_number){
+
+            Flasher::addError('المريض موجود بالفعل برجاء الاختيار من القائمه');
+
+            return back();
+        }
+
+        $clientCheck_id = CrmCustomer::where('id', $request->customer_id)->first();
+
+        if ($clientCheck_id){
+
+            $appointment = $request->all() ;
+            $appointment['customer_id']  = $clientCheck_id->id ;
+            $appointment =   Next_Appointment::create($appointment);
+
+            Flasher::addSuccess('تم اضافه الحجز بنجاح ');
+        }
+        else {
+
+            $client = CrmCustomer::Create([
+                'phone' => $request->customer_id,
+                'first_name' => $request->customer_name,
+            ]);
+            Flasher::addSuccess('تم اضافه العميل');
+            $appointment = $request->all();
+            $appointment['customer_id'] = $client->id;
+            $appointment = Next_Appointment::create($appointment);
+
+            Flasher::addSuccess('تم اضافه الحجز بنجاح');
+        };
+
+        return redirect()->back();
     }
 
 }

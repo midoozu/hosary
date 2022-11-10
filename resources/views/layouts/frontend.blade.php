@@ -438,7 +438,7 @@
                         </a>
 
                         <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://demo-basic.adminkit.io/img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall"> <span class="text-dark">Charles Hall</span>
+                            <img src="{{ asset('venus.jpeg') }}" class="avatar img-fluid rounded me-1" alt="Charles Hall"> <span class="text-dark">Charles Hall</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <a class="dropdown-item" href="pages-profile.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user align-middle me-1">

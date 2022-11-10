@@ -3,6 +3,7 @@
 Route::view('/', 'welcome');
 Auth::routes(['register' => false]);
 
+
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     // Permissions
@@ -239,7 +240,6 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::delete('services/destroy', 'ServicesController@massDestroy')->name('services.massDestroy');
     Route::resource('services', 'ServicesController');
 
-
     // Appointment
     Route::delete('appointments/destroy', 'AppointmentController@massDestroy')->name('appointments.massDestroy');
     Route::get('appointments/getcustomername', 'AppointmentController@getcustomername')->name('appointments.getcustomername');
@@ -251,14 +251,23 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::get('appointments/exit/{id}', 'AppointmentController@exit')->name('appointments.exit');
     Route::get('appointments/deleted', 'AppointmentController@deleted')->name('appointments.deleted');
     Route::get('appointments/pendingdelete', 'AppointmentController@pendingdelete')->name('appointments.pendingdelete');
-    Route::resource('appointments', 'AppointmentController');
+    Route::post('appointments/next', 'AppointmentController@next')->name('appointments.next');
+    Route::post('appointments/store_next_appointment', 'AppointmentController@store_next_appointment')->name('appointments.store_next_appointment');
+    Route::get('appointments/nextIndex', 'AppointmentController@nextIndex')->name('appointments.nextIndex');
+    Route::get('appointments/next_transfer/{appointment}', 'AppointmentController@next_transfer')->name('appointments.next_transfer');
 
+    Route::get('appointments/print', 'PrintController@print')->name('appointments.print');
+
+    Route::resource('appointments', 'AppointmentController');
 
 
 
     Route::view('/reports', 'reports');
     Route::get('filterbydate', 'ReportsController@filterbydate')->name('reports.filterbydate');
+    Route::get('servicesreport', 'ReportsController@servicesreport')->name('reports.servicesreport');
+    Route::get('todayreport', 'ReportsController@todayreport')->name('reports.todayreport');
     Route::post('reportresult', 'ReportsController@reportresult')->name('reports.reportresult');
+
     //    //////////////////////// HR ////////////////////////////////
     require __DIR__.'/HRRoutes.php';
     require __DIR__.'/FinancesRouter.php';
