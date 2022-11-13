@@ -245,14 +245,17 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::get('appointments/getcustomername', 'AppointmentController@getcustomername')->name('appointments.getcustomername');
     Route::get('appointments/getdoctor', 'AppointmentController@getdoctor')->name('appointments.getdoctor');
     Route::get('appointments/getservicename', 'AppointmentController@getservicename')->name('appointments.getservicename');
+    Route::get('appointments/getserviceprice', 'AppointmentController@getserviceprice')->name('appointments.getserviceprice');
     Route::get('appointments/getwaiting', 'AppointmentController@getwaiting')->name('appointments.getwaiting');
     Route::get('appointments/askfordelete/{id}', 'AppointmentController@askfordelete')->name('appointments.askfordelete');
     Route::get('appointments/restore/{id}', 'AppointmentController@restore')->name('appointments.restore');
     Route::get('appointments/exit/{id}', 'AppointmentController@exit')->name('appointments.exit');
+    Route::get('appointments/editandexit/{id}', 'AppointmentController@editandexit')->name('appointments.editandexit');
     Route::get('appointments/deleted', 'AppointmentController@deleted')->name('appointments.deleted');
     Route::get('appointments/pendingdelete', 'AppointmentController@pendingdelete')->name('appointments.pendingdelete');
     Route::post('appointments/next', 'AppointmentController@next')->name('appointments.next');
     Route::post('appointments/store_next_appointment', 'AppointmentController@store_next_appointment')->name('appointments.store_next_appointment');
+    Route::post('appointments/exitupdate/{appointment}', 'AppointmentController@exitupdate')->name('appointments.exitupdate');
     Route::get('appointments/nextIndex', 'AppointmentController@nextIndex')->name('appointments.nextIndex');
     Route::get('appointments/next_transfer/{appointment}', 'AppointmentController@next_transfer')->name('appointments.next_transfer');
 

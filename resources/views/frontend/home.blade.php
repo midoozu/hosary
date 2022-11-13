@@ -477,8 +477,8 @@
                                             @can('appointment_show')
                                                 <a class="fas fa-eye" href="{{ route('frontend.appointments.show', $appointment->id) }}">
                                                 </a>
-                                                <a class="fa fa-sign-out" aria-hidden="true" href="#" type="button"  data-bs-toggle="modal" data-bs-target="#exit"></a>
-                                                <div class="modal fade exit" id="exit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <a class="fa fa-sign-out" aria-hidden="true" href="#" type="button"  data-bs-toggle="modal" data-bs-target="#exit-{{$appointment->id}}"></a>
+                                                <div class="modal fade exit" id="exit-{{$appointment->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -492,7 +492,7 @@
                                                                            <p> {{' هل تم استهلاك منتجات او تغير بالخدمات '}}</p>
                                                                         </div>
                                                                         <div class="modal-footer">
-                                                                            <a class="btn btn-xs btn-info" href="{{ route('frontend.appointments.edit', $appointment->id) }}">
+                                                                            <a class="btn btn-xs btn-info" href="{{ route('frontend.appointments.editandexit', $appointment->id) }}">
                                                                                 {{ trans('global.edit') }}
                                                                             </a>
 

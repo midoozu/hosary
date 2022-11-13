@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Symfony\Component\HttpFoundation\Response;
 use Flasher\Prime\FlasherInterface;
+use function PHPUnit\Framework\returnValueMap;
 
 class AppointmentController extends Controller
 {
@@ -132,7 +133,7 @@ class AppointmentController extends Controller
 
         $appointment = $request->all() ;
         $appointment['customer_id']  = $clientCheck_id->id ;
-        $appointment['total_price'] = ($servicePrice + $request->other_service)-($request->discount) ;
+        $appointment['total_price'] = ($servicePrice + $request->other_service + $request->dr_supplies +$request->clinic_supplies)-($request->discount) ;
         $appointment =   Appointment::create($appointment);
 
         $appointment->services()->sync($request->input('services', []));
@@ -148,7 +149,7 @@ class AppointmentController extends Controller
         Flasher::addSuccess('تم اضافه العميل');
            $appointment = $request->all();
         $appointment['customer_id'] = $client->id;
-        $appointment['total_price'] = ($servicePrice + $request->other_service)-($request->discount) ;
+        $appointment['total_price'] = ($servicePrice + $request->other_service + $request->dr_supplies +$request->clinic_supplies)-($request->discount) ;
         $appointment = Appointment::create($appointment);
 
         $appointment->services()->sync($request->input('services', []));
@@ -166,7 +167,7 @@ class AppointmentController extends Controller
         $servicePrice = Service::find($request->services)->sum('price');
 
             $appointment = $request->all() ;
-            $appointment['total_price'] = ($servicePrice + $request->other_service)-($request->discount) ;
+            $appointment['total_price'] = ($servicePrice + $request->other_service + $request->dr_supplies +$request->clinic_supplies)-($request->discount) ;
             $appointment =   Appointment::create($appointment);
 
             $appointment->services()->sync($request->input('services', []));
@@ -236,7 +237,22 @@ class AppointmentController extends Controller
         $productPrice = Product::find($request->products)->sum('price');
 
         $appointment->update($request->all());
-        $appointment->update( ['total_price' =>($servicePrice + $request->other_service + $productPrice)-($request->discount)]) ;
+        $appointment->update( ['total_price' =>($servicePrice + $request->other_service + $request->dr_supplies +$request->clinic_supplies)-($request->discount)]) ;
+        $appointment->services()->sync($request->input('services', []));
+        $appointment->products()->sync($request->input('products', []));
+
+        return redirect()->route('frontend.appointments.index');
+    }
+    public function exitupdate(Request $request, Appointment $appointment)
+    {
+
+
+        $servicePrice = Service::find($request->services)->sum('price');
+
+        $appointment->update(
+
+            ['total_price' =>($servicePrice + $request->other_service + $request->dr_supplies +$request->clinic_supplies)-($request->discount)]
+        ) ;
         $appointment->services()->sync($request->input('services', []));
         $appointment->products()->sync($request->input('products', []));
 
@@ -292,7 +308,6 @@ class AppointmentController extends Controller
 
     public function getservicename(Request $request){
 
-
         $id = $request->id ;
 
         $services  = Service::WhereHas('servicesClinics' , function($q) use ($id) {
@@ -300,6 +315,15 @@ class AppointmentController extends Controller
         })->get();
 
         return  $services;
+
+    }
+    public function getserviceprice(Request $request){
+
+
+
+      $services = Service::find($request->id)->sum('price');
+
+           return ['data'=> $services];
 
     }
     public function getwaiting(Request $request){
@@ -408,12 +432,24 @@ class AppointmentController extends Controller
 
     public function exit($id){
 
+
         $appointment = Appointment::find($id)->update(['check_out'=>1]);
+
 
     Flasher::addInfo('تم بنجاح ');
 
     return back();
+    }
 
+
+    public function editandexit(Appointment $id){
+
+        $services = Service::pluck('name', 'id');
+
+        $appointment =  $id->load('employee', 'customer', 'company', 'doctor', 'clinic', 'services', 'products', 'branch');
+
+
+        return view('frontend.appointments.editandexit',compact('appointment','services'));
     }
 
     public function next(Request $request)
