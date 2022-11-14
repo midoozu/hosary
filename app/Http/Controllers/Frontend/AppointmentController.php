@@ -164,6 +164,9 @@ class AppointmentController extends Controller
     public function store_next_appointment(StoreAppointmentRequest $request)
     {
 
+
+            dd($request);
+
         $servicePrice = Service::find($request->services)->sum('price');
 
             $appointment = $request->all() ;
@@ -171,9 +174,9 @@ class AppointmentController extends Controller
             $appointment =   Appointment::create($appointment);
 
             $appointment->services()->sync($request->input('services', []));
-            $appointment->products()->sync($request->input('products', []));
 
-            Flasher::addSuccess('تم اضافه الحجز بنجاح ');
+
+            Flasher::addSuccess('تم نقل الحجز بنجاح ');
 
 
         return redirect()->back();
@@ -227,6 +230,8 @@ class AppointmentController extends Controller
 
         $appointment->load('employee', 'customer', 'company', 'doctor', 'clinic', 'branch');
 
+        $appointment->update(['pending_delete'=>1]);
+
         return view('frontend.appointments.next_transfer', compact('appointment', 'branches', 'clinics', 'companies', 'customers', 'doctors', 'employees', 'products', 'services'));
     }
 
@@ -241,7 +246,7 @@ class AppointmentController extends Controller
         $appointment->services()->sync($request->input('services', []));
         $appointment->products()->sync($request->input('products', []));
 
-        return redirect()->route('frontend.appointments.index');
+        return redirect()->route('frontend.home');
     }
     public function exitupdate(Request $request, Appointment $appointment)
     {
@@ -249,14 +254,19 @@ class AppointmentController extends Controller
 
         $servicePrice = Service::find($request->services)->sum('price');
 
-        $appointment->update(
+        $appointment->update([
+            'check_out'=>$request->check_out,
+                'comment'=>$request->comment,
+                'other_service'=>$request->other_service,
+                'discount'=>$request->discount,
+                'dr_supplies'=>$request->dr_supplies,
+                'clinic_supplies'=>$request->clinic_supplies,
+                'total_price' =>($servicePrice + $request->other_service + $request->dr_supplies +$request->clinic_supplies)-($request->discount),
+                ]) ;
+        $appointment->services()->attach($request->input('services', []));
 
-            ['total_price' =>($servicePrice + $request->other_service + $request->dr_supplies +$request->clinic_supplies)-($request->discount)]
-        ) ;
-        $appointment->services()->sync($request->input('services', []));
-        $appointment->products()->sync($request->input('products', []));
 
-        return redirect()->route('frontend.appointments.index');
+        return redirect()->route('frontend.home');
     }
 
     public function show(Appointment $appointment)

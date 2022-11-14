@@ -1,15 +1,15 @@
 @extends('layouts.frontend')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.appointment.title_singular') }} {{ trans('global.list') }}
-    </div>
+    <div class="card">
+        <div class="card-header">
+          {{'اجمالي لا يشمل مستلزمات الطبيب '}}  {{ ' تقرير اليوميه' }}
+        </div>
 
-    <div class="card-body">
-        <div class="table-responsive">
-            <table  class=" table table-bordered table-striped table-hover datatable datatable-Appointment" >
-                <thead>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table  class=" table table-bordered table-striped table-hover datatable datatable-Appointment" >
+                    <thead>
                     <tr>
                         <th width="10">
 
@@ -54,9 +54,6 @@
                         <th>
                             {{ trans('cruds.appointment.fields.total_price') }}
                         </th>
-                        <th>{{' نسبه الشركه'}}</th>
-                        <th>{{' نسبه الدكتور '}}</th>
-                        <th>{{' نسبه العياده '}}</th>
                         <th>
                             {{ trans('cruds.appointment.fields.comment') }}
                         </th>
@@ -132,11 +129,6 @@
 
                         </td>
                         <td>
-
-                        </td>
-                       <td></td>
-                       <td></td>
-                        <td>
                         </td>
                         <td>
                             <select class="search">
@@ -148,8 +140,8 @@
                         </td>
 
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     @foreach($appointments as $key => $appointment)
 
                         <tr data-entry-id="{{ $appointment->id }}"  class="change">
@@ -179,7 +171,6 @@
                                     <span class="badge badge-info">{{ $item->name }}</span>
                                     <span class="badge badge-danger">{{ $item->price }}</span>
                                 @endforeach
-
                             </td>
                             <td>
                                 {{$appointment->services->sum('price') }}
@@ -194,14 +185,11 @@
                                 {{ $appointment->dr_supplies ?? '' }}
                             </td>
                             <td>
-                                {{ $appointment->clinic_suuplies ?? '' }}
+                                {{ $appointment->clinic_supplies  ?? '' }}
                             </td>
                             <td>
-                                {{ $appointment->total_price ?? '' }}
+                                {{ $appointment->total_price -$appointment->dr_supplies ?? '' }}
                             </td>
-                            <td>   {{ $appointment->company->precentage ?? '' }} </td>
-                            <td> {{ $appointment->doctor->percentage ?? '' }}  </td>
-                            <td> {{ $appointment->doctor->precentage ?? '' }}  </td>
                             <td>
                                 {{ $appointment->comment ?? '' }}
                             </td>
@@ -210,78 +198,73 @@
                             </td>
                         </tr>
                     @endforeach
-                </tbody>
-                <tfoot>
-                <tr>
-
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-
-                </tr>
-                </tfoot>
-            </table>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th style="color: red"></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
 
 @endsection
 @section('scripts')
 
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.11.5/api/sum().js"></script>
-@parent
-<script>
-    $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+    @parent
+    <script>
+        $(function () {
+            let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 
-  $.extend(true, $.fn.dataTable.defaults, {
-    orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
-    pageLength: 100,
-  //     footerCallback: function (row, data, start, end, display) {
-  //         var api = this.api();
-  //
-  //         // Remove the formatting to get integer data for summation
-  //         var intVal = function (i) {
-  //             return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
-  //         };
-  //
-  //         // Total over all pages
-  //         total = api
-  //             .column(1)
-  //             .data()
-  //             .reduce(function (a, b) {
-  //                 return intVal(a) + intVal(b);
-  //             }, 0);
-  //
-  //         // Total over this page
-  //         pageTotal = api
-  //             .column(1, { page: 'current' })
-  //             .data()
-  //             .reduce(function (a, b) {
-  //                 return intVal(a) + intVal(b);
-  //             }, 0);
-  //
-  //         // Update footer
-  //         $(api.column(1).footer()).html('$' + pageTotal + ' ( $' + total + ' total)');
-  //     },
+            $.extend(true, $.fn.dataTable.defaults, {
+                orderCellsTop: true,
+                order: [[ 1, 'desc' ]],
+                pageLength: 100,
+                //     footerCallback: function (row, data, start, end, display) {
+                //         var api = this.api();
+                //
+                //         // Remove the formatting to get integer data for summation
+                //         var intVal = function (i) {
+                //             return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
+                //         };
+                //
+                //         // Total over all pages
+                //         total = api
+                //             .column(1)
+                //             .data()
+                //             .reduce(function (a, b) {
+                //                 return intVal(a) + intVal(b);
+                //             }, 0);
+                //
+                //         // Total over this page
+                //         pageTotal = api
+                //             .column(1, { page: 'current' })
+                //             .data()
+                //             .reduce(function (a, b) {
+                //                 return intVal(a) + intVal(b);
+                //             }, 0);
+                //
+                //         // Update footer
+                //         $(api.column(1).footer()).html('$' + pageTotal + ' ( $' + total + ' total)');
+                //     },
 
 
 
@@ -292,63 +275,52 @@
                     //to show first th
                     $(api.column(0).footer()).html('Total');
 
-                    for(var i=0; i<=15;i++)
+
+                    for(var i=8; i<=14;i++)
                     {
                         sum = api.column(i, {page:'current'}).data().sum();
 
                         //to format this sum
                         formated = parseFloat(sum).toLocaleString(undefined, {minimumFractionDigits:2});
-                        $(api.column(i).footer()).html('$'+formated);
+                        $(api.column(i).footer()).html(formated);
                     }
 
                 }
 
 
-
-  });
-  let table = $('.datatable-Appointment:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
-      $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust();
-  });
-
-
-let visibleColumnsIndexes = null;
-$('.datatable thead').on('input', '.search', function () {
-      let strict = $(this).attr('strict') || false
-      let value = strict && this.value ? "^" + this.value + "$" : this.value
-
-      let index = $(this).parent().index()
-      if (visibleColumnsIndexes !== null) {
-        index = visibleColumnsIndexes[index]
-      }
-
-      table
-        .column(index)
-        .search(value, strict)
-        .draw()
-  });
-
-table.on('column-visibility.dt', function(e, settings, column, state) {
-      visibleColumnsIndexes = []
-      table.columns(":visible").every(function(colIdx) {
-          visibleColumnsIndexes.push(colIdx);
-      });
-  })
-
-})
+            });
+            let table = $('.datatable-Appointment:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+            $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+                $($.fn.dataTable.tables(true)).DataTable()
+                    .columns.adjust();
+            });
 
 
-</script>
-    <script>
-        $(document).ready(function (){
+            let visibleColumnsIndexes = null;
+            $('.datatable thead').on('input', '.search', function () {
+                let strict = $(this).attr('strict') || false
+                let value = strict && this.value ? "^" + this.value + "$" : this.value
 
-            @if($appointment->discount !== null )
+                let index = $(this).parent().index()
+                if (visibleColumnsIndexes !== null) {
+                    index = visibleColumnsIndexes[index]
+                }
 
-            $('.change').css('color','#f11919');
+                table
+                    .column(index)
+                    .search(value, strict)
+                    .draw()
+            });
 
-            @endif
+            table.on('column-visibility.dt', function(e, settings, column, state) {
+                visibleColumnsIndexes = []
+                table.columns(":visible").every(function(colIdx) {
+                    visibleColumnsIndexes.push(colIdx);
+                });
+            })
+
         })
+
 
     </script>
 

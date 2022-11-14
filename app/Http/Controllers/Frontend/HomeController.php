@@ -26,7 +26,6 @@ class HomeController
 
         $customers = CrmCustomer::all();
 
-
         $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $doctors = Doctor::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -42,21 +41,18 @@ class HomeController
 
         $appointments = Appointment::with([ 'customer', 'company', 'doctor', 'clinic', 'services', 'branch'])
 
-            ->whereDate('date', Carbon::today())->where('branch_id',auth()->user()->branch->id)->withSum('services','price')->get();
+            ->whereDate('date', Carbon::today())->where('branch_id',auth()->user()->branch->id)->where('check_out' ,'!=' , 1)->withSum('services','price')->get();
 
         $TotalPreviousAppointments = Appointment::with(['services', 'branch'])
 
             ->whereDate('date',Carbon::today())->whereDate('created_at','<',Carbon::today())->where('branch_id',auth()->user()->branch->id)->count();
 
 
-
         $mappedcollection = $appointments->map(function($name, $key) use ($appointments) {
 
         return [ $appointments->where('date','<',$name->date )->count() , $name];
 
-
         });
-
 
 //        $user_info = DB::table('appointments')
 //            ->select('clinic_id', DB::raw('count(*) as total'))
@@ -70,11 +66,9 @@ class HomeController
 //            $query->groupBy('name');
 //        }])->get();
 
-       $clinic_waiting = Appointment::query()->whereDate('date', Carbon::today())->where('branch_id',auth()->user()->branch->id)->get()->groupBy('clinic.name', DB::raw('count(*) as total'));
-
+       $clinic_waiting = Appointment::query()->whereDate('date', Carbon::today())->where('branch_id',auth()->user()->branch->id)->where('check_out','!=',1)->get()->groupBy('clinic.name', DB::raw('count(*) as total'));
 
         return view('frontend.home' , compact('branches','clinics', 'companies', 'customers', 'doctors', 'employees', 'products','appointments', 'services','clinic_waiting','TotalPreviousAppointments')) ;
     }
-
 
 }

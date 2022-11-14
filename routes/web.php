@@ -269,6 +269,7 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::get('filterbydate', 'ReportsController@filterbydate')->name('reports.filterbydate');
     Route::get('servicesreport', 'ReportsController@servicesreport')->name('reports.servicesreport');
     Route::get('todayreport', 'ReportsController@todayreport')->name('reports.todayreport');
+    Route::get('yasterdayreport', 'ReportsController@yasterdayreport')->name('reports.yasterdayreport');
     Route::post('reportresult', 'ReportsController@reportresult')->name('reports.reportresult');
 
     //    //////////////////////// HR ////////////////////////////////

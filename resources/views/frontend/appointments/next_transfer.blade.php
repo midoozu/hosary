@@ -106,20 +106,6 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.appointment.fields.service_helper') }}</span>
                         </div>
-                        <div class="form-group col-3 " style="display:none">
-                            <div>
-                                <input type="hidden" name="check_out" value="1">
-{{--                                <input type="checkbox" name="check_out" id="check_out" value="1" {{ $appointment->check_out || old('check_out', 0) === 1 ? 'checked' : '' }}>--}}
-{{--                                <label for="check_out">{{ trans('cruds.appointment.fields.check_out') }}</label>--}}
-                            </div>
-                            @if($errors->has('check_out'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('check_out') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.appointment.fields.check_out_helper') }}</span>
-                        </div>
-
                         <div class="form-group col-3 " style="display: inline-block">
                             <label class="required" for="branch_id">{{ trans('cruds.appointment.fields.branch') }}</label>
                             <select class="form-control select2" name="branch_id" id="branch_id" required>

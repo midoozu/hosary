@@ -85,10 +85,13 @@
                             <span class="help-block">{{ trans('cruds.appointment.fields.branch_helper') }}</span>
                         </div>
                         <div class="form-group col-3 " style="display: inline-block">
-                            <label  for="services">{{ trans('cruds.appointment.fields.service') }}</label>
-                                @foreach($appointment->services as $id => $service)
-                                    <input class="form-control calc calservice" value="{{ $service->id }}" name="services[]" id="services"  readonly>
+                            <label class="required " for="services">{{ 'خدمات مسبقه لا يمكن تغيرها' }}</label>
+
+                            <select class="form-control select2" name="services[]" id="services" multiple disabled>
+                                @foreach($services as $id => $service)
+                                    <option value="{{ $id }}" {{ (in_array($id, old('services', [])) || $appointment->services->contains($id)) ? 'selected' : '' }}>{{ $service }}</option>
                                 @endforeach
+                            </select>
                             @if($errors->has('services'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('services') }}
@@ -96,13 +99,12 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.appointment.fields.service_helper') }}</span>
                         </div>
-
                         <div class="form-group col-3 " style="display: inline-block">
-                            <label class="required " for="services">{{ 'اضافه خدمه' }}</label>
+                            <label class="required " for="services">{{ ' اضافه خدمه جديده فقط' }}</label>
 
-                            <select class="form-control calc calservice select2" name="services[]" id="services" multiple >
+                            <select class="form-control calservice select2" name="services[]" id="services" multiple >
                                 @foreach($services as $id => $service)
-                                    <option value="{{ $id }}" {{ (in_array($id, old('services', [])) || $appointment->services->contains($id)) ? 'selected' : '' }}>{{ $service }}</option>
+                                    <option value="{{ $id }}" >{{ $service }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('services'))
@@ -172,7 +174,7 @@
                             <span class="help-block">{{ trans('cruds.appointment.fields.comment_helper') }}</span>
                         </div>
 
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3" style="display: inline-block" >
                             <label for="other_service">{{ 'خدمات اضافيه' }}</label>
                             <input class="form-control calc " type="number" name="other_service" id="other_service" value="{{ $appointment->other_service ?? '' }}" step="0.01">
                             @if($errors->has('other_service'))
@@ -183,7 +185,7 @@
                             <span class="help-block">{{ trans('cruds.appointment.fields.other_service_helper') }}</span>
                         </div>
 
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3" style="display: inline-block">
                             <label for="discount">{{ 'خصم' }}</label>
                             <input class="form-control calc " type="number" name="discount" id="discount" value="{{ $appointment->discount ?? '' }}" step="0.01">
                             @if($errors->has('other_service'))
@@ -193,7 +195,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.appointment.fields.other_service_helper') }}</span>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3" style="display: inline-block">
                             <label for="dr_supplies">{{ 'مستلزمات الدكتور' }}</label>
                             <input class="form-control calc " type="number" name="dr_supplies" id="dr_supplies" value="{{$appointment->dr_supplies }}" step="0.01">
                             @if($errors->has('total_price'))
@@ -203,7 +205,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.appointment.fields.total_price_helper') }}</span>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3" style="display: inline-block" >
                             <label for="clinic_supplies">{{ 'مستلزمات العياده' }}</label>
                             <input class="form-control calc " type="number" name="clinic_supplies" id="clinic_supplies" value="{{ $appointment->clinic_supplies }}" step="0.01">
                             @if($errors->has('clinic_supplies'))
@@ -242,7 +244,17 @@
 @section('scripts')
     @parent
 
+    <script>
+$(document).ready(function (){
 
+
+        $(".calservice").select2();
+        $(".calservice").on("click", function () {
+            $(".calservice").prop("disabled", true);
+        });
+
+})
+    </script>
 @endsection
 
 

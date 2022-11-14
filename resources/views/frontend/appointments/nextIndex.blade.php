@@ -21,6 +21,9 @@
                             <thead>
                                 <tr>
                                     <th>
+
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.appointment.fields.id') }}
                                     </th>
                                     <th>
@@ -61,6 +64,9 @@
                                 @foreach($appointments as $key => $appointment)
                                     <tr data-entry-id="{{ $appointment->id }}">
                                         <td>
+
+                                        </td>
+                                        <td>
                                             {{ $appointment->id ?? '' }}
                                         </td>
                                         <td>
@@ -92,10 +98,11 @@
                                         </td>
 
                                         <td>
+                                            @if($appointment->pending_delete !== 1 )
                                                 <a class="btn btn-xs btn-info" href="{{ route('frontend.appointments.next_transfer', $appointment->id) }}">
                                                     {{ 'تحويل للحالي ' }}
                                                 </a>
-
+@endif
                                         </td>
 
                                     </tr>

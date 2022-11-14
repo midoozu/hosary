@@ -16,7 +16,7 @@ Next_Appointment extends Model
     use Auditable;
     use HasFactory;
 
-    public $table = 'appointments';
+    public $table = 'next_appointments';
 
     protected $dates = [
         'date',
