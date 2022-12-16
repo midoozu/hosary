@@ -11,6 +11,6 @@ class HRController extends Controller
 
     public function index()
     {
-        return view('admin.HR.index');
+        return view('frontend.HR.index');
     }
 }

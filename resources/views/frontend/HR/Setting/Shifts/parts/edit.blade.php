@@ -1,5 +1,5 @@
 
-            <form action="{{route('admin.hrShifts.update',$find->id)}}" method="post" id="Form">
+            <form action="{{route('frontend.hrShifts.update',$find->id)}}" method="post" id="Form">
             @csrf
             @method('PUT')
             <div class="row">

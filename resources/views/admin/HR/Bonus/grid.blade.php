@@ -1,4 +1,4 @@
-@extends('layouts.admin.admin')
+@extends('layouts.frontend')
 @section('content')
     <style>
         .select2-search__field{

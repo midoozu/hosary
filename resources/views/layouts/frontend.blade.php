@@ -1,3 +1,5 @@
+<html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,14 +19,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css" rel="stylesheet" />
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
-    <link href="{{ asset('/assets/css/loopple/loopple.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/loopple/loopple.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/theme.css') }}" rel="stylesheet" />
 
 </head>
 
-<body class="null">
-<div class="wrapper">
-    <nav class="sidebar js-sidebar" id="sidebar">
+<body class="null"    >
+<div class="wrapper"  >
+    <nav class="sidebar js-sidebar" id="sidebar" >
         <div class="sidebar-content js-simplebar" data-simplebar="init">
             <div class="simplebar-wrapper" style="margin: 0;">
                 <div class="simplebar-height-auto-observer-wrapper">
@@ -34,10 +36,8 @@
                     <div class="simplebar-offset" style="right: 0; bottom: 0;">
                         <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden;" tabindex="0" role="region" aria-label="scrollable content">
                             <div class="simplebar-content" style="padding: 0;">
-                                <a class="sidebar-brand" href="">
-                                    <span class="align-middle">Clinic</span>
-                                </a>
 
+                                <img src="{{asset('venus.jpeg')}}" alt="" height="110px">
                                 <ul class="sidebar-nav">
                                     <li class="sidebar-header">
                                         Pages
@@ -108,6 +108,7 @@
                                     </li>
                                     @endcan
                                     {{--                                    @can('appointment_access')--}}
+                                    @can('deleted')
                                     <li class="sidebar-item">
                                         <a class="sidebar-link" href="{{ route('frontend.appointments.deleted') }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user align-middle">
@@ -116,8 +117,11 @@
                                             </svg> <span class="align-middle"> {{ 'المحذوف' }}</span>
                                         </a>
                                     </li>
+                                    @endcan
                                     {{--                                    @endcan--}}
-                                    {{--                                    @can('appointment_access')--}}
+                                    {{--
+                                                                   @can('appointment_access')--}}
+                                    @can('pending_delete')
                                     <li class="sidebar-item">
                                         <a class="sidebar-link" href="{{ route('frontend.appointments.pendingdelete') }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user align-middle">
@@ -126,8 +130,8 @@
                                             </svg> <span class="align-middle"> {{ 'مطلوب الحذف' }}</span>
                                         </a>
                                     </li>
+                                    @endcan
                                     {{--                                    @endcan--}}
-
 
                                     <li class="sidebar-item">
                                         @can('basic_c_r_m_access')
@@ -151,7 +155,28 @@
                                             @endcan
                                         </ul>
                                     </li>
+{{--                                    @can('HR')--}}
+                                        <li class="sidebar-item">
+                                            <a class="sidebar-link" href="{{ route('frontend.HRIndex') }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user align-middle">
+                                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                    <circle cx="12" cy="7" r="4"></circle>
+                                                </svg> <span class="align-middle"> {{ "شؤون العاملين" }}</span>
+                                            </a>
+                                        </li>
+{{--                                    @endcan--}}
 
+
+                                    {{--                    <li>--}}
+                                    {{--                        <a class="has-arrow" id="employee" href="#" aria-expanded="false"><span class="educate-icon educate-course icon-wrap"></span><span class="mini-click-non"> {{ __('adminmenu.employee_affairs') }}</span></a>--}}
+                                    {{--                        <ul class="submenu-angle page-mini-nb-dp" aria-expanded="false">--}}
+                                    {{--                            <li><a  href="{{url('manageemployee')}}"><span class="mini-sub-pro">{{ __('adminmenu.manage_employee') }}</span></a></li>--}}
+                                    {{--                            <li><a  href="{{url('orgstructure')}}"><span class="mini-sub-pro">{{ __('adminmenu.org_structure') }}</span></a></li>--}}
+                                    {{--                            <li><a  href="#"><span class="mini-sub-pro"> {{ __('adminmenu.attendance_departure') }}</span></a></li>--}}
+                                    {{--                            <li><a  href="#"><span class="mini-sub-pro"> {{ __('adminmenu.manage_salary') }}</span></a></li>--}}
+                                    {{--                            <li><a  href="#"><span class="mini-sub-pro"> {{ __('adminmenu.employee_settings') }}</span></a></li>--}}
+                                    {{--                        </ul>--}}
+                                    {{--                    </li>--}}
 
                                     <li class="sidebar-item">
                                         @can('setting_access')
@@ -238,16 +263,6 @@
 {{--                                  li  @endcan--}}
 
 
-
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-
                                 </ul>
                             </div>
                         </div>
@@ -263,7 +278,7 @@
             </div>
         </div>
     </nav>
-    <div class="main" id="panel">
+    <div class="main" id="panel" >
         <nav class="navbar navbar-expand navbar-light navbar-bg bg-white" id="navbarTop"><a class="sidebar-toggle js-sidebar-toggle">
                 <i class="hamburger align-self-center"></i>
             </a>

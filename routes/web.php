@@ -6,6 +6,65 @@ Auth::routes(['register' => false]);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::get('table-list', function () {
+        return view('pages.table_list');
+    })->name('table');
+
+    Route::get('typography', function () {
+        return view('pages.typography');
+    })->name('typography');
+
+    Route::get('icons', function () {
+        return view('pages.icons');
+    })->name('icons');
+
+    Route::get('map', function () {
+        return view('pages.map');
+    })->name('map');
+
+    Route::get('notifications', function () {
+        return view('pages.notifications');
+    })->name('notifications');
+
+    Route::get('rtl-support', function () {
+        return view('pages.language');
+    })->name('language');
+
+    Route::get('upgrade', function () {
+        return view('pages.upgrade');
+    })->name('upgrade');
+    //--------------------------------------employee manage------------------------------
+    Route::get('manageEmployee', 'EmployeeController@show_all_employee')->name('manageEmployee');
+
+    Route::get('addemployee', 'EmployeeController@add_employee_page')->name('addemployee');
+
+    Route::post('add_new_employee', 'EmployeeController@add_new_employee')->name('add_new_employee');
+
+    Route::get('employeedetail/{id}', 'EmployeeController@show_employee_detail')->name('employeedetail');
+
+    Route::get('editemployee/{id}', 'EmployeeController@edit_employee_page')->name('editemployee');
+
+    Route::post('edit_employee', 'EmployeeController@edit_employee')->name('edit_employee');
+
+    Route::get('employee_activation/{id}/{status}', 'EmployeeController@employee_activation')->name('employee_activation');
+
+    Route::DELETE('manageEmployee/destroy', 'EmployeeController@massDestroy')
+        ->name('manageEmployee.massDestroy');
+
+
+    //////////////////////  org /////////////////////////////
+
+    Route::get('orgstructure', 'EmployeeController@show_all_org');
+    Route::post('add_new_department', 'EmployeeController@add_new_department')->name('add_new_department');
+    Route::post('add_new_job', 'EmployeeController@add_new_job')->name('add_new_job');
+    Route::get('department_activation/{id}/{status}', 'EmployeeController@department_activation');
+    Route::get('job_activation/{id}/{status}', 'EmployeeController@job_activation');
+
+    require __DIR__.'/HRRoutes.php';
+    require __DIR__.'/FinancesRouter.php';
+
+
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
     Route::resource('permissions', 'PermissionsController');
@@ -13,10 +72,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Roles
     Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
     Route::resource('roles', 'RolesController');
-
-    //    //////////////////////// HR ////////////////////////////////
-    require __DIR__.'/HRRoutes.php';
-    require __DIR__.'/FinancesRouter.php';
 
 
     // Users
@@ -149,6 +204,33 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['auth']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
+    Route::get('table-list', function () {
+        return view('pages.table_list');
+    })->name('table');
+
+    Route::get('typography', function () {
+        return view('pages.typography');
+    })->name('typography');
+
+    Route::get('icons', function () {
+        return view('pages.icons');
+    })->name('icons');
+
+    Route::get('map', function () {
+        return view('pages.map');
+    })->name('map');
+
+    Route::get('notifications', function () {
+        return view('pages.notifications');
+    })->name('notifications');
+
+    Route::get('rtl-support', function () {
+        return view('pages.language');
+    })->name('language');
+
+    Route::get('upgrade', function () {
+        return view('pages.upgrade');
+    })->name('upgrade');
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
     Route::resource('permissions', 'PermissionsController');
@@ -275,7 +357,6 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     //    //////////////////////// HR ////////////////////////////////
     require __DIR__.'/HRRoutes.php';
     require __DIR__.'/FinancesRouter.php';
-
 
     // Branches
     Route::delete('branches/destroy', 'BranchesController@massDestroy')->name('branches.massDestroy');

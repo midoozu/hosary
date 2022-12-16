@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\HR;
+namespace App\Http\Controllers\Frontend\HR;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -39,8 +39,8 @@ class EmployeeSanctionController extends Controller
                 ->addColumn('actions', function ($data) {
 
                         $html = "
-                            <a style='float:right; margin:1px;' href='".route('admin.HREmployeeSanctions.edit', $data->id)."' class='btn mb-2 btn-secondary editButton' id='" . $data->id . "'> <i class='fa fa-edit'></i></a>
-                            <form  method='post' action='".route('admin.HREmployeeSanctions.destroy', $data->id)."'>
+                            <a style='float:right; margin:1px;' href='".route('frontend.HREmployeeSanctions.edit', $data->id)."' class='btn mb-2 btn-secondary editButton' id='" . $data->id . "'> <i class='fa fa-edit'></i></a>
+                            <form  method='post' action='".route('frontend.HREmployeeSanctions.destroy', $data->id)."'>
                                 <input type='hidden' name='_method' value='DELETE'>
                                 <input type='hidden' name='_token' value='".csrf_token()."'>
                                 <button  style='float:right; margin:1px;' class='btn mb-2 btn-danger  delete' id='" . $data->id . "'><i class='fa fa-trash'></i> </button>
@@ -52,7 +52,7 @@ class EmployeeSanctionController extends Controller
                 ->rawColumns(['actions','placeholder','sonction_id','employee_id'])->make(true);
         }
 
-        return view('admin.HR.EmployeesSanctions.grid')->with(['route_url'=>route('admin.HREmployeeSanctions.index'), 'page_title'=>'جزاءات الموظفين']);
+        return view('frontend.HR.EmployeesSanctions.grid')->with(['route_url'=>route('frontend.HREmployeeSanctions.index'), 'page_title'=>'جزاءات الموظفين']);
     }
 
     /**
@@ -71,10 +71,10 @@ class EmployeeSanctionController extends Controller
             'page_title'  => 'إضافة جزاء موظف',
             'employees'   => $employees,
             'sanctions'   => $sanctions,
-            'form_action' => route('admin.HREmployeeSanctions.store')
+            'form_action' => route('frontend.HREmployeeSanctions.store')
         ];
 
-        return view('admin.HR.EmployeesSanctions.form')->with($output);
+        return view('frontend.HR.EmployeesSanctions.form')->with($output);
     }
 
     /**
@@ -100,7 +100,7 @@ class EmployeeSanctionController extends Controller
 
 
          toastr()->success("تم إضافة جزاء موظف بنجاح");
-         return redirect()->route('admin.HREmployeeSanctions.index');
+         return redirect()->route('frontend.HREmployeeSanctions.index');
     }
 
     /**
@@ -138,10 +138,10 @@ class EmployeeSanctionController extends Controller
             'employees'   => $employees,
             'sanctions'   => $sanctions,
             'row_data'    => $row_data,
-            'form_action' => route('admin.HREmployeeSanctions.update', $id)
+            'form_action' => route('frontend.HREmployeeSanctions.update', $id)
         ];
 
-        return view('admin.HR.EmployeesSanctions.form')->with($output);
+        return view('frontend.HR.EmployeesSanctions.form')->with($output);
     }
 
     /**
@@ -169,7 +169,7 @@ class EmployeeSanctionController extends Controller
 
 
          toastr()->success("تم تعديل جزاء موظف بنجاح");
-         return redirect()->route('admin.HREmployeeSanctions.index');
+         return redirect()->route('frontend.HREmployeeSanctions.index');
     }
 
     /**

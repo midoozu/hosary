@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\HR;
+namespace App\Http\Controllers\Frontend\HR;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -37,8 +37,8 @@ class EmployeeSalaryAdvance extends Controller
                     if($data->pay_status == 'new')
                     {
                         $html = "
-                            <a style='float:right; margin:1px;' href='".route('admin.HREmployeeAdvances.edit', $data->id)."' class='btn mb-2 btn-secondary editButton' id='" . $data->id . "'> <i class='fa fa-edit'></i></a>
-                            <form  method='post' action='".route('admin.HREmployeeAdvances.destroy', $data->id)."'>
+                            <a style='float:right; margin:1px;' href='".route('frontend.HREmployeeAdvances.edit', $data->id)."' class='btn mb-2 btn-secondary editButton' id='" . $data->id . "'> <i class='fa fa-edit'></i></a>
+                            <form  method='post' action='".route('frontend.HREmployeeAdvances.destroy', $data->id)."'>
                                 <input type='hidden' name='_method' value='DELETE'>
                                 <input type='hidden' name='_token' value='".csrf_token()."'>
                                 <button  style='float:right; margin:1px;' class='btn mb-2 btn-danger  delete' id='" . $data->id . "'><i class='fa fa-trash'></i> </button>
@@ -51,7 +51,7 @@ class EmployeeSalaryAdvance extends Controller
                 ->rawColumns(['actions','title','value','placeholder'])->make(true);
         }
 
-        return view('admin.HR.Advances.grid')->with(['route_url'=>route('admin.HREmployeeAdvances.index'), 'page_title'=>'السلف']);
+        return view('frontend.HR.Advances.grid')->with(['route_url'=>route('frontend.HREmployeeAdvances.index'), 'page_title'=>'السلف']);
     }
 
     /**
@@ -69,10 +69,10 @@ class EmployeeSalaryAdvance extends Controller
         $output = [
             'page_title'  => 'إضافة سلفة',
             'employees'   => $employees,
-            'form_action' => route('admin.HREmployeeAdvances.store')
+            'form_action' => route('frontend.HREmployeeAdvances.store')
         ];
 
-        return view('admin.HR.Advances.form')->with($output);
+        return view('frontend.HR.Advances.form')->with($output);
     }
 
     /**
@@ -140,7 +140,7 @@ class EmployeeSalaryAdvance extends Controller
 
 
         toastr()->success("تم إضافة سلفة  بنجاح");
-        return redirect()->route('admin.HREmployeeAdvances.index');
+        return redirect()->route('frontend.HREmployeeAdvances.index');
 
     }
 
@@ -177,10 +177,10 @@ class EmployeeSalaryAdvance extends Controller
             'page_title'  => 'تعديل سلفة',
             'employees'   => $employees,
             'row_data'    => $row_data,
-            'form_action' => route('admin.HREmployeeAdvances.update', $id)
+            'form_action' => route('frontend.HREmployeeAdvances.update', $id)
         ];
 
-        return view('admin.HR.Advances.form')->with($output);
+        return view('frontend.HR.Advances.form')->with($output);
     }
 
     /**
@@ -254,7 +254,7 @@ class EmployeeSalaryAdvance extends Controller
 
 
         toastr()->success("تم تعديل سلفة  بنجاح");
-        return redirect()->route('admin.HREmployeeAdvances.index');
+        return redirect()->route('frontend.HREmployeeAdvances.index');
     }
 
     /**

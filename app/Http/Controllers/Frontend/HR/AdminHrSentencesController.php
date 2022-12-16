@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\HR;
+namespace App\Http\Controllers\Frontend\HR;
 
 use App\Http\Controllers\Controller;
 use App\Models\HR\HrSonction;
@@ -37,7 +37,7 @@ class AdminHrSentencesController extends Controller
 
 
 
-        return view("admin/HR/Setting/Sentence/index");
+        return view("frontend/HR/Setting/Sentence/index");
     }
 
     /**
@@ -49,7 +49,7 @@ class AdminHrSentencesController extends Controller
     {
 
         if ($request->ajax()){
-            $returnHTML = view("admin/HR/Setting/Sentence/parts/create")
+            $returnHTML = view("frontend/HR/Setting/Sentence/parts/create")
                 ->with([
                 ])
                 ->render();
@@ -101,7 +101,7 @@ class AdminHrSentencesController extends Controller
 
 
 
-        $returnHTML = view("admin/HR/Setting/Sentence/parts/edit")
+        $returnHTML = view("frontend/HR/Setting/Sentence/parts/edit")
             ->with([
                 'find' => $find
             ])

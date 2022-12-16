@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\HR;
+namespace App\Http\Controllers\Frontend\HR;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -34,8 +34,8 @@ class EvaluationsController extends Controller
                 ->addColumn('actions', function ($data) {
 
                         $html = "
-                            <a style='float:right; margin:1px;' href='".route('admin.HREmployeeEvaluations.edit', $data->id)."' class='btn mb-2 btn-secondary editButton' id='" . $data->id . "'> <i class='fa fa-edit'></i></a>
-                            <form  method='post' action='".route('admin.HREmployeeEvaluations.destroy', $data->id)."'>
+                            <a style='float:right; margin:1px;' href='".route('frontend.HREmployeeEvaluations.edit', $data->id)."' class='btn mb-2 btn-secondary editButton' id='" . $data->id . "'> <i class='fa fa-edit'></i></a>
+                            <form  method='post' action='".route('frontend.HREmployeeEvaluations.destroy', $data->id)."'>
                                 <input type='hidden' name='_method' value='DELETE'>
                                 <input type='hidden' name='_token' value='".csrf_token()."'>
                                 <button  style='float:right; margin:1px;' class='btn mb-2 btn-danger  delete' id='" . $data->id . "'><i class='fa fa-trash'></i> </button>
@@ -48,7 +48,7 @@ class EvaluationsController extends Controller
                 ->rawColumns(['actions','job_id','placeholder'])->make(true);
         }
 
-        return view('admin.HR.Evaluations.grid')->with(['route_url'=>route('admin.HREmployeeEvaluations.index'), 'page_title'=>'التقييمات']);
+        return view('frontend.HR.Evaluations.grid')->with(['route_url'=>route('frontend.HREmployeeEvaluations.index'), 'page_title'=>'التقييمات']);
     }
 
     /**
@@ -64,10 +64,10 @@ class EvaluationsController extends Controller
         $output = [
             'page_title'  => 'إضافة تقييم',
             'jobs'        => $jobs,
-            'form_action' => route('admin.HREmployeeEvaluations.store')
+            'form_action' => route('frontend.HREmployeeEvaluations.store')
         ];
 
-        return view('admin.HR.Evaluations.form')->with($output);
+        return view('frontend.HR.Evaluations.form')->with($output);
     }
 
     /**
@@ -86,7 +86,7 @@ class EvaluationsController extends Controller
 
 
 
-        return redirect()->route('admin.HREmployeeEvaluations.index')->with(['success' => 'تمت الإضافة بنجاح']);
+        return redirect()->route('frontend.HREmployeeEvaluations.index')->with(['success' => 'تمت الإضافة بنجاح']);
     }
 
     /**
@@ -116,10 +116,10 @@ class EvaluationsController extends Controller
             'page_title'  => 'تعديل تقييم',
             'jobs'        => $jobs,
             'row_data'    => $row_data,
-            'form_action' => route('admin.HREmployeeEvaluations.update', $id)
+            'form_action' => route('frontend.HREmployeeEvaluations.update', $id)
         ];
 
-        return view('admin.HR.Evaluations.form')->with($output);
+        return view('frontend.HR.Evaluations.form')->with($output);
     }
 
     /**
@@ -141,7 +141,7 @@ class EvaluationsController extends Controller
 
 
 
-        return redirect()->route('admin.HREmployeeEvaluations.index')->with(['success' => 'تم تعديل التقييم بنجاح']);
+        return redirect()->route('frontend.HREmployeeEvaluations.index')->with(['success' => 'تم تعديل التقييم بنجاح']);
     }
 
     /**

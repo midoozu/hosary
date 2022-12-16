@@ -31,331 +31,352 @@
                 </div>
     <div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addnew">
-                {{'اضافه حجز حالي'}}
-            </button>
-            <!-- Modal -->
-            <div class="modal fade addnewt" id="addnew" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <form method="POST" action="{{ route("frontend.appointments.store") }}" enctype="multipart/form-data">
-                                    @method('POST')
-                                    @csrf
-                                    <div class="form-group">
-                                        <label class="required" for="date">{{ trans('cruds.appointment.fields.date') }}</label>
-                                        <input class="form-control datetime" type="text" name="date" id="date" value="{{ now() }}" readonly>
-                                        @if($errors->has('date'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('date') }}
-                                            </div>
-                                        @endif
-                                        <span class="help-block">{{ trans('cruds.appointment.fields.date_helper') }}</span>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6 ">
-                                            <label class="required" for="user_id">{{ 'كود الموظف' }}</label>
-                                            <input class="form-control"  name="user_id" id="user_id" value="{{ auth()->id() }}" readonly>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="required" for="employee_id">{{ 'اسم الموظف' }}</label>
-                                            <select class="form-control " name="employee_id" id="employee_id" required>
-                                                <option value="{{ auth()->id() }}"  >{{ auth()->user()->name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label for="customer_id">{{ 'رقم العميل' }}</label>
-                                            <input list="customer" id="customer_id" name="customer_id" class="form-control">
-                                            <datalist id="customer">
-                                                @foreach($customers as $id => $entry)
-                                                    <option value="{{ $entry->id }}" >{{ $entry->phone }} {{$entry->first_name}}</option>
-                                                @endforeach
-                                            </datalist>
+    <div class="container">
 
-                                        </div>
-                                        <div class="form-group col-md-6" >
-                                            <label for="">{{ 'اسم العميل' }}</label>
-                                            <input class="form-control"  name="customer_name" id="customer_name" value="">
+        <div class="row">
+            <div class="col-12">
+                <!-- Button trigger modal -->
+               <div class="col-3" style="display: inline">
 
-                                        </div>
-                                    </div>
-                                    <div class="row">
+                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addnew">
+                       {{'اضافه حجز حالي'}}
+                   </button>
+                   <!-- Modal -->
+                   <div class="modal fade addnewt" id="addnew" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                       <div class="modal-dialog">
+                           <div class="modal-content">
+                               <div class="modal-header">
+                                   <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                               </div>
+                               <div class="modal-body">
+                                   <div class="container-fluid">
+                                       <form method="POST" action="{{ route("frontend.appointments.store") }}" enctype="multipart/form-data">
+                                           @method('POST')
+                                           @csrf
+                                           <div class="form-group">
+                                               <label class="required" for="date">{{ trans('cruds.appointment.fields.date') }}</label>
+                                               <input class="form-control datetime" type="text" name="date" id="date" value="{{ now() }}" readonly>
+                                               @if($errors->has('date'))
+                                                   <div class="invalid-feedback">
+                                                       {{ $errors->first('date') }}
+                                                   </div>
+                                               @endif
+                                               <span class="help-block">{{ trans('cruds.appointment.fields.date_helper') }}</span>
+                                           </div>
+                                           <div class="row">
+                                               <div class="form-group col-md-6 ">
+                                                   <label class="required" for="user_id">{{ 'كود الموظف' }}</label>
+                                                   <input class="form-control"  name="user_id" id="user_id" value="{{ auth()->id() }}" readonly>
+                                               </div>
+                                               <div class="form-group col-md-6">
+                                                   <label class="required" for="employee_id">{{ 'اسم الموظف' }}</label>
+                                                   <select class="form-control " name="employee_id" id="employee_id" required>
+                                                       <option value="{{ auth()->id() }}"  >{{ auth()->user()->name }}</option>
+                                                   </select>
+                                               </div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="form-group col-md-6">
+                                                   <label for="customer_id">{{ 'رقم العميل' }}</label>
+                                                   <input list="customer" id="customer_id" name="customer_id" class="form-control">
+                                                   <datalist id="customer">
+                                                       @foreach($customers as $id => $entry)
+                                                           <option value="{{ $entry->id }}" >{{ $entry->phone }} {{$entry->first_name}}</option>
+                                                       @endforeach
+                                                   </datalist>
 
-                                        <div class="form-group col-md-6">
-                                            <label class="required" for="clinic_id">{{ trans('cruds.appointment.fields.clinic') }}</label>
+                                               </div>
+                                               <div class="form-group col-md-6" >
+                                                   <label for="">{{ 'اسم العميل' }}</label>
+                                                   <input class="form-control"  name="customer_name" id="customer_name" value="">
 
-                                            <input list="clinic_list"  class="form-control" name="clinic_id" id="clinic_id" >
-                                            <datalist id="clinic_list">
-                                                @foreach($clinics as $id => $entry)
-                                                    <option value="{{ $id }}" >{{ $entry }}</option>
-                                                @endforeach
-                                            </datalist>
+                                               </div>
+                                           </div>
+                                           <div class="row">
 
-                                        </div>
+                                               <div class="form-group col-md-6">
+                                                   <label class="required" for="clinic_id">{{ trans('cruds.appointment.fields.clinic') }}</label>
 
-                                        <div class="form-group col-md-6">
-                                            <label class="required" for="doctor_id">{{ trans('cruds.appointment.fields.doctor') }}</label>
-                                            <select class="form-control select2" name="doctor_id" id="doctor_id" required>
-                                                @foreach($doctors as $id => $entry)
-                                                    <option value="{{ $id }}" {{ old('doctor_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                                @endforeach
-                                            </select>
-                                            @if($errors->has('doctor'))
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first('doctor') }}
-                                                </div>
-                                            @endif
-                                            <span class="help-block">{{ trans('cruds.appointment.fields.doctor_helper') }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group ">
-                                        <label class="required" for="services">{{ trans('cruds.appointment.fields.service') }}</label>
-                                        <div style="padding-bottom: 4px">
-                                            <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                            <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                                        </div>
+                                                   <input list="clinic_list"  class="form-control" name="clinic_id" id="clinic_id" >
+                                                   <datalist id="clinic_list">
+                                                       @foreach($clinics as $id => $entry)
+                                                           <option value="{{ $id }}" >{{ $entry }}</option>
+                                                       @endforeach
+                                                   </datalist>
 
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <select class="form-control select2" name="services[]" id="services" multiple required>
-                                                    @foreach($services as $id => $service)
-                                                        <option value="{{ $id }}" {{ in_array($id, old('services', [])) ? 'selected' : '' }}>{{ $service }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        @if($errors->has('services'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('services') }}
-                                            </div>
-                                        @endif
-                                        <span class="help-block">{{ trans('cruds.appointment.fields.service_helper') }}</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="company_id">{{ trans('cruds.appointment.fields.company') }}</label>
-                                        <select class="form-control select2" name="company_id" id="company_id">
-                                            @foreach($companies as $id => $entry)
-                                                <option value="{{ $id }}" {{ old('company_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                            @endforeach
-                                        </select>
-                                        @if($errors->has('company'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('company') }}
-                                            </div>
-                                        @endif
-                                        <span class="help-block">{{ trans('cruds.appointment.fields.company_helper') }}</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" name="branch_id" id="branch_id" value="{{auth()->user()->branch->id}}" hidden>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="comment">{{ trans('cruds.appointment.fields.comment') }}</label>
-                                        <input class="form-control" type="text" name="comment" id="comment" value="{{ old('comment', '') }}">
-                                        @if($errors->has('comment'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('comment') }}
-                                            </div>
-                                        @endif
-                                        <span class="help-block">{{ trans('cruds.appointment.fields.comment_helper') }}</span>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-4">
-                                            <label for="other_service">{{ 'خدمات اضافيه' }}</label>
-                                            <input class="form-control" type="number" name="other_service" id="other_service" value="{{ old('other_service', '') }}" step="0.01">
-                                            @if($errors->has('other_service'))
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first('other_service') }}
-                                                </div>
-                                            @endif
-                                            <span class="help-block">{{ trans('cruds.appointment.fields.other_service_helper') }}</span>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="discount">{{ 'خصم' }}</label>
-                                            <input class="form-control" type="number" name="discount" id="discount" value="{{ old('other_service', '') }}" step="0.01">
-                                            @if($errors->has('other_service'))
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first('other_service') }}
-                                                </div>
-                                            @endif
-                                            <span class="help-block">{{ trans('cruds.appointment.fields.other_service_helper') }}</span>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="dr_supplies">{{ 'مستلزمات الدكتور' }}</label>
-                                            <input class="form-control" type="number" name="dr_supplies" id="dr_supplies" value="{{ old('total_price', '') }}" step="0.01">
-                                            @if($errors->has('total_price'))
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first('total_price') }}
-                                                </div>
-                                            @endif
-                                            <span class="help-block">{{ trans('cruds.appointment.fields.total_price_helper') }}</span>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="clinic_supplies">{{ 'مستلزمات العياده' }}</label>
-                                            <input class="form-control" type="number" name="clinic_supplies" id="dr_supplies" value="{{ old('clinic_supplies', '') }}" step="0.01">
-                                            @if($errors->has('clinic_supplies'))
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first('clinic_supplies') }}
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">{{'حفظ و طباعه'}}</button>
+                                               </div>
 
-                                        <button class="btn btn-danger" type="submit">
-                                            {{ trans('global.save') }}
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                                               <div class="form-group col-md-6">
+                                                   <label class="required" for="doctor_id">{{ trans('cruds.appointment.fields.doctor') }}</label>
+                                                   <select class="form-control select2" name="doctor_id" id="doctor_id" required>
+                                                       @foreach($doctors as $id => $entry)
+                                                           <option value="{{ $id }}" {{ old('doctor_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                                       @endforeach
+                                                   </select>
+                                                   @if($errors->has('doctor'))
+                                                       <div class="invalid-feedback">
+                                                           {{ $errors->first('doctor') }}
+                                                       </div>
+                                                   @endif
+                                                   <span class="help-block">{{ trans('cruds.appointment.fields.doctor_helper') }}</span>
+                                               </div>
+                                           </div>
+                                           <div class="form-group ">
+                                               <label class="required" for="services">{{ trans('cruds.appointment.fields.service') }}</label>
+                                               <div style="padding-bottom: 4px">
+                                                   <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                                   <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                                               </div>
 
-                </div>
+                                               <div class="row">
+                                                   <div class="col-12">
+                                                       <select class="form-control select2" name="services[]" id="services" multiple required>
+                                                           @foreach($services as $id => $service)
+                                                               <option value="{{ $id }}" {{ in_array($id, old('services', [])) ? 'selected' : '' }}>{{ $service }}</option>
+                                                           @endforeach
+                                                       </select>
+                                                   </div>
+                                               </div>
+                                               @if($errors->has('services'))
+                                                   <div class="invalid-feedback">
+                                                       {{ $errors->first('services') }}
+                                                   </div>
+                                               @endif
+                                               <span class="help-block">{{ trans('cruds.appointment.fields.service_helper') }}</span>
+                                           </div>
+                                           <div class="form-group">
+                                               <label for="company_id">{{ trans('cruds.appointment.fields.company') }}</label>
+                                               <select class="form-control select2" name="company_id" id="company_id">
+                                                   @foreach($companies as $id => $entry)
+                                                       <option value="{{ $id }}" {{ old('company_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                                   @endforeach
+                                               </select>
+                                               @if($errors->has('company'))
+                                                   <div class="invalid-feedback">
+                                                       {{ $errors->first('company') }}
+                                                   </div>
+                                               @endif
+                                               <span class="help-block">{{ trans('cruds.appointment.fields.company_helper') }}</span>
+                                           </div>
+                                           <div class="form-group">
+                                               <input type="text" name="branch_id" id="branch_id" value="{{auth()->user()->branch->id}}" hidden>
+                                           </div>
+                                           <div class="form-group">
+                                               <label for="comment">{{ trans('cruds.appointment.fields.comment') }}</label>
+                                               <input class="form-control" type="text" name="comment" id="comment" value="{{ old('comment', '') }}">
+                                               @if($errors->has('comment'))
+                                                   <div class="invalid-feedback">
+                                                       {{ $errors->first('comment') }}
+                                                   </div>
+                                               @endif
+                                               <span class="help-block">{{ trans('cruds.appointment.fields.comment_helper') }}</span>
+                                           </div>
+                                           <div class="row">
+                                               <div class="form-group col-md-4">
+                                                   <label for="other_service">{{ 'خدمات اضافيه' }}</label>
+                                                   <input class="form-control" type="number" name="other_service" id="other_service" value="{{ old('other_service', '') }}" step="0.01">
+                                                   @if($errors->has('other_service'))
+                                                       <div class="invalid-feedback">
+                                                           {{ $errors->first('other_service') }}
+                                                       </div>
+                                                   @endif
+                                                   <span class="help-block">{{ trans('cruds.appointment.fields.other_service_helper') }}</span>
+                                               </div>
+                                               <div class="form-group col-md-4">
+                                                   <label for="discount">{{ 'خصم' }}</label>
+                                                   <input class="form-control" type="number" name="discount" id="discount" value="{{ old('other_service', '') }}" step="0.01">
+                                                   @if($errors->has('other_service'))
+                                                       <div class="invalid-feedback">
+                                                           {{ $errors->first('other_service') }}
+                                                       </div>
+                                                   @endif
+                                                   <span class="help-block">{{ trans('cruds.appointment.fields.other_service_helper') }}</span>
+                                               </div>
+                                               <div class="form-group col-md-4">
+                                                   <label for="dr_supplies">{{ 'مستلزمات الدكتور' }}</label>
+                                                   <input class="form-control" type="number" name="dr_supplies" id="dr_supplies" value="{{ old('total_price', '') }}" step="0.01">
+                                                   @if($errors->has('total_price'))
+                                                       <div class="invalid-feedback">
+                                                           {{ $errors->first('total_price') }}
+                                                       </div>
+                                                   @endif
+                                                   <span class="help-block">{{ trans('cruds.appointment.fields.total_price_helper') }}</span>
+                                               </div>
+                                               <div class="form-group col-md-4">
+                                                   <label for="clinic_supplies">{{ 'مستلزمات العياده' }}</label>
+                                                   <input class="form-control" type="number" name="clinic_supplies" id="dr_supplies" value="{{ old('clinic_supplies', '') }}" step="0.01">
+                                                   @if($errors->has('clinic_supplies'))
+                                                       <div class="invalid-feedback">
+                                                           {{ $errors->first('clinic_supplies') }}
+                                                       </div>
+                                                   @endif
+                                               </div>
+                                           </div>
+                                           <div class="modal-footer">
+                                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                               <button type="button" class="btn btn-primary">{{'حفظ و طباعه'}}</button>
+
+                                               <button class="btn btn-danger" type="submit">
+                                                   {{ trans('global.save') }}
+                                               </button>
+                                           </div>
+                                       </form>
+                                   </div>
+                               </div>
+                           </div>
+
+                       </div>
+                   </div>
+
+               </div>
+               <div class="col-3" style="display: inline">
+                   <a href="{{ route('frontend.appointments.index') }}" class="btn btn-success">{{'جميع الحجوزات'}}</a>
+
+               </div>
+
+            <div class="col-3" style="display: inline">
+                <a href="{{ route('frontend.appointments.nextIndex') }}" class="btn btn-outline-danger">{{'الحجز القادم'}}</a>
             </div>
-            <a href="{{ route('frontend.appointments.index') }}" class="btn btn-success">{{'جميع الحجوزات'}}</a>
 
-            <a href="{{ route('frontend.appointments.nextIndex') }}" class="btn btn-outline-danger">{{'الحجز القادم'}}</a>
+           <div class="col-3" style="display: inline">
 
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addnew">
-                {{'جرد مستهلكات'}}
-            </button>
-            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addnew">
-                {{'استقبال مخزون'}}
-            </button>
-            <button type="button" class="btn btn-warning " data-bs-toggle="modal" data-bs-target="#addnext">
-                {{'اضافه حجز قادم'}}
-            </button>
-            <div class="modal fade addnext" id="addnext" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">اضافه حجز قادم </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body  ">
-                            <div class="container-fluid">
-                                <form method="POST" action="{{ route("frontend.appointments.next") }}" enctype="multipart/form-data">
-                                    @method('POST')
-                                    @csrf
-                                    <div class="form-group">
-                                        <label class="required" for="date">{{ trans('cruds.appointment.fields.date') }}</label>
-                                        <input class="form-control datetime" type="text" name="date" id="date" value="{{ now() }}" required>
-                                        @if($errors->has('date'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('date') }}
-                                            </div>
-                                        @endif
-                                        <span class="help-block">{{ trans('cruds.appointment.fields.date_helper') }}</span>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6 ">
-                                            <label class="required" for="user_id">{{ 'كود الموظف' }}</label>
-                                            <input class="form-control"  name="user_id" id="user_id" value="{{ auth()->id() }}" readonly>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="required" for="employee_id">{{ 'اسم الموظف' }}</label>
-                                            <select class="form-control " name="employee_id" id="employee_id" required>
-                                                <option value="{{ auth()->id() }}"  >{{ auth()->user()->name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label for="customer_id">{{ 'رقم العميل' }}</label>
-                                            <input list="customer" id="customer_id" name="customer_id" class="form-control">
-                                            <datalist id="customer">
-                                                @foreach($customers as $id => $entry)
-                                                    <option value="{{ $entry->id }}" >{{ $entry->phone }} {{$entry->first_name}}</option>
-                                                @endforeach
-                                            </datalist>
-                                        </div>
-                                        <div class="form-group col-md-6" >
-                                            <label for="">{{ 'اسم العميل' }}</label>
-                                            <input class="form-control"  name="customer_name" id="customer_name" value="">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label class="required" for="clinic_id">{{ trans('cruds.appointment.fields.clinic') }}</label>
+               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addnew">
+                   {{'جرد مستهلكات'}}
+               </button>
+           </div>
+                <div class="col-3" style="display: inline">
+               <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addnew">
+                   {{'استقبال مخزون'}}
+               </button>
+                </div>
+                <div class="col-3" style="display: inline">
+               <button type="button" class="btn btn-warning " data-bs-toggle="modal" data-bs-target="#addnext">
+                   {{'اضافه حجز قادم'}}
+               </button>
+               <div class="modal fade addnext" id="addnext" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                   <div class="modal-dialog">
+                       <div class="modal-content">
+                           <div class="modal-header">
+                               <h5 class="modal-title" id="exampleModalLabel">اضافه حجز قادم </h5>
+                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                           </div>
+                           <div class="modal-body  ">
+                               <div class="container-fluid">
+                                   <form method="POST" action="{{ route("frontend.appointments.next") }}" enctype="multipart/form-data">
+                                       @method('POST')
+                                       @csrf
+                                       <div class="form-group">
+                                           <label class="required" for="date">{{ trans('cruds.appointment.fields.date') }}</label>
+                                           <input class="form-control datetime" type="text" name="date" id="date" value="{{ now() }}" required>
+                                           @if($errors->has('date'))
+                                               <div class="invalid-feedback">
+                                                   {{ $errors->first('date') }}
+                                               </div>
+                                           @endif
+                                           <span class="help-block">{{ trans('cruds.appointment.fields.date_helper') }}</span>
+                                       </div>
+                                       <div class="row">
+                                           <div class="form-group col-md-6 ">
+                                               <label class="required" for="user_id">{{ 'كود الموظف' }}</label>
+                                               <input class="form-control"  name="user_id" id="user_id" value="{{ auth()->id() }}" readonly>
+                                           </div>
+                                           <div class="form-group col-md-6">
+                                               <label class="required" for="employee_id">{{ 'اسم الموظف' }}</label>
+                                               <select class="form-control " name="employee_id" id="employee_id" required>
+                                                   <option value="{{ auth()->id() }}"  >{{ auth()->user()->name }}</option>
+                                               </select>
+                                           </div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="form-group col-md-6">
+                                               <label for="customer_id">{{ 'رقم العميل' }}</label>
+                                               <input list="customer" id="customer_id" name="customer_id" class="form-control">
+                                               <datalist id="customer">
+                                                   @foreach($customers as $id => $entry)
+                                                       <option value="{{ $entry->id }}" >{{ $entry->phone }} {{$entry->first_name}}</option>
+                                                   @endforeach
+                                               </datalist>
+                                           </div>
+                                           <div class="form-group col-md-6" >
+                                               <label for="">{{ 'اسم العميل' }}</label>
+                                               <input class="form-control"  name="customer_name" id="customer_name" value="">
+                                           </div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="form-group col-md-6">
+                                               <label class="required" for="clinic_id">{{ trans('cruds.appointment.fields.clinic') }}</label>
 
-                                            <input list="clinic_list"  class="form-control" name="clinic_id" id="clinic_id" >
-                                            <datalist id="clinic_list">
-                                                @foreach($clinics as $id => $entry)
-                                                    <option value="{{ $id }}" >{{ $entry }}</option>
-                                                @endforeach
-                                            </datalist>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="required" for="doctor_id">{{ trans('cruds.appointment.fields.doctor') }}</label>
-                                            <select class="form-control select2" name="doctor_id" id="doctor_id" required>
-                                                @foreach($doctors as $id => $entry)
-                                                    <option value="{{ $id }}" {{ old('doctor_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                                @endforeach
-                                            </select>
-                                            @if($errors->has('doctor'))
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first('doctor') }}
-                                                </div>
-                                            @endif
-                                            <span class="help-block">{{ trans('cruds.appointment.fields.doctor_helper') }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="company_id">{{ trans('cruds.appointment.fields.company') }}</label>
-                                        <select class="form-control select2" name="company_id" id="company_id">
-                                            @foreach($companies as $id => $entry)
-                                                <option value="{{ $id }}" {{ old('company_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                            @endforeach
-                                        </select>
-                                        @if($errors->has('company'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('company') }}
-                                            </div>
-                                        @endif
-                                        <span class="help-block">{{ trans('cruds.appointment.fields.company_helper') }}</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" name="branch_id" id="branch_id" value="{{auth()->user()->branch->id}}" hidden>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="comment">{{ trans('cruds.appointment.fields.comment') }}</label>
-                                        <input class="form-control" type="text" name="comment" id="comment" value="{{ old('comment', '') }}">
-                                        @if($errors->has('comment'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('comment') }}
-                                            </div>
-                                        @endif
-                                        <span class="help-block">{{ trans('cruds.appointment.fields.comment_helper') }}</span>
-                                    </div>
-                                    <div class="row">
+                                               <input list="clinic_list"  class="form-control" name="clinic_id" id="clinic_id" >
+                                               <datalist id="clinic_list">
+                                                   @foreach($clinics as $id => $entry)
+                                                       <option value="{{ $id }}" >{{ $entry }}</option>
+                                                   @endforeach
+                                               </datalist>
+                                           </div>
+                                           <div class="form-group col-md-6">
+                                               <label class="required" for="doctor_id">{{ trans('cruds.appointment.fields.doctor') }}</label>
+                                               <select class="form-control select2" name="doctor_id" id="doctor_id" required>
+                                                   @foreach($doctors as $id => $entry)
+                                                       <option value="{{ $id }}" {{ old('doctor_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                                   @endforeach
+                                               </select>
+                                               @if($errors->has('doctor'))
+                                                   <div class="invalid-feedback">
+                                                       {{ $errors->first('doctor') }}
+                                                   </div>
+                                               @endif
+                                               <span class="help-block">{{ trans('cruds.appointment.fields.doctor_helper') }}</span>
+                                           </div>
+                                       </div>
+                                       <div class="form-group">
+                                           <label for="company_id">{{ trans('cruds.appointment.fields.company') }}</label>
+                                           <select class="form-control select2" name="company_id" id="company_id">
+                                               @foreach($companies as $id => $entry)
+                                                   <option value="{{ $id }}" {{ old('company_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                               @endforeach
+                                           </select>
+                                           @if($errors->has('company'))
+                                               <div class="invalid-feedback">
+                                                   {{ $errors->first('company') }}
+                                               </div>
+                                           @endif
+                                           <span class="help-block">{{ trans('cruds.appointment.fields.company_helper') }}</span>
+                                       </div>
+                                       <div class="form-group">
+                                           <input type="text" name="branch_id" id="branch_id" value="{{auth()->user()->branch->id}}" hidden>
+                                       </div>
+                                       <div class="form-group">
+                                           <label for="comment">{{ trans('cruds.appointment.fields.comment') }}</label>
+                                           <input class="form-control" type="text" name="comment" id="comment" value="{{ old('comment', '') }}">
+                                           @if($errors->has('comment'))
+                                               <div class="invalid-feedback">
+                                                   {{ $errors->first('comment') }}
+                                               </div>
+                                           @endif
+                                           <span class="help-block">{{ trans('cruds.appointment.fields.comment_helper') }}</span>
+                                       </div>
+                                       <div class="row">
 
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button class="btn btn-danger" type="submit">
-                                            {{ trans('global.save') }}
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                                       </div>
+                                       <div class="modal-footer">
+                                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                           <button class="btn btn-danger" type="submit">
+                                               {{ trans('global.save') }}
+                                           </button>
+                                       </div>
+                                   </form>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <br>
                 <div class="row removable">
                     <div class="col-12 col-lg-9 col-xxl-10 d-flex">
                         <div class="card flex-fill">
@@ -524,6 +545,7 @@
                         </div>
                     </div>
                     <div class="col-12 col-lg-3 col-xxl-2 ">
+
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">

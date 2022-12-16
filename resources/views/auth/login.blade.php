@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="login-box">
+<div class="login-box" >
     <div class="login-logo">
         <div class="login-logo">
             <a href="{{ route('admin.home') }}">
@@ -8,8 +8,9 @@
             </a>
         </div>
     </div>
-    <div class="card">
+    <div class="card" >
         <div class="card-body login-card-body">
+
             <p class="login-box-msg">
                 {{ trans('global.login') }}
             </p>
@@ -22,15 +23,8 @@
 
             <form action="{{ route('login') }}" method="POST">
                 @csrf
-
                 <div class="form-group">
-                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" required autocomplete="email" autofocus placeholder="{{ trans('global.login_email') }}" name="email" value="{{ old('email', null) }}">
-
-                    @if($errors->has('email'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('email') }}
-                        </div>
-                    @endif
+                    <input id="email" type="number" class="form-control"  autofocus placeholder="{{ 'كود او موبايل' }}" name="email" value="">
                 </div>
 
                 <div class="form-group">
@@ -62,6 +56,7 @@
             </form>
 
 
+
             @if(Route::has('password.request'))
                 <p class="mb-1">
                     <a href="{{ route('password.request') }}">
@@ -73,7 +68,12 @@
 
             </p>
         </div>
+
+
+
+
         <!-- /.login-card-body -->
+
     </div>
 </div>
 @endsection

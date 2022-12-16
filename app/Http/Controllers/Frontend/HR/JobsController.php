@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\HR;
+namespace App\Http\Controllers\Frontend\HR;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -48,8 +48,8 @@ class JobsController extends Controller
                 ->addColumn('actions', function ($data) {
 
                         $html = "
-                            <a href='".route('admin.HRJobs.edit', $data->id)."' class='btn mb-2 btn-secondary editButton' id='" . $data->id . "'> <i class='fa fa-edit'></i></a>
-                            <form  method='post' action='".route('admin.HRJobs.destroy', $data->id)."'>
+                            <a href='".route('frontend.HRJobs.edit', $data->id)."' class='btn mb-2 btn-secondary editButton' id='" . $data->id . "'> <i class='fa fa-edit'></i></a>
+                            <form  method='post' action='".route('frontend.HRJobs.destroy', $data->id)."'>
                                 <input type='hidden' name='_method' value='DELETE'>
                                 <input type='hidden' name='_token' value='".csrf_token()."'>
                                 <button class='btn mb-2 btn-danger  delete' id='" . $data->id . "'><i class='fa fa-trash'></i> </button>
@@ -62,7 +62,7 @@ class JobsController extends Controller
                 ->rawColumns(['actions','title','department_id','max_salary','min_salary','placeholder'])->make(true);
         }
 
-        return view('admin.HR.Jobs.jobsGrid')->with(['route_url'=>route('admin.HRJobs.index'), 'page_title'=>'إعدادات الوظائف', 'show_actions'=>true]);
+        return view('frontend.HR.Jobs.jobsGrid')->with(['route_url'=>route('frontend.HRJobs.index'), 'page_title'=>'إعدادات الوظائف', 'show_actions'=>true]);
     }
 
     /**
@@ -79,10 +79,10 @@ class JobsController extends Controller
         $output = [
             'departments' => $departments,
             'page_title'  => 'إضافة وظيفة',
-            'form_action' => route('admin.HRJobs.store')
+            'form_action' => route('frontend.HRJobs.store')
         ];
 
-        return view('admin.HR.Jobs.jobs_form')->with($output);
+        return view('frontend.HR.Jobs.jobs_form')->with($output);
     }
 
     /**
@@ -103,7 +103,7 @@ class JobsController extends Controller
 
 
 
-        return redirect()->route('admin.HRJobs.index')->with(['success' => 'تمت الإضافة بنجاح']);
+        return redirect()->route('frontend.HRJobs.index')->with(['success' => 'تمت الإضافة بنجاح']);
     }
 
     /**
@@ -134,10 +134,10 @@ class JobsController extends Controller
             'row_data'    => $row_data,
             'departments' => $departments,
             'page_title'  => 'تعديل وظيفة  *'.$row_data->title.'*',
-            'form_action' => route('admin.HRJobs.update',$row_data->id)
+            'form_action' => route('frontend.HRJobs.update',$row_data->id)
         ];
 
-        return view('admin.HR.Jobs.jobs_form')->with($output);
+        return view('frontend.HR.Jobs.jobs_form')->with($output);
 
 
     }
@@ -164,7 +164,7 @@ class JobsController extends Controller
 
 
 
-        return redirect()->route('admin.HRJobs.index')->with(['success' => 'تم التحديث بنجاح']);
+        return redirect()->route('frontend.HRJobs.index')->with(['success' => 'تم التحديث بنجاح']);
     }
 
     /**

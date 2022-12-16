@@ -1,4 +1,4 @@
-<form action="{{route('admin.hrVacations.store')}}" method="post" id="Form">
+<form action="{{route('frontend.hrVacations.store')}}" method="post" id="Form">
 @csrf
     <div class="row">
 

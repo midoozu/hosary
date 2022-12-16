@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\HR;
+namespace App\Http\Controllers\Frontend\HR;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\EmployeeVacationsRequest;
@@ -26,7 +26,7 @@ class EmployeeVacationsController extends Controller
         //return all data
         if ($request->ajax()) {
 
-            $all_data = HrEmployeeVacations::with(['employee', 'vacation'])->orderby('id','DESC')->get();
+            $all_data = HrEmployeeVacations::with(['employee', 'vaca`tion'])->orderby('id','DESC')->get();
 
             return DataTables::of($all_data)
 
@@ -41,8 +41,8 @@ class EmployeeVacationsController extends Controller
                 ->addColumn('actions', function ($data) {
 
                         $html = "
-                            <a style='float:right; margin:1px;' href='".route('admin.HREmployeeVacations.edit', $data->id)."' class='btn mb-2 btn-secondary editButton' id='" . $data->id . "'> <i class='fa fa-edit'></i></a>
-                            <form  method='post' action='".route('admin.HREmployeeVacations.destroy', $data->id)."'>
+                            <a style='float:right; margin:1px;' href='".route('frontend.HREmployeeVacations.edit', $data->id)."' class='btn mb-2 btn-secondary editButton' id='" . $data->id . "'> <i class='fa fa-edit'></i></a>
+                            <form  method='post' action='".route('frontend.HREmployeeVacations.destroy', $data->id)."'>
                                 <input type='hidden' name='_method' value='DELETE'>
                                 <input type='hidden' name='_token' value='".csrf_token()."'>
                                 <button  style='float:right; margin:1px;' class='btn mb-2 btn-danger  delete' id='" . $data->id . "'><i class='fa fa-trash'></i> </button>
@@ -55,7 +55,7 @@ class EmployeeVacationsController extends Controller
                 ->rawColumns(['actions','title','value'],'placeholder')->make(true);
         }
 
-        return view('admin.HR.Vacations.grid')->with(['route_url'=>route('admin.HREmployeeVacations.index'), 'page_title'=>'الإجازات']);
+        return view('frontend.HR.Vacations.grid')->with(['route_url'=>route('frontend.HREmployeeVacations.index'), 'page_title'=>'الإجازات']);
     }
 
     /**
@@ -75,10 +75,10 @@ class EmployeeVacationsController extends Controller
             'page_title'  => 'إضافة إجازةموظف',
             'employees'   => $employees,
             'vacations'   => $vacations,
-            'form_action' => route('admin.HREmployeeVacations.store')
+            'form_action' => route('frontend.HREmployeeVacations.store')
         ];
 
-        return view('admin.HR.Vacations.form')->with($output);
+        return view('frontend.HR.Vacations.form')->with($output);
     }
 
     /**
@@ -101,7 +101,7 @@ class EmployeeVacationsController extends Controller
 
 
          toastr()->success("تم إضافة إجازة  بنجاح");
-         return redirect()->route('admin.HREmployeeVacations.index');
+         return redirect()->route('frontend.HREmployeeVacations.index');
 
     }
 
@@ -135,10 +135,10 @@ class EmployeeVacationsController extends Controller
             'employees'   => $employees,
             'vacations'   => $vacations,
             'row_data'    => $row_data,
-            'form_action' => route('admin.HREmployeeVacations.update', $id)
+            'form_action' => route('frontend.HREmployeeVacations.update', $id)
         ];
 
-        return view('admin.HR.Vacations.form')->with($output);
+        return view('frontend.HR.Vacations.form')->with($output);
 
     }
 
@@ -164,7 +164,7 @@ class EmployeeVacationsController extends Controller
 
 
          toastr()->success("تم تعديل إجازة موظف  بنجاح");
-         return redirect()->route('admin.HREmployeeVacations.index');
+         return redirect()->route('frontend.HREmployeeVacations.index');
     }
 
     /**

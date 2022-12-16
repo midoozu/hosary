@@ -228,6 +228,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Invoice' => LaravelDaily\Invoices\Facades\Invoice::class,
 
+
     ],
 
 ];

@@ -39,9 +39,32 @@ class LoginController extends Controller
     public function redirectTo()
     {
         if (auth()->user()->is_admin) {
-            return '/admin';
+
+            return '/admin/home';
         }
 
         return '/home';
+    }
+
+
+
+    public function username()
+    {
+//        return 'email';
+
+        $value = request()->input('email');
+        $options =array(
+            'options' => array(
+                'min_range' => 1,
+                'max_range' => 4,
+            ) );
+
+
+        $field =   filter_var($value,FILTER_VALIDATE_FLOAT, $options) ? 'id' : 'phone' ;
+
+        request()->merge([$field=>$value]);
+
+        return $field;
+
     }
 }

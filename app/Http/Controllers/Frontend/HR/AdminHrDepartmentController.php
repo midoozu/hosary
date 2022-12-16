@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\HR;
+namespace App\Http\Controllers\Frontend\HR;
 
 use App\Http\Controllers\Controller;
 use App\Models\HR\HrDepartment;
@@ -41,7 +41,7 @@ class AdminHrDepartmentController extends Controller
 
 
 
-        return view("admin/HR/Setting/Departments/index");
+        return view("frontend/HR/Setting/Departments/index");
     }
 
     /**
@@ -52,7 +52,7 @@ class AdminHrDepartmentController extends Controller
     public function create(Request $request)
     {
         if ($request->ajax()){
-            $returnHTML = view("admin/HR/Setting/Departments/parts/create")
+            $returnHTML = view("frontend/HR/Setting/Departments/parts/create")
                 ->with([
                 ])
                 ->render();
@@ -105,7 +105,7 @@ class AdminHrDepartmentController extends Controller
 
 
 
-        $returnHTML = view("admin/HR/Setting/Departments/parts/edit")
+        $returnHTML = view("frontend/HR/Setting/Departments/parts/edit")
             ->with([
                 'find' => $find
             ])

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\HR;
+namespace App\Http\Controllers\Frontend\HR;
 
 use App\Http\Controllers\Controller;
 use App\Models\HR\HrShifts;
@@ -40,7 +40,7 @@ class AdminHrShiftsController extends Controller
 
 
 
-        return view("admin/HR/Setting/Shifts/index");
+        return view("frontend/HR/Setting/Shifts/index");
     }
 
     /**
@@ -52,7 +52,7 @@ class AdminHrShiftsController extends Controller
     {
 
         if ($request->ajax()){
-            $returnHTML = view("admin/HR/Setting/Shifts/parts/create")
+            $returnHTML = view("frontend/HR/Setting/Shifts/parts/create")
                 ->with([
                 ])
                 ->render();
@@ -99,7 +99,7 @@ class AdminHrShiftsController extends Controller
     {
         $find = HrShifts::find($id);
 
-        $returnHTML = view("admin/HR/Setting/Shifts/parts/edit")
+        $returnHTML = view("frontend/HR/Setting/Shifts/parts/edit")
             ->with([
                 'find' => $find
             ])

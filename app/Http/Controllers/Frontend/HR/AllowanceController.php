@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\HR;
+namespace App\Http\Controllers\Frontend\HR;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -32,8 +32,8 @@ class AllowanceController extends Controller
                 ->addColumn('actions', function ($data) {
 
                         $html = "
-                            <a style='float:right; margin:1px;' href='".route('admin.HRAllowances.edit', $data->id)."' class='btn mb-2 btn-secondary editButton' id='" . $data->id . "'> <i class='fa fa-edit'></i></a>
-                            <form  method='post' action='".route('admin.HRAllowances.destroy', $data->id)."'>
+                            <a style='float:right; margin:1px;' href='".route('frontend.HRAllowances.edit', $data->id)."' class='btn mb-2 btn-secondary editButton' id='" . $data->id . "'> <i class='fa fa-edit'></i></a>
+                            <form  method='post' action='".route('frontend.HRAllowances.destroy', $data->id)."'>
                                 <input type='hidden' name='_method' value='DELETE'>
                                 <input type='hidden' name='_token' value='".csrf_token()."'>
                                 <button  style='float:right; margin:1px;' class='btn mb-2 btn-danger  delete' id='" . $data->id . "'><i class='fa fa-trash'></i> </button>
@@ -46,7 +46,7 @@ class AllowanceController extends Controller
                 ->rawColumns(['actions','title','value','placeholder'])->make(true);
         }
 
-        return view('admin.HR.Allowances.grid')->with(['route_url'=>route('admin.HRAllowances.index'), 'page_title'=>'البدلات', 'show_actions'=>true]);
+        return view('frontend.HR.Allowances.grid')->with(['route_url'=>route('frontend.HRAllowances.index'), 'page_title'=>'البدلات', 'show_actions'=>true]);
     }
 
     /**
@@ -60,10 +60,10 @@ class AllowanceController extends Controller
 
         $output = [
             'page_title'  => 'إضافة بدل',
-            'form_action' => route('admin.HRAllowances.store')
+            'form_action' => route('frontend.HRAllowances.store')
         ];
 
-        return view('admin.HR.Allowances.form')->with($output);
+        return view('frontend.HR.Allowances.form')->with($output);
     }
 
     /**
@@ -81,7 +81,7 @@ class AllowanceController extends Controller
 
         ]);
 
-        return redirect()->route('admin.HRAllowances.index')->with(['success' => 'تمت الإضافة بنجاح']);
+        return redirect()->route('frontend.HRAllowances.index')->with(['success' => 'تمت الإضافة بنجاح']);
     }
 
     /**
@@ -110,10 +110,10 @@ class AllowanceController extends Controller
         $output = [
             'row_data'    => $row_data,
             'page_title'  => 'تعديل بدل  *'.$row_data->title.'*',
-            'form_action' => route('admin.HRAllowances.update',$row_data->id)
+            'form_action' => route('frontend.HRAllowances.update',$row_data->id)
         ];
 
-        return view('admin.HR.Allowances.form')->with($output);
+        return view('frontend.HR.Allowances.form')->with($output);
 
 
     }
@@ -136,7 +136,7 @@ class AllowanceController extends Controller
             'value' => $request->value,
         ]);
 
-        return redirect()->route('admin.HRAllowances.index')->with(['success' => 'تم التحديث بنجاح']);
+        return redirect()->route('frontend.HRAllowances.index')->with(['success' => 'تم التحديث بنجاح']);
     }
 
     /**

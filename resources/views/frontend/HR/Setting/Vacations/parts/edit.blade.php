@@ -1,5 +1,5 @@
 
-            <form action="{{route('admin.hrVacations.update',$find->id)}}" method="post" id="Form">
+            <form action="{{route('frontend.hrVacations.update',$find->id)}}" method="post" id="Form">
             @csrf
             @method('PUT')
             <div class="row">

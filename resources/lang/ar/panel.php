@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'Hosary Clinic',
+    'site_title' => 'Venus Clinic',
 ];

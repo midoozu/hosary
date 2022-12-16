@@ -1,4 +1,4 @@
-@extends('layouts.admin.admin')
+@extends('layouts.frontend')
 
 @section('styles')
 
@@ -60,7 +60,7 @@
             {{--======================== HR Mohamed ============================--}}
 
             <div class="col-lg-4 col-sm-6 mb-4">
-                <a href="{{route('admin.hrDepartment.index')}}">
+                <a href="{{route('frontend.hrDepartment.index')}}">
                     <div class="content  d-flex align-items-center justify-content-center">
                         <div class="text-i">
                             <div class="w-100 mb-3 d-flex align-items-center justify-content-center">
@@ -77,7 +77,7 @@
             </div>
 
             <div class="col-lg-4 col-sm-6 mb-4">
-                <a href="{{route('admin.hrVacations.index')}}">
+                <a href="{{route('frontend.hrVacations.index')}}">
                     <div class="content  d-flex align-items-center justify-content-center">
                         <div class="text-i">
                             <div class="w-100 mb-3 d-flex align-items-center justify-content-center">
@@ -93,7 +93,7 @@
 
             </div>
             <div class="col-lg-4 col-sm-6 mb-4">
-                <a href="{{route('admin.hrSentence.index')}}">
+                <a href="{{route('frontend.hrSentence.index')}}">
                     <div class="content  d-flex align-items-center justify-content-center">
                         <div class="text-i">
                             <div class="w-100 mb-3 d-flex align-items-center justify-content-center">
@@ -109,7 +109,7 @@
 
             </div>
             <div class="col-lg-4 col-sm-6 mb-4">
-                <a href="{{route('admin.hrShifts.index')}}">
+                <a href="{{route('frontend.hrShifts.index')}}">
                     <div class="content  d-flex align-items-center justify-content-center">
                         <div class="text-i">
                             <div class="w-100 mb-3 d-flex align-items-center justify-content-center">
@@ -125,7 +125,7 @@
 
             </div>
             <div class="col-lg-4 col-sm-6 mb-4">
-                <a href="{{route('admin.hrShiftsTimes.index')}}">
+                <a href="{{route('frontend.hrShiftsTimes.index')}}">
                     <div class="content  d-flex align-items-center justify-content-center">
                         <div class="text-i">
                             <div class="w-100 mb-3 d-flex align-items-center justify-content-center">
@@ -144,7 +144,7 @@
             {{--======================== END HR Mohamed ============================--}}
 
             <div class="col-lg-4 col-sm-6 mb-4">
-                <a href="{{route('admin.HRJobs.index')}}">
+                <a href="{{route('frontend.HRJobs.index')}}">
                     <div class="content  d-flex align-items-center justify-content-center">
                         <div class="text-i">
                             <div class="w-100 mb-3 d-flex align-items-center justify-content-center">
@@ -161,7 +161,7 @@
             </div>
 
             <div class="col-lg-4 col-sm-6 mb-4">
-                <a href="{{route('admin.HRAllowances.index')}}">
+                <a href="{{route('frontend.HRAllowances.index')}}">
                     <div class="content  d-flex align-items-center justify-content-center">
                         <div class="text-i">
                             <div class="w-100 mb-3 d-flex align-items-center justify-content-center">
@@ -178,7 +178,7 @@
             </div>
 
             <div class="col-lg-4 col-sm-6 mb-4">
-                <a href="{{route('admin.HREmployee.index')}}">
+                <a href="{{route('frontend.HREmployee.index')}}">
                     <div class="content  d-flex align-items-center justify-content-center">
                         <div class="text-i">
                             <div class="w-100 mb-3 d-flex align-items-center justify-content-center">
@@ -196,7 +196,7 @@
 
 
             <div class="col-lg-4 col-sm-6 mb-4">
-                <a href="{{route('admin.HREmployeeVacations.index')}}">
+                <a href="{{route('frontend.HREmployeeVacations.index')}}">
                     <div class="content  d-flex align-items-center justify-content-center">
                         <div class="text-i">
                             <div class="w-100 mb-3 d-flex align-items-center justify-content-center">
@@ -211,7 +211,7 @@
             </div>
 
             <div class="col-lg-4 col-sm-6 mb-4">
-                <a href="{{route('admin.HREmployeeSanctions.index')}}">
+                <a href="{{route('frontend.HREmployeeSanctions.index')}}">
                     <div class="content  d-flex align-items-center justify-content-center">
                         <div class="text-i">
                             <div class="w-100 mb-3 d-flex align-items-center justify-content-center">
@@ -226,7 +226,7 @@
             </div>
 
             <div class="col-lg-4 col-sm-6 mb-4">
-                <a href="{{route('admin.HREmployeeEvaluations.index')}}">
+                <a href="{{route('frontend.HREmployeeEvaluations.index')}}">
                     <div class="content  d-flex align-items-center justify-content-center">
                         <div class="text-i">
                             <div class="w-100 mb-3 d-flex align-items-center justify-content-center">
@@ -241,7 +241,7 @@
             </div>
 
             <div class="col-lg-4 col-sm-6 mb-4">
-                <a href="{{route('admin.HREmployeeBonus.index')}}">
+                <a href="{{route('frontend.HREmployeeBonus.index')}}">
                     <div class="content  d-flex align-items-center justify-content-center">
                         <div class="text-i">
                             <div class="w-100 mb-3 d-flex align-items-center justify-content-center">
@@ -256,7 +256,7 @@
             </div>
 
             <div class="col-lg-4 col-sm-6 mb-4">
-                <a href="{{route('admin.HREmployeeAdvances.index')}}">
+                <a href="{{route('frontend.HREmployeeAdvances.index')}}">
                     <div class="content  d-flex align-items-center justify-content-center">
                         <div class="text-i">
                             <div class="w-100 mb-3 d-flex align-items-center justify-content-center">

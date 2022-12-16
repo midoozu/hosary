@@ -1,4 +1,4 @@
-@extends('admin.layouts.layout')
+@extends('layouts.frontend')
 
 @section('styles')
     <link href="{{asset('admin')}}/css/dataTables.bootstrap4.css" rel="stylesheet">

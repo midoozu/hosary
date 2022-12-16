@@ -1,4 +1,4 @@
-<form action="{{route('admin.hrShifts.store')}}" method="post" id="Form">
+<form action="{{route('frontend.hrShifts.store')}}" method="post" id="Form">
 @csrf
     <div class="row">
 

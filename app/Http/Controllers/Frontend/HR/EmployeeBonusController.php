@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\HR;
+namespace App\Http\Controllers\Frontend\HR;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -37,8 +37,8 @@ class EmployeeBonusController extends Controller
                     $html = '';
                     if($data->pay_status == 'new'){
                         $html = "
-                            <a style='float:right; margin:1px;' href='".route('admin.HREmployeeBonus.edit', $data->id)."' class='btn mb-2 btn-secondary editButton' id='" . $data->id . "'> <i class='fa fa-edit'></i></a>
-                            <form  method='post' action='".route('admin.HREmployeeBonus.destroy', $data->id)."'>
+                            <a style='float:right; margin:1px;' href='".route('frontend.HREmployeeBonus.edit', $data->id)."' class='btn mb-2 btn-secondary editButton' id='" . $data->id . "'> <i class='fa fa-edit'></i></a>
+                            <form  method='post' action='".route('frontend.HREmployeeBonus.destroy', $data->id)."'>
                                 <input type='hidden' name='_method' value='DELETE'>
                                 <input type='hidden' name='_token' value='".csrf_token()."'>
                                 <button  style='float:right; margin:1px;' class='btn mb-2 btn-danger  delete' id='" . $data->id . "'><i class='fa fa-trash'></i> </button>
@@ -51,7 +51,7 @@ class EmployeeBonusController extends Controller
                 ->rawColumns(['actions','employee_id','placeholder'])->make(true);
         }
 
-        return view('admin.HR.Bonus.grid')->with(['route_url'=>route('admin.HREmployeeBonus.index'), 'page_title'=>'مكافآت']);
+        return view('frontend.HR.Bonus.grid')->with(['route_url'=>route('frontend.HREmployeeBonus.index'), 'page_title'=>'مكافآت']);
     }
 
     /**
@@ -67,10 +67,10 @@ class EmployeeBonusController extends Controller
         $output = [
             'page_title'  => 'إضافة مكافئة',
             'employees'   => $employees,
-            'form_action' => route('admin.HREmployeeBonus.store')
+            'form_action' => route('frontend.HREmployeeBonus.store')
         ];
 
-        return view('admin.HR.Bonus.form')->with($output);
+        return view('frontend.HR.Bonus.form')->with($output);
     }
 
     /**
@@ -97,7 +97,7 @@ class EmployeeBonusController extends Controller
 
 
          toastr()->success("تم إضافة مكافئة موظف بنجاح");
-         return redirect()->route('admin.HREmployeeBonus.index');
+         return redirect()->route('frontend.HREmployeeBonus.index');
     }
 
     /**
@@ -132,10 +132,10 @@ class EmployeeBonusController extends Controller
             'page_title'  => 'تعديل مكافئة',
             'employees'   => $employees,
             'row_data'    => $row_data,
-            'form_action' => route('admin.HREmployeeBonus.update', $id)
+            'form_action' => route('frontend.HREmployeeBonus.update', $id)
         ];
 
-        return view('admin.HR.Bonus.form')->with($output);
+        return view('frontend.HR.Bonus.form')->with($output);
     }
 
     /**
@@ -166,7 +166,7 @@ class EmployeeBonusController extends Controller
 
 
          toastr()->success("تم تعديل مكافئة الموظف بنجاح");
-         return redirect()->route('admin.HREmployeeBonus.index');
+         return redirect()->route('frontend.HREmployeeBonus.index');
     }
 
     /**

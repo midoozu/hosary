@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\HR;
+namespace App\Http\Controllers\Frontend\HR;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -46,8 +46,8 @@ class EmployeesController extends Controller
 
 
                         $html = "
-                            <a style='float:right; margin:1px;' href='".route('admin.HREmployee.edit', $data->id)."' class='btn mb-2 btn-secondary editButton' id='" . $data->id . "'> <i class='fa fa-edit'></i></a>
-                            <form  method='post' action='".route('admin.HREmployee.destroy', $data->id)."'>
+                            <a style='float:right; margin:1px;' href='".route('frontend.HREmployee.edit', $data->id)."' class='btn mb-2 btn-secondary editButton' id='" . $data->id . "'> <i class='fa fa-edit'></i></a>
+                            <form  method='post' action='".route('frontend.HREmployee.destroy', $data->id)."'>
                                 <input type='hidden' name='_method' value='DELETE'>
                                 <input type='hidden' name='_token' value='".csrf_token()."'>
                                 <button  style='float:right; margin:1px;' class='btn mb-2 btn-danger  delete' id='" . $data->id . "'><i class='fa fa-trash'></i> </button>
@@ -60,7 +60,7 @@ class EmployeesController extends Controller
                 ->rawColumns(['actions','title','value','placeholder'])->make(true);
         }
 
-        return view('admin.HR.Employees.grid')->with(['route_url'=>route('admin.HREmployee.index'), 'page_title'=>'الموظفين']);
+        return view('frontend.HR.Employees.grid')->with(['route_url'=>route('frontend.HREmployee.index'), 'page_title'=>'الموظفين']);
     }
 
     /**
@@ -86,10 +86,10 @@ class EmployeesController extends Controller
             'departments' => $departments,
             'jobs'        => $jobs,
             'allowances'  => $new_allowances,
-            'form_action' => route('admin.HREmployee.store')
+            'form_action' => route('frontend.HREmployee.store')
         ];
 
-        return view('admin.HR.Employees.form')->with($output);
+        return view('frontend.HR.Employees.form')->with($output);
     }
 
     /**
@@ -154,7 +154,7 @@ class EmployeesController extends Controller
             }
 
 
-            return redirect()->route('admin.HREmployee.index')->with(['success' => 'تمت الإضافة بنجاح']);
+            return redirect()->route('frontend.HREmployee.index')->with(['success' => 'تمت الإضافة بنجاح']);
         }
     }
 
@@ -196,10 +196,10 @@ class EmployeesController extends Controller
             'jobs'        => $jobs,
             'allowances'  => $new_allowances,
             'row_data'    => $emp_data,
-            'form_action' => route('admin.HREmployee.update', $emp_data->id)
+            'form_action' => route('frontend.HREmployee.update', $emp_data->id)
         ];
 
-        return view('admin.HR.Employees.form')->with($output);
+        return view('frontend.HR.Employees.form')->with($output);
 
     }
 
@@ -274,7 +274,7 @@ class EmployeesController extends Controller
 
 
             toastr()->success("تم تعديل بيانات الموظف  بنجاح");
-            return redirect()->route('admin.HREmployee.index');
+            return redirect()->route('frontend.HREmployee.index');
         }
     }
 
@@ -291,7 +291,7 @@ class EmployeesController extends Controller
         $row_data = HrEmployee::findOrFail($id);
 
         $row_data->delete();
-        return redirect()->route('admin.HREmployee.index')->with(['success'=>'تم الحذف بنجاح']);
+        return redirect()->route('frontend.HREmployee.index')->with(['success'=>'تم الحذف بنجاح']);
     }
 
 }

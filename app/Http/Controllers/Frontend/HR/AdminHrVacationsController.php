@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\HR;
+namespace App\Http\Controllers\Frontend\HR;
 
 use App\Http\Controllers\Controller;
 use App\Models\HR\HrVacations;
@@ -44,7 +44,7 @@ class AdminHrVacationsController extends Controller
 
 
 
-        return view("admin/HR/Setting/Vacations/index");
+        return view("frontend/HR/Setting/Vacations/index");
     }
 
     /**
@@ -56,7 +56,7 @@ class AdminHrVacationsController extends Controller
     {
 
         if ($request->ajax()){
-            $returnHTML = view("admin/HR/Setting/Vacations/parts/create")
+            $returnHTML = view("frontend/HR/Setting/Vacations/parts/create")
                 ->with([
                 ])
                 ->render();
@@ -106,7 +106,7 @@ class AdminHrVacationsController extends Controller
     {
         $find = HrVacations::find($id);
 
-        $returnHTML = view("admin/HR/Setting/Vacations/parts/edit")
+        $returnHTML = view("frontend/HR/Setting/Vacations/parts/edit")
             ->with([
                 'find' => $find
             ])

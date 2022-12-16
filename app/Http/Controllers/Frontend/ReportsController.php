@@ -127,7 +127,6 @@ return view('reports.todayreport' ,compact('appointments', 'branches', 'clinics'
         $branches = Branch::get();
 
 
-
         $appointments = Service::withCount('serviceAppointments')->get()->groupBy('service.name', DB::raw('count(*) as total'));
 
         return view('reports.yasterdayreport' ,compact('appointments', 'branches', 'clinics', 'companies', 'crm_customers', 'doctors', 'products', 'services', 'users'));

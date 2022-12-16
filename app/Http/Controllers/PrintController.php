@@ -12,21 +12,39 @@ class PrintController extends Controller
 {
     public function print(){
 
-        $printers = Printing::printers();
 
-        foreach ($printers as $printer) {
-            echo $printer->name();
-        }
 
-        $printerId =    Printing::defaultPrinterId();
+//        $printers = Printing::printers();
+//
+//        foreach ($printers as $printer) {
+//            echo $printer->name();
+//        }
+//
+//        $printerId = Printing::defaultPrinterId();
+//
+//      $printJob = Printing::newPrintTask()
+//            ->printer($printerId)
+//            ->file('path_to_file.pdf')
+//            ->send();
+//
+//        $printJob->id(); // the id number returned from
 
-        dd($printerId);
+        $customer = new Buyer([
+            'name'          => 'John Doe',
+            'custom_fields' => [
+                'email' => 'test@example.com',
+            ],
+        ]);
 
-      $printJob = Printing::newPrintTask()
-            ->printer($printerId)
-            ->file('path_to_file.pdf')
-            ->send();
+        $item = (new InvoiceItem())->title('Service 1')->pricePerUnit(2);
 
-        $printJob->id(); // the id number returned from
+        $invoice = Invoice::make()
+            ->buyer($customer)
+            ->discountByPercent(10)
+            ->taxRate(15)
+            ->shipping(1.99)
+            ->addItem($item);
+
+        return $invoice->stream();
     }
 }
